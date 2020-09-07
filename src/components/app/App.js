@@ -1,4 +1,3 @@
-/* import firebase from 'firebase/app' */
 import React from 'react';
 import {
   Switch,
@@ -13,6 +12,7 @@ import {
   preloadDatabase,
   preloadStorage,
   SuspenseWithPerf,
+  preloadAnalytics,
 } from 'reactfire';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -27,6 +27,7 @@ const SignIn = React.lazy(() => import('../SignIn'));
 const Register = React.lazy(() => import('../Register'));
 const About = React.lazy(() => import('../About'));
 const GenericNotFound = React.lazy(() => import('../404'));
+const PageViewLogger = React.lazy(() => import('../PageViewLogger'));
 
 const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.toolbar,
@@ -38,10 +39,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-// Our components will lazy load the
-// SDKs to decrease their bundle size.
-// Since we know that, we can start
-// fetching them now
 const preloadSDKs = firebaseApp => {
   return Promise.all([
     preloadFirestore({
@@ -58,7 +55,7 @@ const preloadSDKs = firebaseApp => {
       }
     }),
     preloadAuth({ firebaseApp }),
-    
+    preloadAnalytics({ firebaseApp }),
   ]);
 };
 
@@ -71,11 +68,6 @@ function App() {
   const firebaseApp = useFirebaseApp();
   const classes = useStyles();
 
-  // Kick off fetches for SDKs and data that
-  // we know our components will eventually need.
-  //
-  // This is OPTIONAL but encouraged as part of the render-as-you-fetch pattern
-  // https://reactjs.org/docs/concurrent-mode-suspense.html#approach-3-render-as-you-fetch-using-suspense
   preloadSDKs(firebaseApp).then(preloadData(firebaseApp));
   
   return (
@@ -92,6 +84,7 @@ function App() {
               <Route path="/register" exact component={Register} />
               <Route path="*" exact={true} component={GenericNotFound} />
         </Switch>
+        <PageViewLogger />
       </SuspenseWithPerf>
       </Container>
       <Footer />

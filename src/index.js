@@ -17,7 +17,8 @@ const firebaseConfig = {
   projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
   storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
   messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
-  appId: process.env.REACT_APP_CLIENTID
+  appId: process.env.REACT_APP_CLIENTID,
+  measurementId: process.env.REACT_APP_MEASUREMENTID,
  };
 
 ReactDOM.render(
