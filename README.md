@@ -3,6 +3,13 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4f2d4d4adcda432290b07a179fab3e86)](https://app.codacy.com/gh/BuildForSDGCohort2/Team-253-Group-A-Frontend?utm_source=github.com&utm_medium=referral&utm_content=BuildForSDGCohort2/Team-253-Group-A-Frontend&utm_campaign=Badge_Grade_Dashboard)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/2b9a8ed1-cb18-488f-acd2-05a2a33b3218/deploy-status)](https://app.netlify.com/sites/awesome-jang-7f1fc2/deploys)
 
+## Firebase Configuration
+
+Rename `.env.template` to `.env`
+Fill `.env` from firebase console
+
+DO NOT PUSH `.env` to Github (already ignored with `.gitignore`)
+
 ## Available Scripts
 
 In the project directory, you can run:
