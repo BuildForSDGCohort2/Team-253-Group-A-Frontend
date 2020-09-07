@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from "react-router-dom";
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
 import { FirebaseAppProvider } from 'reactfire';
-import './index.css';
-import App from './App';
+import App from './components/app/App';
 import * as serviceWorker from './serviceWorker';
+import theme from './theme';
+import ScrollToTop from './components/ScrollToTop'
 
 const firebaseConfig = {
   /* Paste your config object from Firebase console here */
@@ -17,11 +21,17 @@ const firebaseConfig = {
  };
 
 ReactDOM.render(
-  <React.StrictMode>
     <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-      <App />
+      <ThemeProvider theme={theme}>
+      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+      <CssBaseline />
+      <BrowserRouter>
+        <ScrollToTop />
+        <App />
+        </BrowserRouter>
+        </ThemeProvider>
     </FirebaseAppProvider>
-  </React.StrictMode>,
+  ,
   document.getElementById('root')
 );
 
