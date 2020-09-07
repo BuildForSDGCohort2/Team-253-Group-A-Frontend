@@ -7,19 +7,23 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
+import { grey } from '@material-ui/core/colors';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     background: "#ffffff",
-    paddingTop: 32
+    paddingTop: theme.spacing(4),
   },
   subTitle: {
-    paddingLeft: 16,
+    paddingLeft: theme.spacing(2),
+  },
+  primary:{
+    color: grey[800],
   },
   copyright: {
     fontSize: 12,
-    color: "#555555"
+    color: grey[700],
   },
 }));
 
@@ -34,7 +38,7 @@ export default function Footer() {
 
           <Grid container spacing={3}>
             <Grid item md={5} xs={12}>
-              <Typography variant="h6">
+              <Typography variant="h6" gutterBottom>
               CleanOut
               </Typography>
             </Grid>
@@ -46,10 +50,10 @@ export default function Footer() {
 
               <List component="nav" dense>
                 <ListItem button>
-                  <ListItemText primary="Terms of services" />
+                  <ListItemText className={classes.primary} primary="Terms of services"/>
                 </ListItem>
                 <ListItem button>
-                  <ListItemText primary="Privacy policy" />
+                  <ListItemText className={classes.primary} primary="Privacy policy" />
                 </ListItem>
               </List>
             </Grid>
@@ -61,13 +65,13 @@ export default function Footer() {
 
               <List component="nav" dense>
                 <ListItem button>
-                  <ListItemText primary="Twitter" />
+                  <ListItemText className={classes.primary} primary="Twitter" />
                 </ListItem>
                 <ListItem button>
-                  <ListItemText primary="Facebook" />
+                  <ListItemText className={classes.primary} primary="Facebook" />
                 </ListItem>
                 <ListItem button>
-                  <ListItemText primary="Github" />
+                  <ListItemText className={classes.primary} primary="Github" />
                 </ListItem>
               </List>
             </Grid>
@@ -79,10 +83,10 @@ export default function Footer() {
 
               <List component="nav" dense>
                 <ListItem button>
-                  <ListItemText primary="About us" />
+                  <ListItemText className={classes.primary} primary="About us" />
                 </ListItem>
                 <ListItem button>
-                  <ListItemText primary="Contact us" />
+                  <ListItemText className={classes.primary} primary="Contact us" />
                 </ListItem>
               </List>
             </Grid>
