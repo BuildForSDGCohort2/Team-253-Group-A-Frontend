@@ -1,5 +1,5 @@
 /* import firebase from 'firebase/app' */
-import React, { Suspense } from 'react';
+import React from 'react';
 import {
   Switch,
   Route,
@@ -12,6 +12,7 @@ import {
   preloadFirestore,
   preloadDatabase,
   preloadStorage,
+  SuspenseWithPerf,
 } from 'reactfire';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -82,7 +83,8 @@ function App() {
       <Header />
       <div className={classes.offset} />
       <Container className={classes.mainContainer}>
-      <Suspense fallback={<CircularProgress color="secondary" />}>
+      <SuspenseWithPerf fallback={<CircularProgress color="secondary" />}
+        traceId={'load-views-status'}>
         <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/about" exact component={About} />
@@ -90,7 +92,7 @@ function App() {
               <Route path="/register" exact component={Register} />
               <Route path="*" exact={true} component={GenericNotFound} />
         </Switch>
-      </Suspense>
+      </SuspenseWithPerf>
       </Container>
       <Footer />
     </React.Fragment>
