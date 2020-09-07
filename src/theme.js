@@ -15,7 +15,12 @@ const theme = createMuiTheme({
       main: red.A400,
     },
     background: {
-      default: '#f7f7f7',
+      default: '#dedede',
+    },
+  },
+  typography: {
+    subtitle1: {
+      fontWeight: 500,
     },
   },
 });
