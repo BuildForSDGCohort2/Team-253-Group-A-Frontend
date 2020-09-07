@@ -14,6 +14,9 @@ const useStyles = makeStyles(() => ({
     background: "#ffffff",
     paddingTop: 32
   },
+  subTitle: {
+    paddingLeft: 16,
+  },
   copyright: {
     fontSize: 12,
     color: "#555555"
@@ -37,7 +40,7 @@ export default function Footer() {
             </Grid>
 
             <Grid item md={3} xs={6}>
-              <Typography variant="subtitle1" gutterBottom>
+              <Typography variant="subtitle1" className={classes.subTitle} gutterBottom>
               Legal
               </Typography>
 
@@ -52,7 +55,7 @@ export default function Footer() {
             </Grid>
 
             <Grid item md={2} xs={6}>
-              <Typography variant="subtitle1" gutterBottom>
+              <Typography variant="subtitle1" className={classes.subTitle} gutterBottom>
               Social
               </Typography>
 
@@ -70,7 +73,7 @@ export default function Footer() {
             </Grid>
 
             <Grid item md={2} xs={6}>
-              <Typography variant="subtitle1" gutterBottom>
+              <Typography variant="subtitle1" className={classes.subTitle} gutterBottom>
               Project
               </Typography>
 
