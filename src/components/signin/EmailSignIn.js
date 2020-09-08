@@ -27,14 +27,8 @@ export default function EmailSignIn() {
         <Grid container spacing={4}>
             <Grid item>
                 <Typography variant="h6">
-                    Sign up for a free account
+                    Sign in with your account
                 </Typography>
-            </Grid>
-            <Grid item sm={6} xs={12}>
-                <TextField required id="first-name" fullWidth label="First name" color="secondary"/>
-            </Grid>
-            <Grid item sm={6} xs={12}>
-                <TextField required id="last-name" fullWidth label="Last name" color="secondary"/>
             </Grid>
             <Grid item xs={12}>
                 <TextField required id="email" type="email" fullWidth label="Email address" color="secondary"/>
@@ -43,15 +37,8 @@ export default function EmailSignIn() {
                 <TextField required id="password" fullWidth type="password" label="Password" color="secondary"/>
             </Grid>
             <Grid item>
-                <Typography variant="body2">
-                I have read and I do accept&nbsp;  
-                 <Link component={LinkRouter} to="/terms-of-services" color="secondary" >terms of services</Link> 
-                 &nbsp;and <Link component={LinkRouter} to="/privacy-policy" color="secondary" >privacy policy</Link>.
-                </Typography>
-            </Grid>
-            <Grid item>
                 <Button variant="contained" color="secondary">
-                    Register
+                    Log in
                 </Button>
             </Grid>
         </Grid>
