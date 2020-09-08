@@ -17,13 +17,14 @@ import {
 
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
+
+import Loading from '../Loading';
 import Header from '../Header';
 import Footer from '../Footer';
 
 const Home = React.lazy(() => import('../Home'));
-const SignIn = React.lazy(() => import('../SignIn'));
+const SignIn = React.lazy(() => import('../signin/SignIn'));
 const Register = React.lazy(() => import('../Register'));
 const About = React.lazy(() => import('../About'));
 const GenericNotFound = React.lazy(() => import('../404'));
@@ -75,7 +76,7 @@ function App() {
       <Header />
       <div className={classes.offset} />
       <Container className={classes.mainContainer}>
-      <SuspenseWithPerf fallback={<CircularProgress color="secondary" />}
+      <SuspenseWithPerf fallback={<Loading />}
         traceId={'load-views-status'}>
         <Switch>
               <Route path="/" exact component={Home} />

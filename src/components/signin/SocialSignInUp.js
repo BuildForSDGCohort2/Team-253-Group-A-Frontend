@@ -1,19 +1,19 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
   },
 }));
 
 
-export default function SignIn() {
+export default function Home() {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-        sign in
+        SocialSignInUp
     </div>
   );
 }
