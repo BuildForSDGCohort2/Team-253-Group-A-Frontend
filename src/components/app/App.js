@@ -25,7 +25,7 @@ import Footer from '../Footer';
 
 const Home = React.lazy(() => import('../Home'));
 const SignIn = React.lazy(() => import('../signin/SignIn'));
-const Register = React.lazy(() => import('../Register'));
+const Register = React.lazy(() => import('../signup/Register'));
 const About = React.lazy(() => import('../About'));
 const GenericNotFound = React.lazy(() => import('../404'));
 const PageViewLogger = React.lazy(() => import('../PageViewLogger'));
