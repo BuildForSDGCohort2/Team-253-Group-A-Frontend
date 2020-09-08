@@ -4,8 +4,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(() => ({
   root: {
-    flexGrow: 1,
-    alignContent: "center",
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
   },
 }));
 
