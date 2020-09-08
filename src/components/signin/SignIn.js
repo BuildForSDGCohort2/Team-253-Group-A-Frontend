@@ -5,7 +5,7 @@ import Container from '@material-ui/core/Container';
 
 import Loading from '../Loading';
 
-const EmailSignIngnIn = React.lazy(() => import('./EmailSignIn'));
+const EmailSignIn = React.lazy(() => import('./EmailSignIn'));
 const SocialSignInUP = React.lazy(() => import('./SocialSignInUp'));
 
 const useStyles = makeStyles((theme) => ({
@@ -23,7 +23,7 @@ export default function SignIn() {
         <SuspenseWithPerf fallback={<Loading />}
           traceId={'load-signin-views-status'}>
           <Container maxWidth="sm">
-              <EmailSignIngnIn />
+              <EmailSignIn />
               <SocialSignInUP />
           </Container>
         </SuspenseWithPerf>
