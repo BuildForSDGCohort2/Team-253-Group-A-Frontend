@@ -6,7 +6,6 @@ const PageViewLogger = (location) => {
     const analytics = useAnalytics();
 
     useEffect(() => {
-        console.log("changed");
       analytics.logEvent('page_view', { path_name: location.pathname});
     });
   
