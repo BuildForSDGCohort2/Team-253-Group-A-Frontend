@@ -22,7 +22,7 @@ const firebaseConfig = {
  };
 
 ReactDOM.render(
-    <FirebaseAppProvider firebaseConfig={firebaseConfig}>
+    <FirebaseAppProvider firebaseConfig={firebaseConfig} initPerformance>
       <ThemeProvider theme={theme}>
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
       <CssBaseline />
