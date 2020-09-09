@@ -4,6 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Avatar from '@material-ui/core/Avatar';
+import {Link as LinkRouter} from 'react-router-dom';
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -24,11 +25,25 @@ export default function AccountMenu() {
 
   const user =  useUser();
 
+  const getProfilePath = () => {
+    return "/profile/"+user.uid;
+  };
+
+  const getInitials = (string) => {
+    var names = string.split(' '),
+        initials = names[0].substring(0, 1).toUpperCase();
+    
+    if (names.length > 1) {
+        initials += names[names.length - 1].substring(0, 1).toUpperCase();
+    }
+    return initials;
+  };
+
   if(user){
     return (
       <div>
         <IconButton aria-controls="account-menu" aria-haspopup="true" onClick={handleClick}>
-          <Avatar src={user.photoURL} color="secondary">U</Avatar>
+    <Avatar src={user.photoURL} color="secondary">{getInitials(user.displayName)}</Avatar>
         </IconButton>
         <Menu
           id="account-menu"
@@ -37,9 +52,9 @@ export default function AccountMenu() {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem  onClick={signOut}>Logout</MenuItem>
+          <MenuItem onClick={handleClose} component={LinkRouter} to={getProfilePath}>Profile</MenuItem>
+          <MenuItem onClick={handleClose} component={LinkRouter} to="/account">My account</MenuItem>
+          <MenuItem onClick={signOut}>Logout</MenuItem>
         </Menu>
       </div>
     );
