@@ -2,6 +2,7 @@ import React from 'react';
 import {SuspenseWithPerf} from 'reactfire';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
 
 import Loading from '../Loading';
 
@@ -11,6 +12,9 @@ const SocialSignInUP = React.lazy(() => import('./SocialSignInUp'));
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+  },
+  subTitle: {
+    textAlign: "center",
   }
 }));
 
@@ -24,7 +28,10 @@ export default function SignIn() {
           traceId={'load-signin-views-status'}>
           <Container maxWidth="sm">
               <EmailSignIn />
-              <SocialSignInUP />
+              <Typography variant="h6"  className={classes.subTitle} gutterBottom>
+                    Or
+                </Typography>
+              <SocialSignInUP signText="in"/>
           </Container>
         </SuspenseWithPerf>
     </div>
