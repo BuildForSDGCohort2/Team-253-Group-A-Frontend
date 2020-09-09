@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { useAuth } from 'reactfire';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,12 +19,47 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function EmailSignIn() {
+
+
+export default function EmailSignIn(authDone) {
   const classes = useStyles();
+
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [errors, setErrors] = React.useState({});
+
+  const auth = useAuth();
+
+  const registerNewUser = (event) => {
+    event.preventDefault();
+    
+    auth.createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        auth.currentUser.updateProfile({
+            displayName: firstName+" "+lastName,
+          }).then(function() {
+            //TO DO done 
+          }, function(error) {
+            console.error(error);
+          });
+      }).catch((error) => {
+          const authErrors = {};
+          if (error.code === "auth/weak-password" || error.code === "auth/invalid-email") {
+              authErrors.isPassword =  true;
+              authErrors.passwordMessage =  error.message;
+          } else if (error.code === "auth/email-already-in-use") {
+              authErrors.isEmail =  true;
+              authErrors.emailMessage =  error.message;
+          }
+        setErrors(authErrors)
+      })
+  }
 
   return (
     <Paper className={classes.root}>
-        <form className={classes.root} noValidate autoComplete="off">
+        <form className={classes.root}  autoComplete="on" onSubmit={registerNewUser}>
         <Grid container spacing={4}>
             <Grid item>
                 <Typography variant="h6">
@@ -31,16 +67,27 @@ export default function EmailSignIn() {
                 </Typography>
             </Grid>
             <Grid item sm={6} xs={12}>
-                <TextField required id="first-name" fullWidth label="First name" color="secondary"/>
+                <TextField required name="firstName" fullWidth label="First name" color="secondary" 
+                    defaultValue={firstName}
+                    onChange={e => setFirstName(e.target.value)}/>
             </Grid>
             <Grid item sm={6} xs={12}>
-                <TextField required id="last-name" fullWidth label="Last name" color="secondary"/>
+                <TextField required name="lastName" fullWidth label="Last name" color="secondary" 
+                    defaultValue={lastName}
+                    onChange={e => setLastName(e.target.value)}/>
             </Grid>
             <Grid item xs={12}>
-                <TextField required id="email" type="email" fullWidth label="Email address" color="secondary"/>
+                <TextField required name="email" type="email" fullWidth label="Email address" color="secondary" 
+                    error={errors.isEmail}
+                    helperText={errors.emailMessage}
+                    defaultValue={email}
+                    onChange={e => setEmail(e.target.value)}/>
             </Grid>
             <Grid item xs={12}>
-                <TextField required id="password" fullWidth type="password" label="Password" color="secondary"/>
+                <TextField required name="password" fullWidth type="password" label="Password" color="secondary" 
+                    error={errors.isPassword}
+                    helperText={errors.passwordMessage}
+                    onChange={e => setPassword(e.target.value)}/>
             </Grid>
             <Grid item>
                 <Typography variant="body2">
@@ -50,7 +97,7 @@ export default function EmailSignIn() {
                 </Typography>
             </Grid>
             <Grid item>
-                <Button variant="contained" color="secondary">
+                <Button type="submit" variant="contained" color="secondary">
                     Register
                 </Button>
             </Grid>
