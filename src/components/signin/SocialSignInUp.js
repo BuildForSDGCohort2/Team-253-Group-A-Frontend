@@ -18,11 +18,12 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
+    textTransform: "none",
   },
 }));
 
 
-export default function SocialSignInUp() {
+export default function SocialSignInUp(props) {
   const classes = useStyles();
 
   const auth = useAuth();
@@ -42,13 +43,13 @@ export default function SocialSignInUp() {
   return (
     <Paper className={classes.root}>
         <Button className={classes.socialButton} size="large" variant="outlined" color="secondary" onClick={signInGoogle}>
-            with Google
+        sign {props.signText} with Google
         </Button>
         <Button className={classes.socialButton} size="large" variant="outlined" color="secondary" onClick={signInTwitter}>
-            with Twitter
+        sign {props.signText} with Twitter
         </Button>
         <Button className={classes.socialButton} size="large" variant="outlined" color="secondary" onClick={signInFacebook}>
-            with Facebook
+        sign {props.signText} with Facebook
         </Button>
     </Paper>
   );
