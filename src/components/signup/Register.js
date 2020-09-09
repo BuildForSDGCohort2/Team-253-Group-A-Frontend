@@ -26,7 +26,7 @@ export default function Register() {
   return (
     <div className={classes.root}>
         <SuspenseWithPerf fallback={<Loading />}
-          traceId={'load-signin-views-status'}>
+          traceId={'load-register-views-status'}>
           
           <AuthCheck fallback={
           <Container maxWidth="sm">
