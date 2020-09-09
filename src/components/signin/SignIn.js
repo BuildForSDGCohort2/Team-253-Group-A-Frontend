@@ -1,5 +1,6 @@
 import React from 'react';
-import {SuspenseWithPerf} from 'reactfire';
+import  { Redirect } from 'react-router-dom';
+import {AuthCheck , SuspenseWithPerf} from 'reactfire';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -26,13 +27,19 @@ export default function SignIn() {
     <div className={classes.root}>
         <SuspenseWithPerf fallback={<Loading />}
           traceId={'load-signin-views-status'}>
-          <Container maxWidth="sm">
+
+          <AuthCheck fallback={
+            <Container maxWidth="sm">
               <EmailSignIn />
               <Typography variant="h6"  className={classes.subTitle} gutterBottom>
                     Or
                 </Typography>
               <SocialSignInUP signText="in"/>
-          </Container>
+            </Container>
+          }>
+          
+            <Redirect to="/dashboard"/>
+          </AuthCheck>
         </SuspenseWithPerf>
     </div>
   );
