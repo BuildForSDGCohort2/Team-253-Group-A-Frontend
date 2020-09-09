@@ -23,7 +23,7 @@ export default function EmailSignIn() {
 
   return (
     <Paper className={classes.root}>
-        <form className={classes.root} validate autoComplete="off">
+        <form className={classes.root} noValidate autoComplete="off">
         <Grid container spacing={4}>
             <Grid item>
                 <Typography variant="h6">
