@@ -21,7 +21,7 @@ export default function EmailSignIn() {
 
   return (
     <Paper className={classes.root}>
-        <form className={classes.root} validate autoComplete="off">
+        <form className={classes.root} noValidate autoComplete="off">
         <Grid container spacing={4}>
             <Grid item>
                 <Typography variant="h6">
@@ -36,7 +36,7 @@ export default function EmailSignIn() {
             </Grid>
             <Grid item>
                 <Button variant="contained" color="secondary">
-                    Log in
+                    Sign in
                 </Button>
             </Grid>
         </Grid>
