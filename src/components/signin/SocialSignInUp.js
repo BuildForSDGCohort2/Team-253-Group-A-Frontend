@@ -99,7 +99,7 @@ export default function SocialSignInUp(props) {
         <Button className={classes.socialButton} size="large" variant="outlined" color="secondary" onClick={signInFacebook}>
         sign {props.signText} with Facebook
         </Button>
-        <Snackbar  open={open} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Snackbar  open={open} autoHideDuration={10000} onClose={handleCloseAlert}>
         <Alert severity={alertSeverity} action={
           <React.Fragment>
             <IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseAlert}>
