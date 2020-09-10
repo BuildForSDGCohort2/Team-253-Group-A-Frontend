@@ -11,8 +11,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {AuthCheck, SuspenseWithPerf} from 'reactfire';
 
-import AccountMenu from './AccountMenu';
 import NavigationDrawer from './nav/NavigationDrawer';
+
+const AccountMenu = React.lazy(() => import('./AccountMenu'));
 
 const useStyles = makeStyles((theme) => ({
   root: {
