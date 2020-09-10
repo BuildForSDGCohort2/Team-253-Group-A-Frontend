@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth } from 'reactfire';
 import {Link as LinkRouter} from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,7 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { useAuth } from 'reactfire';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
     padding: theme.spacing(2),
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
   },
 }));
 
@@ -30,21 +35,28 @@ export default function EmailSignIn(authDone) {
   const [password, setPassword] = React.useState("");
   const [errors, setErrors] = React.useState({});
 
+  const [backdropOpen, setbackdropOpen] = React.useState(false);
+  const handlebackdropClose = () => {
+    setbackdropOpen(false);
+  };
+
   const auth = useAuth();
 
   const registerNewUser = (event) => {
     event.preventDefault();
     
+    setbackdropOpen(true);
     auth.createUserWithEmailAndPassword(email, password)
-      .then((result) => {
+      .then(() => {
         auth.currentUser.updateProfile({
             displayName: firstName+" "+lastName,
           }).then(function() {
-            //TO DO done 
-          }, function(error) {
-            console.error(error);
+            handlebackdropClose();
+          }, function() {
+            handlebackdropClose();
           });
       }).catch((error) => {
+        handlebackdropClose();
           const authErrors = {};
           if (error.code === "auth/weak-password" || error.code === "auth/invalid-email") {
               authErrors.isPassword =  true;
@@ -103,6 +115,10 @@ export default function EmailSignIn(authDone) {
             </Grid>
         </Grid>
         </form>
+
+        <Backdrop className={classes.backdrop} open={backdropOpen} onClick={handlebackdropClose}>
+          <CircularProgress />
+        </Backdrop>
     </Paper>
   );
 }
