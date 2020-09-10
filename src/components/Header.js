@@ -10,7 +10,9 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {AuthCheck, SuspenseWithPerf} from 'reactfire';
+
 import AccountMenu from './AccountMenu';
+import NavigationDrawer from './nav/NavigationDrawer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,12 +43,23 @@ function HeaderAuthButtons() {
 export default function Header() {
   const classes = useStyles();
 
+  const [openDrawer, setOpenDrawer] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpenDrawer(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpenDrawer(false);
+  };
+
   return (
     <React.Fragment>
       <AppBar position="fixed">
         <Toolbar>
         <Hidden mdUp>
-        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+        <IconButton edge="start" color="inherit" aria-label="menu"
+            onClick={handleDrawerOpen}>
           <MenuIcon />
         </IconButton>
         </Hidden>
@@ -67,6 +80,7 @@ export default function Header() {
           </SuspenseWithPerf >
         </Toolbar>
       </AppBar>
+      <NavigationDrawer open={openDrawer} closeHandler={handleDrawerClose}/>
     </React.Fragment>
   );
 }
