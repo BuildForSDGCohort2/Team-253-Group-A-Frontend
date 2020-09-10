@@ -29,6 +29,7 @@ const Register = React.lazy(() => import('../signup/Register'));
 const About = React.lazy(() => import('../About'));
 const GenericNotFound = React.lazy(() => import('../404'));
 const PageViewLogger = React.lazy(() => import('../PageViewLogger'));
+const Dashboard = React.lazy(() => import('../dashboard/Dashboard'));
 
 const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.toolbar,
@@ -83,6 +84,7 @@ function App() {
               <Route path="/about" exact component={About} />
               <Route path="/signin" exact component={SignIn} />
               <Route path="/register" exact component={Register} />
+              <Route path="/dashboard" exact component={Dashboard} />
               <Route path="*" exact={true} component={GenericNotFound} />
         </Switch>
         <PageViewLogger />
