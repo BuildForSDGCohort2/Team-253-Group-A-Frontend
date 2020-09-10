@@ -100,16 +100,16 @@ export default function SocialSignInUp(props) {
         sign {props.signText} with Facebook
         </Button>
         <Snackbar  open={open} autoHideDuration={10000} onClose={handleCloseAlert}>
-        <Alert severity={alertSeverity} action={
-          <React.Fragment>
-            <IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseAlert}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </React.Fragment>
-        }>
-          {alertMessage}
-        </Alert>
-      </Snackbar>
+          <Alert severity={alertSeverity} action={
+            <React.Fragment>
+              <IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseAlert}>
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            </React.Fragment>
+          }>
+            {alertMessage}
+          </Alert>
+        </Snackbar>
     </Paper>
   );
 }
