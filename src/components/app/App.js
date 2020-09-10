@@ -20,9 +20,9 @@ import Container from '@material-ui/core/Container';
 
 
 import Loading from '../Loading';
-import Header from '../Header';
-import Footer from '../Footer';
 
+const Header = React.lazy(() => import('../Header'));
+const Footer = React.lazy(() => import('../Footer'));
 const Home = React.lazy(() => import('../Home'));
 const SignIn = React.lazy(() => import('../signin/SignIn'));
 const Register = React.lazy(() => import('../signup/Register'));
@@ -74,7 +74,10 @@ function App() {
   
   return (
     <React.Fragment>
-      <Header />
+      <SuspenseWithPerf fallback={<Loading />}
+        traceId={'load-header-status'}>
+          <Header />
+        </SuspenseWithPerf>
       <div className={classes.offset} />
       <Container className={classes.mainContainer}>
       <SuspenseWithPerf fallback={<Loading />}
@@ -90,7 +93,11 @@ function App() {
         <PageViewLogger />
       </SuspenseWithPerf>
       </Container>
-      <Footer />
+
+      <SuspenseWithPerf fallback={<Loading />}
+        traceId={'load-footer-status'}>
+          <Footer />
+        </SuspenseWithPerf>
     </React.Fragment>
   );
 }
