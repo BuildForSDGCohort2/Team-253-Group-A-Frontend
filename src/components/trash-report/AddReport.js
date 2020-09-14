@@ -2,13 +2,21 @@ import firebase from "firebase/app";
 
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import AddAPhoto from "@material-ui/icons/AddAPhoto";
+import Box from "@material-ui/core/Box";
 import { useStorage, useUser, useFirestore } from "reactfire";
+
+import Avatar from "@material-ui/core/Avatar";
+import Chip from "@material-ui/core/Chip";
+import DoneIcon from "@material-ui/icons/Done";
+
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,16 +32,22 @@ const useStyles = makeStyles((theme) => ({
     transitionTimingFunction: "ease",
   },
   imageUpload: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 4,
     padding: theme.spacing(2),
-    boderWidth: 2,
-    borderStyle: "dashed",
-    borderColor: theme.palette.secondary.main,
     cursor: "pointer",
     textAlign: "center",
     transitionDuration: "500ms",
     transitionProperty: "background-image,background-color",
     transitionTimingFunction: "ease",
+    minHeight: 350,
+  },
+  addBorder: {
+    boderWidth: 2,
+    borderStyle: "dashed",
+    borderColor: theme.palette.secondary.main,
   },
   formContentContainer: {
     flexGrow: 1,
@@ -43,6 +57,15 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(2),
   },
+  spotTags: {
+    display: "flex",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    padding: theme.spacing(2),
+    "& > *": {
+      margin: theme.spacing(0.5),
+    },
+  },
 }));
 
 export default function AddTrashReport() {
@@ -51,10 +74,13 @@ export default function AddTrashReport() {
   const storage = useStorage();
   const firestore = useFirestore();
 
+  // eslint-disable-next-line
   const [selectedFile, setSelectedFile] = React.useState(null);
+
   const [selectedFileURL, setSelectedFileURL] = React.useState("");
   const [reservedReportID, setReservedReportID] = React.useState("");
   const [remoteUploadRef, setRemoteUploadRef] = React.useState(null);
+  const [uploadProgress, setUploadProgress] = React.useState(-1);
 
   if (reservedReportID === "") {
     setReservedReportID(firestore.collection("spots").doc().id);
@@ -104,6 +130,7 @@ export default function AddTrashReport() {
           // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
           var progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setUploadProgress(progress);
           console.log("Upload is " + progress + "% done");
           switch (snapshot.state) {
             case firebase.storage.TaskState.PAUSED: // or 'paused'
@@ -112,10 +139,12 @@ export default function AddTrashReport() {
             case firebase.storage.TaskState.RUNNING: // or 'running'
               console.log("Upload is running");
               break;
+            default: //nothing
           }
         },
         function (error) {
           // Handle unsuccessful uploads
+          setUploadProgress(-1);
         },
         function () {
           setRemoteUploadRef(mRemoteUploadRef);
@@ -123,41 +152,119 @@ export default function AddTrashReport() {
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
             console.log("File available at", downloadURL);
+            setUploadProgress(-1);
           });
         }
       );
     }
   };
 
+  const handleDelete = () => {
+    console.info("You clicked the delete icon.");
+  };
+
+  const handleClick = () => {
+    console.info("You clicked the Chip.");
+  };
+
   return (
     <Container maxWidth="md" className={classes.root}>
       <Paper>
-        <form autoComplete="off" noValidate onSubmit={saveTrashReport}>
-          <input
-            required
-            accept="image/*"
-            id="contained-button-file"
-            multiple
-            type="file"
-            onChange={handleImageUpload}
-          />
+        <form autoComplete="off" onSubmit={saveTrashReport}>
+          <Box display="none">
+            <input
+              required
+              name="spotImage"
+              accept="image/*"
+              id="contained-button-file"
+              multiple
+              type="file"
+              onChange={handleImageUpload}
+            />
+          </Box>
           <div
             className={classes.imageUploadContainer}
             style={{ backgroundImage: `url(${selectedFileURL})` }}
           >
             <label htmlFor="contained-button-file">
-              <div className={classes.imageUpload}>
+              <div
+                className={clsx(
+                  classes.imageUpload,
+                  selectedFileURL === "" && classes.addBorder
+                )}
+              >
                 <Button
-                  variant="outlined"
-                  color="secondary"
+                  variant="contained"
+                  color="primary"
                   component="span"
                   size="large"
                   startIcon={<AddAPhoto />}
                 >
-                  Add Photo
+                  {clsx(
+                    "",
+                    selectedFileURL === "" && "Add",
+                    selectedFileURL !== "" && "Replace"
+                  )}{" "}
+                  Photo
                 </Button>
               </div>
             </label>
+          </div>
+          <LinearProgress
+            color={clsx(
+              (uploadProgress === -1 || selectedFileURL === "") && "primary",
+              uploadProgress !== -1 && "secondary"
+            )}
+            variant="determinate"
+            value={uploadProgress}
+          />
+          <div className={classes.spotTags}>
+            this is just a previw for spot tags:
+            <Chip label="Basic" />
+            <Chip label="Disabled" disabled />
+            <Chip
+              avatar={<Avatar>M</Avatar>}
+              label="Clickable"
+              onClick={handleClick}
+            />
+            <Chip label="Deletable" onDelete={handleDelete} />
+            <Chip
+              label="Clickable deletable"
+              onClick={handleClick}
+              onDelete={handleDelete}
+            />
+            <Chip
+              label="Custom delete icon"
+              onClick={handleClick}
+              onDelete={handleDelete}
+              deleteIcon={<DoneIcon />}
+            />
+            <Chip label="Clickable Link" component="a" href="#chip" clickable />
+            <Chip
+              avatar={<Avatar>M</Avatar>}
+              label="Primary clickable"
+              clickable
+              color="primary"
+              onDelete={handleDelete}
+              deleteIcon={<DoneIcon />}
+            />
+            <Chip
+              label="Primary clickable"
+              clickable
+              color="primary"
+              onDelete={handleDelete}
+              deleteIcon={<DoneIcon />}
+            />
+            <Chip
+              label="Deletable primary"
+              onDelete={handleDelete}
+              color="primary"
+            />
+            <Chip
+              label="Deletable secondary"
+              onDelete={handleDelete}
+              color="secondary"
+            />
           </div>
           <Grid container className={classes.formContentContainer} spacing={2}>
             <Grid item container xs={12} sm={7}>
@@ -194,11 +301,14 @@ export default function AddTrashReport() {
               </Grid>
             </Grid>
             <Grid item xs={12} sm={5}>
-              <Paper className={classes.locationContainer}>Location</Paper>
+              <Paper className={classes.locationContainer}>
+                This is a placeholder for Google Maps where the user select the
+                location of the spot.
+              </Paper>
             </Grid>
             <Grid item>
               <Button type="submit" variant="contained" color="secondary">
-                Save Report
+                Create Report
               </Button>
             </Grid>
           </Grid>
