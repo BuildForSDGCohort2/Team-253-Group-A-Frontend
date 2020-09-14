@@ -100,7 +100,7 @@ export default function AddTrashReport() {
         .then(function () {
           // File deleted successfully
         })
-        .catch(function (error) {
+        .catch(function () {
           // Uh-oh, an error occurred!
         });
     }
@@ -142,7 +142,7 @@ export default function AddTrashReport() {
             default: //nothing
           }
         },
-        function (error) {
+        function () {
           // Handle unsuccessful uploads
           setUploadProgress(-1);
         },
