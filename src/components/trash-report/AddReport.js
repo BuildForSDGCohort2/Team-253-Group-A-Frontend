@@ -4,7 +4,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -17,6 +16,7 @@ import Chip from "@material-ui/core/Chip";
 import DoneIcon from "@material-ui/icons/Done";
 
 import LinearProgress from "@material-ui/core/LinearProgress";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,6 +51,8 @@ const useStyles = makeStyles((theme) => ({
   },
   formContentContainer: {
     flexGrow: 1,
+  },
+  formContentLine: {
     padding: theme.spacing(2),
   },
   locationContainer: {
@@ -170,7 +172,7 @@ export default function AddTrashReport() {
   return (
     <Container maxWidth="md" className={classes.root}>
       <Paper>
-        <form autoComplete="off" onSubmit={saveTrashReport}>
+        <form autoComplete="off" noValidate onSubmit={saveTrashReport}>
           <Box display="none">
             <input
               required
@@ -266,52 +268,49 @@ export default function AddTrashReport() {
               color="secondary"
             />
           </div>
-          <Grid container className={classes.formContentContainer} spacing={2}>
-            <Grid item container xs={12} sm={7}>
-              <Grid container spacing={4}>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    name="title"
-                    fullWidth
-                    label="Name your spot"
-                    placeholder="placeholder"
-                    color="secondary"
-                    variant="outlined"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    name="desc"
-                    fullWidth
-                    label="Describe your spot"
-                    placeholder="Add more details to decribe the situation"
-                    color="secondary"
-                    variant="outlined"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    multiline
-                  />
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12} sm={5}>
+          <div className={classes.formContentContainer}>
+            <div className={classes.formContentLine}>
+              <TextField
+                required
+                name="title"
+                fullWidth
+                label="Name your spot"
+                placeholder="placeholder"
+                color="secondary"
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </div>
+            <div className={classes.formContentLine}>
+              <TextField
+                required
+                name="desc"
+                fullWidth
+                label="Describe your spot"
+                placeholder="Add more details to decribe the situation"
+                color="secondary"
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                multiline
+              />
+            </div>
+            <div className={classes.formContentLine}>
               <Paper className={classes.locationContainer}>
+                <Typography variant="h6">Select spot location</Typography>
                 This is a placeholder for Google Maps where the user select the
                 location of the spot.
               </Paper>
-            </Grid>
-            <Grid item>
+            </div>
+            <div className={classes.formContentLine}>
               <Button type="submit" variant="contained" color="secondary">
                 Create Report
               </Button>
-            </Grid>
-          </Grid>
+            </div>
+          </div>
         </form>
       </Paper>
     </Container>
