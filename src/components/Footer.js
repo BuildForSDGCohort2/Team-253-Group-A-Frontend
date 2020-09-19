@@ -52,7 +52,7 @@ export default function Footer() {
               </Typography>
 
               <List component="nav" dense>
-                <ListItem button>
+                <ListItem button component={LinkRouter} to="/terms-of-services">
                   <ListItemText
                     className={classes.primary}
                     primary="Terms of services"
