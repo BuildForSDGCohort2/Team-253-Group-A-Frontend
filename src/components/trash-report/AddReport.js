@@ -174,12 +174,12 @@ export default function AddTrashReport() {
     setMapGeocoder(new maps.Geocoder()); */
   };
 
-  const handleGoogleMapClick = ({ lat, lng}) => {
+  const handleGoogleMapClick = ({ lat, lng }) => {
     console.log(lat, lng);
-    const latlng = {
+    /*     const latlng = {
       lat: lat,
       lng: lng,
-    };
+    }; */
     /* mapGeocoder.geocode(
       { location: latlng },
       (results: mapsApi.GeocoderResult[], status: mapsApi.GeocoderStatus) => {
