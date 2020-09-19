@@ -105,7 +105,7 @@ export default function Privacy() {
         <p>
           For more general information on cookies, please read{" "}
           <a href="https://www.cookieconsent.com/what-are-cookies/">
-            "What Are Cookies"
+          &quot;What Are Cookies&quot;
           </a>
           .
         </p>
