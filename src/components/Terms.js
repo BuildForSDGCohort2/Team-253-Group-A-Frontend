@@ -30,7 +30,7 @@ export default function Terms() {
 
         <p>
           Permission is granted to temporarily download one copy of the
-          materials on CleanOut's Website for personal, non-commercial
+          materials on CleanOut&apos;s Website for personal, non-commercial
           transitory viewing only. This is the grant of a license, not a
           transfer of title, and under this license, you may not:
         </p>
@@ -42,7 +42,7 @@ export default function Terms() {
             display;
           </li>
           <li>
-            attempt to reverse engineer any software contained on CleanOut's
+            attempt to reverse engineer any software contained on CleanOut&apos;s
             Website;
           </li>
           <li>
@@ -50,7 +50,7 @@ export default function Terms() {
             materials; or
           </li>
           <li>
-            transferring the materials to another person or "mirror" the
+            transferring the materials to another person or &quot;mirror&quot; the
             materials on any other server.
           </li>
         </ul>
@@ -65,7 +65,7 @@ export default function Terms() {
         <h2>3. Disclaimer</h2>
 
         <p>
-          All the materials on CleanOut’s Website are provided "as is". CleanOut
+          All the materials on CleanOut’s Website are provided &quot;as is&quot;. CleanOut
           makes no warranties, may it be expressed or implied, therefore negates
           all other warranties. Furthermore, CleanOut does not make any
           representations concerning the accuracy or reliability of the use of
@@ -120,7 +120,7 @@ export default function Terms() {
         <h2>9. Governing Law</h2>
 
         <p>
-          Any claim related to CleanOut's Website shall be governed by the laws
+          Any claim related to CleanOut&apos;s Website shall be governed by the laws
           of Morocco without regards to its conflict of law provisions.
         </p>
       </Paper>
