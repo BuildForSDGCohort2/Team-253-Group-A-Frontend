@@ -10,7 +10,7 @@ import Loading from '../Loading';
 const EmailSignIn = React.lazy(() => import('./EmailSignIn'));
 const SocialSignInUP = React.lazy(() => import('./SocialSignInUp'));
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
   },
