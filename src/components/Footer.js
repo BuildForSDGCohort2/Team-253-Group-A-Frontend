@@ -58,7 +58,7 @@ export default function Footer() {
                     primary="Terms of services"
                   />
                 </ListItem>
-                <ListItem button>
+                <ListItem button component={LinkRouter} to="/privacy-policy">
                   <ListItemText
                     className={classes.primary}
                     primary="Privacy policy"
