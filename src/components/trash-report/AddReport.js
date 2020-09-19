@@ -78,8 +78,9 @@ export default function AddTrashReport() {
   const storage = useStorage();
   const firestore = useFirestore();
 
-  /* const [mapsApi, setMapsApi] = React.useState(null);
-  const [mapGeocoder, setMapGeocoder] = React.useState(null); */
+  // eslint-disable-next-line
+  const [mapsApi, setMapsApi] = React.useState(null);
+  /* const [mapGeocoder, setMapGeocoder] = React.useState(null); */
 
   // eslint-disable-next-line
   const [selectedFile, setSelectedFile] = React.useState(null);
@@ -169,9 +170,9 @@ export default function AddTrashReport() {
   };
 
   // Fit map to its bounds after the api is loaded
-  const mapApiIsLoaded = (map, maps) => {
-    /* setMapsApi(maps);
-    setMapGeocoder(new maps.Geocoder()); */
+  const mapApiIsLoaded = (maps) => {
+    setMapsApi(maps);
+    /*setMapGeocoder(new maps.Geocoder()); */
   };
 
   const handleGoogleMapClick = ({ lat, lng }) => {
