@@ -18,6 +18,8 @@ import DoneIcon from "@material-ui/icons/Done";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
 
+import GoogleMap from "google-map-react";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -76,6 +78,9 @@ export default function AddTrashReport() {
   const storage = useStorage();
   const firestore = useFirestore();
 
+  /* const [mapsApi, setMapsApi] = React.useState(null);
+  const [mapGeocoder, setMapGeocoder] = React.useState(null); */
+
   // eslint-disable-next-line
   const [selectedFile, setSelectedFile] = React.useState(null);
 
@@ -121,10 +126,6 @@ export default function AddTrashReport() {
 
       var uploadTask = mRemoteUploadRef.put(mFile);
 
-      // Register three observers:
-      // 1. 'state_changed' observer, called any time the state changes
-      // 2. Error observer, called on failure
-      // 3. Completion observer, called on successful completion
       uploadTask.on(
         "state_changed",
         function (snapshot) {
@@ -150,8 +151,6 @@ export default function AddTrashReport() {
         },
         function () {
           setRemoteUploadRef(mRemoteUploadRef);
-          // Handle successful uploads on complete
-          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
             console.log("File available at", downloadURL);
             setUploadProgress(-1);
@@ -167,6 +166,30 @@ export default function AddTrashReport() {
 
   const handleClick = () => {
     console.info("You clicked the Chip.");
+  };
+
+  // Fit map to its bounds after the api is loaded
+  const mapApiIsLoaded = (map, maps) => {
+    /* setMapsApi(maps);
+    setMapGeocoder(new maps.Geocoder()); */
+  };
+
+  const handleGoogleMapClick = ({ lat, lng}) => {
+    console.log(lat, lng);
+    const latlng = {
+      lat: lat,
+      lng: lng,
+    };
+    /* mapGeocoder.geocode(
+      { location: latlng },
+      (results: mapsApi.GeocoderResult[], status: mapsApi.GeocoderStatus) => {
+        if (status === "OK") {
+          if (results[0]) {
+            console.log(results[0]);
+          }
+        }
+      }
+    ); */
   };
 
   return (
@@ -299,10 +322,25 @@ export default function AddTrashReport() {
               />
             </div>
             <div className={classes.formContentLine}>
-              <Paper className={classes.locationContainer}>
+              <Paper elevation={2} className={classes.locationContainer}>
                 <Typography variant="h6">Select spot location</Typography>
-                This is a placeholder for Google Maps where the user select the
-                location of the spot.
+                <div style={{ height: "350px", width: "100%" }}>
+                  <GoogleMap
+                    bootstrapURLKeys={{
+                      key: process.env.REACT_APP_FIREBASE_APIKEY,
+                    }}
+                    defaultCenter={{
+                      lat: 34.7398,
+                      lng: 10.76,
+                    }}
+                    defaultZoom={10}
+                    yesIWantToUseGoogleMapApiInternals
+                    onGoogleApiLoaded={({ map, maps }) =>
+                      mapApiIsLoaded(map, maps)
+                    }
+                    onClick={handleGoogleMapClick}
+                  ></GoogleMap>
+                </div>
               </Paper>
             </div>
             <div className={classes.formContentLine}>
