@@ -1,4 +1,6 @@
 import React from "react";
+import { Link as LinkRouter } from "react-router-dom";
+import Link from "@material-ui/core/Link";
 import { useAuth } from "reactfire";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -22,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
+  },
+  authButton: {
+    flexGrow: 1,
+    width: "100%",
   },
 }));
 
@@ -129,10 +135,35 @@ export default function EmailSignIn() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Grid>
-          <Grid item>
-            <Button type="submit" variant="contained" color="secondary">
+          <Grid item xs={12}>
+            <Typography variant="body2" align="right">
+              <Link
+                component={LinkRouter}
+                color="secondary"
+                to="/reset-password"
+              >
+                forget password?
+              </Link>
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="secondary"
+              size="large"
+              className={classes.authButton}
+            >
               Sign in
             </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="body2" align="center">
+              Don't have an account?{" "}
+              <Link component={LinkRouter} to="/register" color="secondary">
+                Register
+              </Link>
+            </Typography>
           </Grid>
         </Grid>
       </form>
