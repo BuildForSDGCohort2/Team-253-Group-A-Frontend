@@ -21,6 +21,10 @@ const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
   },
+  authButton: {
+    flexGrow: 1,
+    width: "100%",
+  },
 }));
 
 export default function EmailSignIn(authDone) {
@@ -157,10 +161,24 @@ export default function EmailSignIn(authDone) {
               .
             </Typography>
           </Grid>
-          <Grid item>
-            <Button type="submit" variant="contained" color="secondary">
+          <Grid item xs={12}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="secondary"
+              size="large"
+              className={classes.authButton}
+            >
               Register
             </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="body2" align="center">
+              Already have an account?{" "}
+              <Link component={LinkRouter} to="/signin" color="secondary">
+                Sign in
+              </Link>
+            </Typography>
           </Grid>
         </Grid>
       </form>
