@@ -159,7 +159,7 @@ export default function EmailSignIn() {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body2" align="center">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link component={LinkRouter} to="/register" color="secondary">
                 Register
               </Link>
