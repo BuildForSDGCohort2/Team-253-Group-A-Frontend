@@ -10,6 +10,9 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Divider from "@material-ui/core/Divider";
+
+import SocialSignInUp from "../signin/SocialSignInUp";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
   authButton: {
     flexGrow: 1,
     width: "100%",
+  },
+  divider: {
+    margin: theme.spacing(4),
   },
 }));
 
@@ -140,27 +146,6 @@ export default function EmailSignIn(authDone) {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Grid>
-          <Grid item>
-            <Typography variant="body2">
-              I have read and I do accept&nbsp;
-              <Link
-                component={LinkRouter}
-                to="/terms-of-services"
-                color="secondary"
-              >
-                terms of services
-              </Link>
-              &nbsp;and{" "}
-              <Link
-                component={LinkRouter}
-                to="/privacy-policy"
-                color="secondary"
-              >
-                privacy policy
-              </Link>
-              .
-            </Typography>
-          </Grid>
           <Grid item xs={12}>
             <Button
               type="submit"
@@ -172,16 +157,33 @@ export default function EmailSignIn(authDone) {
               Register
             </Button>
           </Grid>
-          <Grid item xs={12}>
-            <Typography variant="body2" align="center">
-              Already have an account?{" "}
-              <Link component={LinkRouter} to="/signin" color="secondary">
-                Sign in
-              </Link>
-            </Typography>
-          </Grid>
         </Grid>
       </form>
+
+      <Typography align="center" variant="h6" gutterBottom>
+        Or
+      </Typography>
+      <SocialSignInUp />
+      <Typography align="center" variant="body2">
+        By continuing, you agree to our's{" "}
+        <Link component={LinkRouter} to="/terms-of-services" color="secondary">
+          terms of services
+        </Link>
+        &nbsp;and{" "}
+        <Link component={LinkRouter} to="/privacy-policy" color="secondary">
+          privacy policy
+        </Link>
+        .
+      </Typography>
+
+      <Divider className={classes.divider} variant="middle" />
+
+      <Typography gutterBottom variant="body2" align="center">
+        Already have an account?{" "}
+        <Link component={LinkRouter} to="/signin" color="secondary">
+          Sign in
+        </Link>
+      </Typography>
 
       <Backdrop
         className={classes.backdrop}
