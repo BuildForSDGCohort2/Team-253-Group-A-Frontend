@@ -14,6 +14,9 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+import Divider from "@material-ui/core/Divider";
+
+import SocialSignInUp from "./SocialSignInUp";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
   authButton: {
     flexGrow: 1,
     width: "100%",
+  },
+  divider: {
+    margin: theme.spacing(4),
   },
 }));
 
@@ -142,7 +148,7 @@ export default function EmailSignIn() {
                 color="secondary"
                 to="/reset-password"
               >
-                forgot password?
+                forgot your password?
               </Link>
             </Typography>
           </Grid>
@@ -157,16 +163,38 @@ export default function EmailSignIn() {
               Sign in
             </Button>
           </Grid>
-          <Grid item xs={12}>
-            <Typography variant="body2" align="center">
-              Don&apos;t have an account?{" "}
-              <Link component={LinkRouter} to="/register" color="secondary">
-                Register
-              </Link>
-            </Typography>
-          </Grid>
         </Grid>
       </form>
+
+      <Typography
+        align="center"
+        variant="h6"
+        className={classes.subTitle}
+        gutterBottom
+      >
+        Or
+      </Typography>
+      <SocialSignInUp />
+      <Typography align="center" variant="body2">
+        By continuing, you agree to our's{" "}
+        <Link component={LinkRouter} to="/terms-of-services" color="secondary">
+          terms of services
+        </Link>
+        &nbsp;and{" "}
+        <Link component={LinkRouter} to="/privacy-policy" color="secondary">
+          privacy policy
+        </Link>
+        .
+      </Typography>
+
+      <Divider className={classes.divider} variant="middle" />
+
+      <Typography variant="body2" align="center">
+        You don&apos;t have an account yet?{" "}
+        <Link component={LinkRouter} to="/register" color="secondary">
+          Register
+        </Link>
+      </Typography>
 
       <Backdrop
         className={classes.backdrop}
