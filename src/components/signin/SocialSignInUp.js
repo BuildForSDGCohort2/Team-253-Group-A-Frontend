@@ -182,7 +182,7 @@ export default function SocialSignInUp(props) {
           </SvgIcon>
         }
       >
-        continue with Facbook
+        continue with Facebook
       </Button>
 
       <Snackbar open={open} autoHideDuration={10000} onClose={handleCloseAlert}>
