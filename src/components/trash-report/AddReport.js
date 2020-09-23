@@ -9,7 +9,12 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import AddAPhoto from "@material-ui/icons/AddAPhoto";
 import Box from "@material-ui/core/Box";
-import { useStorage, useUser, useFirestore } from "reactfire";
+import {
+  useStorage,
+  useUser,
+  useFirestore,
+  useFirestoreCollectionData,
+} from "reactfire";
 
 import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
@@ -89,6 +94,10 @@ export default function AddTrashReport() {
   const [reservedReportID, setReservedReportID] = React.useState("");
   const [remoteUploadRef, setRemoteUploadRef] = React.useState(null);
   const [uploadProgress, setUploadProgress] = React.useState(-1);
+
+  const defaultTagsRef = useFirestore().collection("report-tags");
+  let test = useFirestoreCollectionData(defaultTagsRef);
+  console.log(test);
 
   if (reservedReportID === "") {
     setReservedReportID(firestore.collection("spots").doc().id);
@@ -245,52 +254,9 @@ export default function AddTrashReport() {
             value={uploadProgress}
           />
           <div className={classes.spotTags}>
-            this is just a previw for spot tags:
-            <Chip label="Basic" />
-            <Chip label="Disabled" disabled />
-            <Chip
-              avatar={<Avatar>M</Avatar>}
-              label="Clickable"
-              onClick={handleClick}
-            />
-            <Chip label="Deletable" onDelete={handleDelete} />
-            <Chip
-              label="Clickable deletable"
-              onClick={handleClick}
-              onDelete={handleDelete}
-            />
-            <Chip
-              label="Custom delete icon"
-              onClick={handleClick}
-              onDelete={handleDelete}
-              deleteIcon={<DoneIcon />}
-            />
-            <Chip label="Clickable Link" component="a" href="#chip" clickable />
-            <Chip
-              avatar={<Avatar>M</Avatar>}
-              label="Primary clickable"
-              clickable
-              color="primary"
-              onDelete={handleDelete}
-              deleteIcon={<DoneIcon />}
-            />
-            <Chip
-              label="Primary clickable"
-              clickable
-              color="primary"
-              onDelete={handleDelete}
-              deleteIcon={<DoneIcon />}
-            />
-            <Chip
-              label="Deletable primary"
-              onDelete={handleDelete}
-              color="primary"
-            />
-            <Chip
-              label="Deletable secondary"
-              onDelete={handleDelete}
-              color="secondary"
-            />
+            {test.map((data) => {
+              return <Chip label={data.name} />;
+            })}
           </div>
           <div className={classes.formContentContainer}>
             <div className={classes.formContentLine}>
