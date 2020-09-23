@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EmailSignIn(authDone) {
+export default function EmailSignIn() {
   const classes = useStyles();
 
   const [firstName, setFirstName] = React.useState("");

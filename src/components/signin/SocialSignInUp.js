@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SocialSignInUp(props) {
+export default function SocialSignInUp() {
   const classes = useStyles();
   const auth = useAuth();
   const [open, setOpen] = React.useState(false);
