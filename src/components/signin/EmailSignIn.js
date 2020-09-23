@@ -112,7 +112,7 @@ export default function EmailSignIn() {
       <form className={classes.root} autoComplete="on" onSubmit={signIn}>
         <Grid container spacing={4}>
           <Grid item>
-            <Typography variant="h6">Sign in</Typography>
+            <Typography variant="h6">Log In</Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -160,7 +160,7 @@ export default function EmailSignIn() {
               size="large"
               className={classes.authButton}
             >
-              Sign in
+              Log in
             </Button>
           </Grid>
         </Grid>
@@ -178,7 +178,7 @@ export default function EmailSignIn() {
       <Typography align="center" variant="body2">
         By continuing, you agree to our's{" "}
         <Link component={LinkRouter} to="/terms-of-services" color="secondary">
-          Terms of Services
+          Terms of Service
         </Link>
         &nbsp;and{" "}
         <Link component={LinkRouter} to="/privacy-policy" color="secondary">

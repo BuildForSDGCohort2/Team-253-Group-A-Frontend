@@ -95,7 +95,7 @@ export default function EmailSignIn() {
       >
         <Grid container spacing={4}>
           <Grid item xs={12}>
-            <Typography variant="h6">Sign up</Typography>
+            <Typography variant="h6">Sign Up</Typography>
           </Grid>
           <Grid item sm={6} xs={12}>
             <TextField
@@ -167,7 +167,7 @@ export default function EmailSignIn() {
       <Typography align="center" variant="body2">
         By continuing, you agree to our's{" "}
         <Link component={LinkRouter} to="/terms-of-services" color="secondary">
-          Terms of Services
+          Terms of Service
         </Link>
         &nbsp;and{" "}
         <Link component={LinkRouter} to="/privacy-policy" color="secondary">
@@ -181,7 +181,7 @@ export default function EmailSignIn() {
       <Typography gutterBottom variant="body2" align="center">
         Already have an account?{" "}
         <Link component={LinkRouter} to="/signin" color="secondary">
-          Sign in
+          Log In
         </Link>
       </Typography>
 
