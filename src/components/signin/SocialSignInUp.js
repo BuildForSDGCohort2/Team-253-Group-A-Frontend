@@ -93,7 +93,7 @@ export default function SocialSignInUp(props) {
 
   return (
     <div className={classes.root}>
-      <Typography variant="span">continue with:</Typography>
+      <Typography component="span">continue with:</Typography>
       <IconButton onClick={signInGoogle} aria-label="Connect with Google">
         <SvgIcon fontSize="large" viewBox="0 0 533.5 544.3">
           <path
