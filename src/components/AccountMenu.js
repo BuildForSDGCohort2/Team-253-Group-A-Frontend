@@ -76,7 +76,7 @@ export default function AccountMenu() {
           >
             Profile
           </MenuItem>
-          <MenuItem onClick={handleClose} component={LinkRouter} to="/account">
+          <MenuItem onClick={handleClose} component={LinkRouter} to="/dashboard/account">
             My account
           </MenuItem>
           <MenuItem onClick={signOut}>Logout</MenuItem>
