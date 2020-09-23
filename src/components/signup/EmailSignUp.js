@@ -161,17 +161,17 @@ export default function EmailSignIn() {
       </form>
 
       <Typography align="center" variant="h6" gutterBottom>
-        Or
+        OR
       </Typography>
       <SocialSignInUp />
       <Typography align="center" variant="body2">
         By continuing, you agree to our's{" "}
         <Link component={LinkRouter} to="/terms-of-services" color="secondary">
-          terms of services
+          Terms of Services
         </Link>
         &nbsp;and{" "}
         <Link component={LinkRouter} to="/privacy-policy" color="secondary">
-          privacy policy
+          Privacy Policy
         </Link>
         .
       </Typography>

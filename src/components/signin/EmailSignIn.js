@@ -148,7 +148,7 @@ export default function EmailSignIn() {
                 color="secondary"
                 to="/reset-password"
               >
-                forgot your password?
+                Forgot your password?
               </Link>
             </Typography>
           </Grid>
@@ -172,17 +172,17 @@ export default function EmailSignIn() {
         className={classes.subTitle}
         gutterBottom
       >
-        Or
+        OR
       </Typography>
       <SocialSignInUp />
       <Typography align="center" variant="body2">
         By continuing, you agree to our's{" "}
         <Link component={LinkRouter} to="/terms-of-services" color="secondary">
-          terms of services
+          Terms of Services
         </Link>
         &nbsp;and{" "}
         <Link component={LinkRouter} to="/privacy-policy" color="secondary">
-          privacy policy
+          Privacy Policy
         </Link>
         .
       </Typography>

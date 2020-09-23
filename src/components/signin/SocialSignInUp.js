@@ -144,7 +144,7 @@ export default function SocialSignInUp() {
           </SvgIcon>
         }
       >
-        continue with Google
+        Continue with Google
       </Button>
 
       <Button
@@ -163,7 +163,7 @@ export default function SocialSignInUp() {
           </SvgIcon>
         }
       >
-        continue with Twitter
+        Continue with Twitter
       </Button>
 
       <Button
@@ -182,7 +182,7 @@ export default function SocialSignInUp() {
           </SvgIcon>
         }
       >
-        continue with Facebook
+        Continue with Facebook
       </Button>
 
       <Snackbar open={open} autoHideDuration={10000} onClose={handleCloseAlert}>
