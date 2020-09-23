@@ -142,7 +142,7 @@ export default function EmailSignIn() {
                 color="secondary"
                 to="/reset-password"
               >
-                forget password?
+                forgot password?
               </Link>
             </Typography>
           </Grid>
