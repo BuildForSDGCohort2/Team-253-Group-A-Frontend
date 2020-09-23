@@ -189,7 +189,7 @@ export default function EmailSignIn() {
 
       <Divider className={classes.divider} variant="middle" />
 
-      <Typography variant="body2" align="center">
+      <Typography gutterBottom variant="body2" align="center">
         You don&apos;t have an account yet?{" "}
         <Link component={LinkRouter} to="/register" color="secondary">
           Register
