@@ -10,6 +10,9 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Divider from "@material-ui/core/Divider";
+
+import SocialSignInUp from "../signin/SocialSignInUp";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,9 +28,12 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     width: "100%",
   },
+  divider: {
+    margin: theme.spacing(4),
+  },
 }));
 
-export default function EmailSignIn(authDone) {
+export default function EmailSignIn() {
   const classes = useStyles();
 
   const [firstName, setFirstName] = React.useState("");
@@ -89,7 +95,7 @@ export default function EmailSignIn(authDone) {
       >
         <Grid container spacing={4}>
           <Grid item xs={12}>
-            <Typography variant="h6">Sign up</Typography>
+            <Typography variant="h6">Sign Up</Typography>
           </Grid>
           <Grid item sm={6} xs={12}>
             <TextField
@@ -140,27 +146,6 @@ export default function EmailSignIn(authDone) {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Grid>
-          <Grid item>
-            <Typography variant="body2">
-              I have read and I do accept&nbsp;
-              <Link
-                component={LinkRouter}
-                to="/terms-of-services"
-                color="secondary"
-              >
-                terms of services
-              </Link>
-              &nbsp;and{" "}
-              <Link
-                component={LinkRouter}
-                to="/privacy-policy"
-                color="secondary"
-              >
-                privacy policy
-              </Link>
-              .
-            </Typography>
-          </Grid>
           <Grid item xs={12}>
             <Button
               type="submit"
@@ -172,16 +157,33 @@ export default function EmailSignIn(authDone) {
               Register
             </Button>
           </Grid>
-          <Grid item xs={12}>
-            <Typography variant="body2" align="center">
-              Already have an account?{" "}
-              <Link component={LinkRouter} to="/signin" color="secondary">
-                Sign in
-              </Link>
-            </Typography>
-          </Grid>
         </Grid>
       </form>
+
+      <Typography align="center" variant="h6" gutterBottom>
+        OR
+      </Typography>
+      <SocialSignInUp />
+      <Typography align="center" variant="body2">
+        By continuing, you agree to our&apos;s{" "}
+        <Link component={LinkRouter} to="/terms-of-services" color="secondary">
+          Terms of Service
+        </Link>
+        &nbsp;and{" "}
+        <Link component={LinkRouter} to="/privacy-policy" color="secondary">
+          Privacy Policy
+        </Link>
+        .
+      </Typography>
+
+      <Divider className={classes.divider} variant="middle" />
+
+      <Typography gutterBottom variant="body2" align="center">
+        Already have an account?{" "}
+        <Link component={LinkRouter} to="/signin" color="secondary">
+          Log In
+        </Link>
+      </Typography>
 
       <Backdrop
         className={classes.backdrop}
