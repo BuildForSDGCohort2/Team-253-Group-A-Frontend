@@ -25,6 +25,9 @@ const About = React.lazy(() => import("../About"));
 const GenericNotFound = React.lazy(() => import("../404"));
 const PageViewLogger = React.lazy(() => import("../PageViewLogger"));
 const Dashboard = React.lazy(() => import("../dashboard/Dashboard"));
+const Terms = React.lazy(() => import("../Terms"));
+const Privacy = React.lazy(() => import("../Privacy"));
+const ResetPassword = React.lazy(() => import("../signin/ResetPassword"));
 
 // My code
 const UpdateProfile = React.lazy(() => import("../UpdateProfile"));
@@ -88,12 +91,12 @@ function App() {
             <Route path="/" exact component={Home} />
             <Route path="/about" exact component={About} />
             <Route path="/signin" exact component={SignIn} />
+            <Route path="/reset-password" exact component={ResetPassword} />
             <Route path="/register" exact component={Register} />
             <Route path="/dashboard" component={Dashboard} />
-
-            {/* My code */}
             <Route path="/updateprofile" component={UpdateProfile} />
-            
+            <Route path="/terms-of-services" component={Terms} />
+            <Route path="/privacy-policy" component={Privacy} />
             <Route path="*" exact={true} component={GenericNotFound} />
           </Switch>
           <PageViewLogger />
