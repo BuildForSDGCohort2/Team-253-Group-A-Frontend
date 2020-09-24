@@ -1,23 +1,15 @@
 import React from "react";
-import Avatar from '@material-ui/core/Avatar';
+import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from '@material-ui/core/Typography';
+import Typography from "@material-ui/core/Typography";
 import "../index.css";
 
-// My code
-import UpdateProfile from "./UpdateProfile";
+import { Link as LinkRouter } from "react-router-dom";
 
-import {
-  Link as LinkRouter,
-  Switch,
-  Route,
-  useRouteMatch,
-} from "react-router-dom";
-
-import Tooltip from '@material-ui/core/Tooltip';
-import EditIcon from '@material-ui/icons/Edit';
-import Button from '@material-ui/core/Button';
-import { useAuth, useUser } from 'reactfire';
+import Tooltip from "@material-ui/core/Tooltip";
+import EditIcon from "@material-ui/icons/Edit";
+import Button from "@material-ui/core/Button";
+import { useAuth } from "reactfire";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,14 +22,14 @@ const useStyles = makeStyles((theme) => ({
   },
   extendedIcon: {
     marginRight: theme.spacing(1),
-  },  
+  },
   large: {
     width: theme.spacing(20),
     height: theme.spacing(20),
   },
   paper: {
     padding: theme.spacing(2),
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.text.primary,
   },
   gap: {
@@ -45,26 +37,27 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   danger: {
-    color: 'red',
-  }
+    color: "red",
+  },
 }));
 
 export default function Account() {
   const classes = useStyles();
-  let { path, url } = useRouteMatch();
 
   const auth = useAuth();
   let user = auth.currentUser;
   let userName = user.displayName;
 
   const deleteAccount = () => {
-    user.delete().then(function() {
-      console.log('User deleted successfullly!')
-    }).catch(function(err) {
-      console.log('Sorry, user could not be deleted.', err)
-    });
-    
-  }
+    user
+      .delete()
+      .then(function () {
+        console.log("User deleted successfullly!");
+      })
+      .catch(function (err) {
+        console.log("Sorry, user could not be deleted.", err);
+      });
+  };
 
   return (
     <div className="account-grid-container">
@@ -72,12 +65,13 @@ export default function Account() {
         <Avatar alt={userName} src="#" className={classes.large} />
         <p>{userName}</p>
         <div>
-          <Button 
+          <Button
             className={classes.gap}
-            variant="outlined" 
-            color="secondary" 
+            variant="outlined"
+            color="secondary"
             component={LinkRouter}
-            to="/updateprofile">
+            to="/updateprofile"
+          >
             <Tooltip title="Edit">
               <EditIcon color="secondary" />
             </Tooltip>
@@ -85,25 +79,25 @@ export default function Account() {
           </Button>
         </div>
         <div>
-          <Button 
+          <Button
             onClick={deleteAccount}
             className={classes.danger}
-            variant="outlined">
+            variant="outlined"
+          >
             Delete account
           </Button>
         </div>
       </div>
       <div className="account-grid-item2">
-        <Typography 
-          component="div" 
-          variant="h4" 
-          style={{ color: 'rgb(56 80 58)', height: 'fit-content' }} >
+        <Typography
+          component="div"
+          variant="h4"
+          style={{ color: "rgb(56 80 58)", height: "fit-content" }}
+        >
           Your covid-spots info
         </Typography>
       </div>
-      <div className="account-grid-item3">
-        Content
-      </div>
+      <div className="account-grid-item3">Content</div>
     </div>
-  )
+  );
 }

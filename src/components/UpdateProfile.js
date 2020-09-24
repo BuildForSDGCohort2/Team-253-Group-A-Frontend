@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 
-import { useAuth, useUser } from 'reactfire';
+import { useAuth, useUser } from "reactfire";
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +24,6 @@ function UpdateProfile() {
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
 
   const auth = useAuth();
   const user = useUser();
@@ -39,70 +38,71 @@ function UpdateProfile() {
     let user = auth.currentUser;
 
     // Update displayname
-    user.updateProfile({
-      displayName: `${firstName} ${lastName}`,
-    }).then(function() {
-      console.log('displayName update successful');
-    }).then(function(err) {
-      console.log('Error updating displayName: ', err)
-    })
+    user
+      .updateProfile({
+        displayName: `${firstName} ${lastName}`,
+      })
+      .then(function () {
+        console.log("displayName update successful");
+      })
+      .then(function (err) {
+        console.log("Error updating displayName: ", err);
+      });
 
     // Update emaill
-    user.updateEmail(email).then(function() {
-      console.log('Email update successful');
-    }).catch(function(err) {
-      console.log('Error updating email', err)
-    });
-    
-    console.log(user.email);
-  }
+    user
+      .updateEmail(email)
+      .then(function () {
+        console.log("Email update successful");
+      })
+      .catch(function (err) {
+        console.log("Error updating email", err);
+      });
 
-  
+    console.log(user.email);
+  };
 
   return (
     <>
       <h1>Update your profile information</h1>
-      <form className={classes.root} noValidate autoComplete="off" onSubmit={updateUserProfile}>
+      <form
+        className={classes.root}
+        noValidate
+        autoComplete="off"
+        onSubmit={updateUserProfile}
+      >
         <div>
-          <TextField 
-            id="firstname" 
+          <TextField
+            id="firstname"
             name="firstName"
-            label="First name:" 
+            label="First name:"
             type="text"
             defaultValue={userFirstName}
-            onChange={e => setFirstName(e.target.value)} />
-          <TextField 
-            id="lastname" 
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+          <TextField
+            id="lastname"
             name="lastName"
             label="Last name"
-            type="text" 
+            type="text"
             defaultValue={userLastName}
-            onChange={e => setLastName(e.target.value)} />
-          <TextField 
+            onChange={(e) => setLastName(e.target.value)}
+          />
+          <TextField
             id="email"
             name="email"
             label="Email"
-            type="email" 
+            type="email"
             defaultValue={userEmail}
-            onChange={e => setEmail(e.target.value)} />
-          <TextField
-            id="password"
-            label="Password"
-            type="password"
-            defaultValue="" />
-          <TextField
-            id="confirmpassword"
-            label="Confirm password"
-            type="password"
-            defaultValue="" />
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <Button type="submit" variant="contained" color="secondary">
             Update
           </Button>
-        </div>      
+        </div>
       </form>
     </>
   );
 }
-
 
 export default UpdateProfile;
