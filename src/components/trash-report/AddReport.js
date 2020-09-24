@@ -16,9 +16,8 @@ import {
   useFirestoreCollectionData,
 } from "reactfire";
 
-import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
-import DoneIcon from "@material-ui/icons/Done";
+/* import DoneIcon from "@material-ui/icons/Done"; */
 
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
@@ -170,13 +169,13 @@ export default function AddTrashReport() {
     }
   };
 
-  const handleDelete = () => {
+  /*  const handleDelete = () => {
     console.info("You clicked the delete icon.");
   };
 
   const handleClick = () => {
     console.info("You clicked the Chip.");
-  };
+  }; */
 
   // Fit map to its bounds after the api is loaded
   const mapApiIsLoaded = (maps) => {
