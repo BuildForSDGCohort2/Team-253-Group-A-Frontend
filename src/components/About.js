@@ -64,7 +64,11 @@ export default function About() {
 
       <Grid container spacing={4}>
         <Grid item xs={6} sm={3}>
-          <Avatar component="div" className={classes.profilePicture}>
+          <Avatar
+            src="https://avatars1.githubusercontent.com/u/45902355?s=460&u=ffbc0cc593f575d67140e4197eec449a412a08c9&v=4"
+            component="div"
+            className={classes.profilePicture}
+          >
             SB
           </Avatar>
           <Typography
@@ -86,7 +90,11 @@ export default function About() {
         </Grid>
 
         <Grid item xs={6} sm={3}>
-          <Avatar component="div" className={classes.profilePicture}>
+          <Avatar
+            src="https://avatars2.githubusercontent.com/u/27445092?s=460&u=349cffccfccda38293e4aab20868a77b60079274&v=4"
+            component="div"
+            className={classes.profilePicture}
+          >
             SE
           </Avatar>
           <Typography
@@ -108,7 +116,11 @@ export default function About() {
         </Grid>
 
         <Grid item xs={6} sm={3}>
-          <Avatar component="div" className={classes.profilePicture}>
+          <Avatar
+            src="https://avatars2.githubusercontent.com/u/46009285?s=460&v=4"
+            component="div"
+            className={classes.profilePicture}
+          >
             OC
           </Avatar>
           <Typography
@@ -130,7 +142,11 @@ export default function About() {
         </Grid>
 
         <Grid item xs={6} sm={3}>
-          <Avatar component="div" className={classes.profilePicture}>
+          <Avatar
+            src="https://avatars1.githubusercontent.com/u/297917?s=460&v=4"
+            component="div"
+            className={classes.profilePicture}
+          >
             KH
           </Avatar>
           <Typography
