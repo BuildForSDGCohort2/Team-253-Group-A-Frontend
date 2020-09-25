@@ -3,10 +3,12 @@ body {
 }
 
 .members {
-  padding: 10px 0px;
+  padding: 10px 0;
 }
 
-.about-grid-header { text-align: center; }
+.about-grid-header {
+  text-align: center;
+}
 
 .about-grid-container {
   display: grid;
@@ -22,6 +24,7 @@ body {
   border-radius: 50%;
   border: none;
 }
+
 .about-grid-item img {
   height: 200px;
   width: 200px;
@@ -31,27 +34,29 @@ body {
   position: relative;
   left: 10%;
 }
+
 .about-grid-item p {
   text-align: center;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .account-grid-container {
   margin-top: 20px;
   display: grid;
-  grid-template-areas: 
-    'avatar header header header header header'
-    'avatar content content content content content'
-    'avatar content content content content content'
-  ;
+  grid-template-areas:
+    "avatar header header header header header"
+    "avatar content content content content content"
+    "avatar content content content content content";
 }
 
 .account-grid-item1 {
   grid-area: avatar;
 }
+
 .account-grid-item2 {
   grid-area: header;
 }
+
 .account-grid-item3 {
   grid-area: content;
 }
