@@ -31,23 +31,24 @@ export default function About() {
   const classes = useStyles();
 
   return (
-    <Paper className={classes.root}>
-      <Typography gutterBottom variant="h4">
-        About Us
-      </Typography>
+    <div>
+      <Paper className={classes.root}>
+        <Typography gutterBottom variant="h4">
+          About Us
+        </Typography>
 
-      <Typography gutterBottom paragraph variant="body1" component="p">
-        <strong>CleanOut</strong> is a web App built by Team 253 Group A of
-        BuildforSDG Challenge 2020, sponsored by Facebook and Andela.
-      </Typography>
+        <Typography gutterBottom paragraph variant="body1" component="p">
+          <strong>CleanOut</strong> is a web App built by Team 253 Group A of
+          BuildforSDG Challenge 2020, sponsored by Facebook and Andela.
+        </Typography>
 
-      <Typography gutterBottom paragraph variant="body1" component="p">
-        The App utilises the power of AI to detect trashes from pictures. Users
-        are required to take a snapshot or video of a location, upload on it on
-        the app. The app detects possible trashes on the image. The image and
-        location is then forwarded to cleanup agencies.
-      </Typography>
-
+        <Typography gutterBottom paragraph variant="body1" component="p">
+          The App utilises the power of AI to detect trashes from pictures.
+          Users are required to take a snapshot or video of a location, upload
+          on it on the app. The app detects possible trashes on the image. The
+          image and location is then forwarded to cleanup agencies.
+        </Typography>
+      </Paper>
       <Typography
         className={classes.teamTitle}
         align="center"
@@ -146,6 +147,6 @@ export default function About() {
           </Typography>
         </Grid>
       </Grid>
-    </Paper>
+    </div>
   );
 }
