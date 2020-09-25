@@ -38,15 +38,19 @@ export default function About() {
         </Typography>
 
         <Typography gutterBottom paragraph variant="body1" component="p">
-          <strong>CleanOut</strong> is a web App built by Team 253 Group A of
-          BuildforSDG Challenge 2020, sponsored by Facebook and Andela.
+          CleanOut is a web app built by Team 253 Group A of Build for SDG
+          Cohort 2 Challenge 2020, sponsored by Facebook and Andela.
         </Typography>
 
         <Typography gutterBottom paragraph variant="body1" component="p">
-          The App utilises the power of AI to detect trashes from pictures.
-          Users are required to take a snapshot or video of a location, upload
-          on it on the app. The app detects possible trashes on the image. The
-          image and location is then forwarded to cleanup agencies.
+          This app uses the power of AI to detect COVID-19 trash from pictures.
+        </Typography>
+
+        <Typography gutterBottom paragraph variant="body1" component="p">
+          Users are required to take a snapshot or video of a location and
+          upload it on the app. Then the AI model detects possible COVID-19
+          trash like glove, mask, sanitizer or tissues on the image. The image
+          and location are then forwarded to cleanup agencies.
         </Typography>
       </Paper>
       <Typography
