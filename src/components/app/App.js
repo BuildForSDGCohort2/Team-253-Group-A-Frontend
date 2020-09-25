@@ -29,6 +29,9 @@ const Terms = React.lazy(() => import("../Terms"));
 const Privacy = React.lazy(() => import("../Privacy"));
 const ResetPassword = React.lazy(() => import("../signin/ResetPassword"));
 
+// My code
+const UpdateProfile = React.lazy(() => import("../UpdateProfile"));
+
 const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.toolbar,
   mainContainer: {
@@ -93,6 +96,7 @@ function App() {
             <Route path="/reset-password" exact component={ResetPassword} />
             <Route path="/register" exact component={Register} />
             <Route path="/dashboard" component={Dashboard} />
+            <Route path="/updateprofile" component={UpdateProfile} />
             <Route path="/terms-of-services" component={Terms} />
             <Route path="/privacy-policy" component={Privacy} />
             <Route path="*" exact={true} component={GenericNotFound} />
