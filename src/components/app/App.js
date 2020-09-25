@@ -84,7 +84,7 @@ function App() {
         <Header />
       </SuspenseWithPerf>
       <div className={classes.offset} />
-      <Container className={classes.mainContainer}>
+      <Container className={classes.mainContainer} maxWidth="md">
         <SuspenseWithPerf fallback={<Loading />} traceId={"load-views-status"}>
           <Switch>
             <Route path="/" exact component={Home} />
