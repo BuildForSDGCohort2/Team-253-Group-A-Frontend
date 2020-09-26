@@ -48,12 +48,12 @@ const preloadSDKs = (firebaseApp) => {
     preloadFirestore({
       firebaseApp,
       setup(firestore) {
-        if (window.location.hostname === "localhost") {
+        /* if (window.location.hostname === "localhost") {
           firestore().settings({
             host: "localhost:8080",
             ssl: false,
           });
-        }
+        } */
         return firestore().enablePersistence({
           synchronizeTabs: true,
         });
