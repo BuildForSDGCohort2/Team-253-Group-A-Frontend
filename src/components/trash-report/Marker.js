@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Room from "@material-ui/icons/Room";
 import { red } from "@material-ui/core/colors";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     transform: "translateZ(0) translate(-50%, -100%)",
     backfaceVisibility: "hidden",
