@@ -23,6 +23,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
 
 import GoogleMap from "google-map-react";
+import Marker from "./Marker";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -99,6 +100,19 @@ export default function AddTrashReport() {
   const [reservedReportID, setReservedReportID] = React.useState("");
   const [remoteUploadRef, setRemoteUploadRef] = React.useState(null);
   const [uploadProgress, setUploadProgress] = React.useState(-1);
+
+  const [reportLocation, setReportLocation] = React.useState(null);
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      setReportLocation(
+        new firebase.firestore.GeoPoint(
+          position.coords.latitude,
+          position.coords.longitude
+        )
+      );
+    });
+  }
 
   const [tagsData, setTagsData] = React.useState({ tags: [] });
 
@@ -203,21 +217,7 @@ export default function AddTrashReport() {
   };
 
   const handleGoogleMapClick = ({ lat, lng }) => {
-    console.log(lat, lng);
-    /*     const latlng = {
-      lat: lat,
-      lng: lng,
-    }; */
-    /* mapGeocoder.geocode(
-      { location: latlng },
-      (results: mapsApi.GeocoderResult[], status: mapsApi.GeocoderStatus) => {
-        if (status === "OK") {
-          if (results[0]) {
-            console.log(results[0]);
-          }
-        }
-      }
-    ); */
+    setReportLocation(new firebase.firestore.GeoPoint(lat, lng));
   };
 
   const handleTagChange = (tag) => () => {
@@ -356,17 +356,28 @@ export default function AddTrashReport() {
                     bootstrapURLKeys={{
                       key: process.env.REACT_APP_FIREBASE_APIKEY,
                     }}
-                    defaultCenter={{
-                      lat: 34.7398,
-                      lng: 10.76,
-                    }}
+                    center={
+                      reportLocation != null
+                        ? {
+                            lat: reportLocation.latitude,
+                            lng: reportLocation.longitude,
+                          }
+                        : { lat: 34.7398, lng: 10.76 }
+                    }
                     defaultZoom={10}
                     yesIWantToUseGoogleMapApiInternals
                     onGoogleApiLoaded={({ map, maps }) =>
                       mapApiIsLoaded(map, maps)
                     }
                     onClick={handleGoogleMapClick}
-                  ></GoogleMap>
+                  >
+                    {reportLocation != null && (
+                      <Marker
+                        lat={reportLocation.latitude}
+                        lng={reportLocation.longitude}
+                      />
+                    )}
+                  </GoogleMap>
                 </div>
               </Paper>
             </div>
