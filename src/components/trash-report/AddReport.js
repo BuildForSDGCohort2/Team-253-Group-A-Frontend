@@ -65,14 +65,20 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(2),
   },
+  spotTagsContainer: {
+    flexGrow: 1,
+    padding: theme.spacing(2),
+  },
   spotTags: {
     display: "flex",
     justifyContent: "center",
     flexWrap: "wrap",
-    padding: theme.spacing(2),
     "& > *": {
       margin: theme.spacing(0.5),
     },
+  },
+  paperWrapper: {
+    padding: theme.spacing(2),
   },
 }));
 
@@ -94,9 +100,22 @@ export default function AddTrashReport() {
   const [remoteUploadRef, setRemoteUploadRef] = React.useState(null);
   const [uploadProgress, setUploadProgress] = React.useState(-1);
 
+  const [tagsData, setTagsData] = React.useState({ tags: [] });
+
   const defaultTagsRef = useFirestore().collection("report-tags");
-  let test = useFirestoreCollectionData(defaultTagsRef);
-  console.log(test);
+  let tags = useFirestoreCollectionData(defaultTagsRef);
+  if (tagsData.tags.length === 0) {
+    setTagsData(
+      tags.reduce(
+        (options, option) => ({
+          ...options,
+          tags: tags,
+          [option.id]: false,
+        }),
+        {}
+      )
+    );
+  }
 
   if (reservedReportID === "") {
     setReservedReportID(firestore.collection("spots").doc().id);
@@ -201,6 +220,13 @@ export default function AddTrashReport() {
     ); */
   };
 
+  const handleTagChange = (tag) => () => {
+    setTagsData((prevState) => ({
+      ...prevState,
+      [tag.id]: !prevState[tag.id],
+    }));
+  };
+
   return (
     <Container maxWidth="md" className={classes.root}>
       <Paper>
@@ -252,11 +278,7 @@ export default function AddTrashReport() {
             variant="determinate"
             value={uploadProgress}
           />
-          <div className={classes.spotTags}>
-            {test.map((data) => {
-              return <Chip label={data.name} />;
-            })}
-          </div>
+
           <div className={classes.formContentContainer}>
             <div className={classes.formContentLine}>
               <TextField
@@ -287,9 +309,48 @@ export default function AddTrashReport() {
                 multiline
               />
             </div>
+
+            <div className={classes.spotTagsContainer}>
+              <Paper
+                variant="outlined"
+                elevation={0}
+                className={classes.paperWrapper}
+              >
+                <Typography gutterBottom variant="h6" component="div">
+                  Tag your spot:
+                </Typography>
+                <div className={classes.spotTags}>
+                  {tagsData["tags"].map((tag) => {
+                    return (
+                      <Chip
+                        key={tag.id}
+                        label={tag.name}
+                        {...(!tagsData[tag.id] && {
+                          onClick: handleTagChange(tag),
+                        })}
+                        {...(tagsData[tag.id] && {
+                          onDelete: handleTagChange(tag),
+                        })}
+                        color={clsx(
+                          !tagsData[tag.id] && "default",
+                          tagsData[tag.id] && "secondary"
+                        )}
+                      />
+                    );
+                  })}
+                </div>
+              </Paper>
+            </div>
+
             <div className={classes.formContentLine}>
-              <Paper elevation={2} className={classes.locationContainer}>
-                <Typography variant="h6">Select spot location</Typography>
+              <Paper
+                variant="outlined"
+                elevation={0}
+                className={classes.locationContainer}
+              >
+                <Typography gutterBottom variant="h6">
+                  Select spot location
+                </Typography>
                 <div style={{ height: "350px", width: "100%" }}>
                   <GoogleMap
                     bootstrapURLKeys={{
