@@ -2,6 +2,7 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { AuthCheck, SuspenseWithPerf } from "reactfire";
 import { makeStyles } from "@material-ui/core/styles";
+import Account from "../Account"
 
 import {
   Link as LinkRouter,
@@ -46,6 +47,9 @@ export default function Dashboard() {
           <Switch>
             <Route path={`${path}/spots/create`}>
               <AddTrashReport />
+            </Route>
+            <Route path={`${path}/account`}>
+              <Account />
             </Route>
             <Route exact path={path}>
               <Fab
