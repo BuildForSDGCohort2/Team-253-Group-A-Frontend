@@ -3,46 +3,6 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4f2d4d4adcda432290b07a179fab3e86)](https://app.codacy.com/gh/BuildForSDGCohort2/Team-253-Group-A-Frontend?utm_source=github.com&utm_medium=referral&utm_content=BuildForSDGCohort2/Team-253-Group-A-Frontend&utm_campaign=Badge_Grade_Dashboard)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/2b9a8ed1-cb18-488f-acd2-05a2a33b3218/deploy-status)](https://app.netlify.com/sites/awesome-jang-7f1fc2/deploys)
 
-## Firebase Configuration
+## About our project "CleanOut"
 
-Rename `.env.template` to `.env`
-Fill `.env` from firebase console
-
-DO NOT PUSH `.env` to Github (already ignored with `.gitignore`)
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The idea behind it is to help communities to clean the neighborhood by letting users to report trash by uploading (geotagged) image   location. Each report has a status (trash cleaned or not). User can create an event to gather volunteers to help to clean. For Covid-19, AI will ensure uploaded images are about trash & it will detect if there's any trash are related to Covid-19 like masks which need precaution when cleaning or reporting to local authorities.
