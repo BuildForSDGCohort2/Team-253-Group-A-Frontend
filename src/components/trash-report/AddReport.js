@@ -89,6 +89,8 @@ export default function AddTrashReport() {
   const storage = useStorage();
   const firestore = useFirestore();
 
+  const reportFirestoreRef = firestore.collection("spots");
+
   // eslint-disable-next-line
   const [mapsApi, setMapsApi] = React.useState(null);
   /* const [mapGeocoder, setMapGeocoder] = React.useState(null); */
@@ -101,7 +103,14 @@ export default function AddTrashReport() {
   const [remoteUploadRef, setRemoteUploadRef] = React.useState(null);
   const [uploadProgress, setUploadProgress] = React.useState(-1);
 
+  const [reporTitle, setReportTitle] = React.useState("");
+  const [reportDescription, setReportDescription] = React.useState("");
+
   const [reportLocation, setReportLocation] = React.useState(null);
+
+  if (reservedReportID === "") {
+    setReservedReportID(reportFirestoreRef.doc().id);
+  }
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -131,12 +140,49 @@ export default function AddTrashReport() {
     );
   }
 
-  if (reservedReportID === "") {
-    setReservedReportID(firestore.collection("spots").doc().id);
-  }
-
   const saveTrashReport = (event) => {
     event.preventDefault();
+    let trashReport = { uid: user.uid };
+    let isReportValid = false;
+
+    trashReport.userProfile = firestore.collection("profiles").doc(user.uid);
+
+    //check image
+    if (selectedFile != null && remoteUploadRef != null) {
+      trashReport.images = [remoteUploadRef.fullPath];
+    } else {
+      // handle image required
+    }
+
+    //check title
+    if (reporTitle.length > 0) {
+      trashReport.title = reporTitle;
+    } else {
+      // handle title required
+    }
+
+    //check description
+    if (reportDescription.length > 0) {
+      trashReport.description = reportDescription;
+    } else {
+      // handle description required
+    }
+
+    //check location
+    if (reportLocation != null) {
+      trashReport.location = reportLocation;
+    } else {
+      // handle location required
+    }
+
+    trashReport.createdAt = firebase.firestore.Timestamp.fromDate(new Date());
+
+    reportFirestoreRef
+      .doc(reservedReportID)
+      .set(Object.assign({}, trashReport))
+      .then(function () {
+        console.log("Document successfully written!");
+      });
   };
 
   const handleImageUpload = (event) => {
@@ -201,14 +247,6 @@ export default function AddTrashReport() {
       );
     }
   };
-
-  /*  const handleDelete = () => {
-    console.info("You clicked the delete icon.");
-  };
-
-  const handleClick = () => {
-    console.info("You clicked the Chip.");
-  }; */
 
   // Fit map to its bounds after the api is loaded
   const mapApiIsLoaded = (maps) => {
@@ -292,6 +330,7 @@ export default function AddTrashReport() {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                onChange={(e) => setReportTitle(e.target.value)}
               />
             </div>
             <div className={classes.formContentLine}>
@@ -306,6 +345,7 @@ export default function AddTrashReport() {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                onChange={(e) => setReportDescription(e.target.value)}
                 multiline
               />
             </div>
