@@ -9,12 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import AddAPhoto from "@material-ui/icons/AddAPhoto";
 import Box from "@material-ui/core/Box";
-import {
-  useStorage,
-  useUser,
-  useFirestore,
-  useFirestoreCollectionData,
-} from "reactfire";
+import { useStorage, useUser, useFirestore } from "reactfire";
 
 import Chip from "@material-ui/core/Chip";
 import SvgIcon from "@material-ui/core/SvgIcon";
@@ -24,6 +19,8 @@ import Typography from "@material-ui/core/Typography";
 
 import GoogleMap from "google-map-react";
 import Marker from "./Marker";
+
+import Loading from "../Loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   spotTagsContainer: {
+    position: "relative",
     flexGrow: 1,
     padding: theme.spacing(2),
   },
@@ -87,9 +85,10 @@ export default function AddTrashReport() {
   const classes = useStyles();
   const user = useUser();
   const storage = useStorage();
-  const firestore = useFirestore();
+  const db = useFirestore();
 
-  const reportFirestoreRef = firestore.collection("spots");
+  const reportFirestoreRef = db.collection("spots");
+  const defaultTagsRef = db.collection("report-tags");
 
   // eslint-disable-next-line
   const [mapsApi, setMapsApi] = React.useState(null);
@@ -125,19 +124,23 @@ export default function AddTrashReport() {
 
   const [tagsData, setTagsData] = React.useState({ tags: [] });
 
-  const defaultTagsRef = useFirestore().collection("report-tags");
-  let tags = useFirestoreCollectionData(defaultTagsRef);
   if (tagsData.tags.length === 0) {
-    setTagsData(
-      tags.reduce(
-        (options, option) => ({
-          ...options,
-          tags: tags,
-          [option.id]: false,
-        }),
-        {}
-      )
-    );
+    defaultTagsRef.get().then(function (querySnapshot) {
+      let tags = [];
+      querySnapshot.forEach(function (doc) {
+        tags = [...tags, doc.data()];
+      });
+      setTagsData(
+        tags.reduce(
+          (options, option) => ({
+            ...options,
+            tags: tags,
+            [option.id]: false,
+          }),
+          {}
+        )
+      );
+    });
   }
 
   const saveTrashReport = (event) => {
@@ -145,7 +148,7 @@ export default function AddTrashReport() {
     let trashReport = { uid: user.uid };
     let isReportValid = false;
 
-    trashReport.userProfile = firestore.collection("profiles").doc(user.uid);
+    trashReport.userProfile = db.collection("profiles").doc(user.uid);
 
     //check image
     if (selectedFile != null && remoteUploadRef != null) {
@@ -360,6 +363,8 @@ export default function AddTrashReport() {
                   Tag your spot:
                 </Typography>
                 <div className={classes.spotTags}>
+                  {tagsData["tags"].length === 0 && <Loading />}
+
                   {tagsData["tags"].map((tag) => {
                     return (
                       <Chip
