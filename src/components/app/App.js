@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import {
   useFirebaseApp,
@@ -90,7 +90,10 @@ function App() {
       <Container className={classes.mainContainer} maxWidth="md">
         <SuspenseWithPerf fallback={<Loading />} traceId={"load-views-status"}>
           <Switch>
-            <Route path="/" exact component={Home} />
+            <Route path="/" exact>
+              <Redirect to="/spots" />
+            </Route>
+            <Route path="/spots" exact component={Home} />
             <Route path="/about" exact component={About} />
             <Route path="/signin" exact component={SignIn} />
             <Route path="/reset-password" exact component={ResetPassword} />
