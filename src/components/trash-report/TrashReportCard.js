@@ -23,9 +23,9 @@ export default function TrashReportCard(props) {
   const storage = useStorage();
 
   const [reportImageURL, setReportImageURL] = React.useState(null);
-  const [userProfile, setUserProfile] = React.useState(null);
+  /*   const [userProfile, setUserProfile] = React.useState(null);
 
-  console.log("profile");
+  console.log("profile"); */
 
   const fetchImageURL = () => {
     if (reportImageURL === null) {
@@ -41,7 +41,7 @@ export default function TrashReportCard(props) {
     }
   };
 
-  if (userProfile == null) {
+  /* if (userProfile == null) {
     props.data.userProfile
       .get()
       .then(function (doc) {
@@ -63,11 +63,19 @@ export default function TrashReportCard(props) {
       .catch(function (error) {
         // Handle any errors
       });
-  }
+  } */
+
+  fetchImageURL();
 
   return (
     <Card className={classes.root}>
-      <CardHeader subheader={props.data.createdAt.toDate().toString()} />
+      {/*       {userProfile != null && (
+        <CardHeader
+          avatar={<Avatar src={userProfile.photoURL} aria-label="profile picture"></Avatar>}
+          title={userProfile.displayName}
+          subheader={props.data.createdAt.toDate().toString()}
+        />
+      )} */}
 
       <CardActionArea>
         <CardMedia
