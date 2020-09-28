@@ -146,7 +146,7 @@ export default function AddTrashReport() {
   const saveTrashReport = (event) => {
     event.preventDefault();
     let trashReport = { uid: user.uid };
-    let isReportValid = false;
+    //let isReportValid = false;
 
     trashReport.userProfile = db.collection("profiles").doc(user.uid);
 
