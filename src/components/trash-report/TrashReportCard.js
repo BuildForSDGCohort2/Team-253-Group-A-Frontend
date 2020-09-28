@@ -21,40 +21,44 @@ const useStyles = makeStyles({
 export default function TrashReportCard(props) {
   const classes = useStyles();
   const storage = useStorage();
-  /* const db = useFirestore();
-
-  const [userProfile, setUserProfile] = React.useState(null);
-
-  if (userProfile == null) {
-    db.doc(props.data.userProfile.path).get().then(function (querySnapshot) {
-      console.log("profile");
-      setUserProfile(querySnapshot.data);
-    });
-  } */
 
   const [reportImageURL, setReportImageURL] = React.useState(null);
   const [userProfile, setUserProfile] = React.useState(null);
 
   console.log("profile");
-  if (reportImageURL === null) {
-    storage;
+
+  const fetchImageURL = () => {
+    if (reportImageURL === null) {
+      storage
+        .ref(props.data.images[0])
+        .getDownloadURL()
+        .then(function (url) {
+          setReportImageURL(url);
+        })
+        .catch(function (error) {
+          // Handle any errors
+        });
+    }
+  };
+
+  if (userProfile == null) {
     props.data.userProfile
       .get()
-      .then(function (querySnapshot) {
-        console.log("profile");
-        setUserProfile(querySnapshot.data);
-      })
-      .catch(function (error) {
-        // Handle any errors
-      });
-  }
-
-  if (reportImageURL === null) {
-    storage
-      .ref(props.data.images[0])
-      .getDownloadURL()
-      .then(function (url) {
-        setReportImageURL(url);
+      .then(function (doc) {
+        if (doc.exists) {
+          setUserProfile((state) => ({
+            ...state,
+            uid: doc.data().uid,
+            displayName: doc.data().displayName,
+            photoURL: doc.data().photoURL,
+            isVerified: doc.data().isVerified,
+            disabled: doc.data().disabled,
+            createdAt: doc.data().createdAt,
+          }));
+        } else {
+          console.log("No such document!");
+        }
+        fetchImageURL();
       })
       .catch(function (error) {
         // Handle any errors
@@ -63,15 +67,8 @@ export default function TrashReportCard(props) {
 
   return (
     <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
-      />
+      <CardHeader subheader={props.data.createdAt.toDate().toString()} />
+
       <CardActionArea>
         <CardMedia
           className={classes.media}

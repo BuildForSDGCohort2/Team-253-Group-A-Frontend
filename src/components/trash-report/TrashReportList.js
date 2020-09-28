@@ -5,9 +5,11 @@ import Grid from "@material-ui/core/Grid";
 
 import TrashReportCard from "./TrashReportCard";
 
-const useStyles = makeStyles({
-  root: {},
-});
+const useStyles = makeStyles(() => ({
+  root: {
+    flexGrow: 1,
+  },
+}));
 
 export default function TrashReportList(props) {
   const classes = useStyles();
