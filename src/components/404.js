@@ -37,10 +37,10 @@ export default function GenericNotFound() {
         Trash not found
       </Typography>
       <Typography align="center" variant="body1" component="p">
-        Horray, no trash has been found here!
+        Hooray, no trash has been found!
       </Typography>
       <Typography align="center" variant="body1" component="p">
-        This spot has been already cleaned.
+        This spot has already been cleaned.
       </Typography>
     </Container>
   );
