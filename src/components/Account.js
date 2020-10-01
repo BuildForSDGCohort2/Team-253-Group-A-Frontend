@@ -1,15 +1,17 @@
 import React from "react";
+import { useAuth } from "reactfire";
+import "../index.css";
+
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import "../index.css";
 
 import { Link as LinkRouter } from "react-router-dom";
 
 import Tooltip from "@material-ui/core/Tooltip";
 import EditIcon from "@material-ui/icons/Edit";
 import Button from "@material-ui/core/Button";
-import { useAuth } from "reactfire";
+import { Alert, AlertTitle } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +41,12 @@ const useStyles = makeStyles((theme) => ({
   danger: {
     color: "red",
   },
+  alertbox: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
 
 export default function Account() {
@@ -47,16 +55,26 @@ export default function Account() {
   const auth = useAuth();
   let user = auth.currentUser;
   let userName = user.displayName;
+  let credential;
 
   const deleteAccount = () => {
     user
-      .delete()
+      .reauthenticateWithCredential(credential)
       .then(function () {
-        console.log("User deleted successfullly!");
+        console.log("User re-authenticated");
       })
       .catch(function (err) {
-        console.log("Sorry, user could not be deleted.", err);
+        console.log("Re-authentication failed!!", err);
       });
+
+    // user
+    //   .delete()
+    //   .then(function () {
+    //     console.log("User deleted successfullly!");
+    //   })
+    //   .catch(function (err) {
+    //     console.log("Sorry, user could not be deleted.", err);
+    //   });
   };
 
   return (
