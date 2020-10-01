@@ -10,6 +10,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import TrashReportStatus from "./TrashReportStatus";
 /* import Avatar from "@material-ui/core/Avatar";
  */
 const useStyles = makeStyles({
@@ -100,11 +101,9 @@ export default function TrashReportCard(props) {
       </CardActionArea>
       <CardActions>
         <Button size="small" color="secondary">
-          Share
-        </Button>
-        <Button size="small" color="secondary">
           Learn More
         </Button>
+        <TrashReportStatus tagId={props.data.statusId} />
       </CardActions>
     </Card>
   );
