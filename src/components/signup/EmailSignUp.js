@@ -165,7 +165,7 @@ export default function EmailSignIn() {
       </Typography>
       <SocialSignInUp />
       <Typography align="center" variant="body2">
-        By continuing, you agree to our&apos;s{" "}
+        By continuing, you agree to our{" "}
         <Link component={LinkRouter} to="/terms-of-services" color="secondary">
           Terms of Service
         </Link>

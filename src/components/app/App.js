@@ -38,6 +38,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     minHeight: "100vh",
     flexDirection: "column",
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4),
   },
 }));
 
@@ -85,7 +87,7 @@ function App() {
         <Header />
       </SuspenseWithPerf>
       <div className={classes.offset} />
-      <Container className={classes.mainContainer}>
+      <Container className={classes.mainContainer} maxWidth="md">
         <SuspenseWithPerf fallback={<Loading />} traceId={"load-views-status"}>
           <Switch>
             <Route path="/" exact component={Home} />
