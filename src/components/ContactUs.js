@@ -5,39 +5,36 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
-import MailOutlineOutlinedIcon from "@material-ui/icons/MailOutlineOutlined";
-import SendRoundedIcon from "@material-ui/icons/SendRounded";
-
-const useStylesc = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-}));
+import StarRateTwoToneIcon from "@material-ui/icons/StarRateTwoTone";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: theme.spacing(4),
   },
-  roots: {
-    display: "flex",
-    flexWrap: "wrap",
+  textFieldLeft: {
+    marginLeft: theme.spacing(0),
+    marginRight: "3%",
+    width: "47%",
   },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: "25ch",
+  textFieldRight: {
+    marginLeft: "3%",
+    marginRight: theme.spacing(0),
+    width: "47%",
   },
   button: {
     margin: theme.spacing(1),
     fontSize: 20,
     padding: theme.spacing(1),
-    backgroundColor: "#d6e4d6e6",
-    color: "#023e07",
+    // backgroundColor: "#d6e4d6e6",
+    backgroundColor: "#023e07",
+    color: "white",
   },
   icon: {
-    marginLeft: theme.spacing(1),
-    fontSize: 15,
+    marginLeft: 2,
+    marginBottom: 4,
+    fontSize: 10,
+    color: "red",
   },
   message: {
     display: "flex",
@@ -53,62 +50,74 @@ export default function ContactUs() {
   const classes = useStyles();
 
   return (
-    <div>
-      <Typography gutterBottom variant="h3" style={{ fontWeight: "bold" }}>
-        Contact Us
+    <div className={classes.root}>
+      <Typography
+        gutterBottom
+        variant="h3"
+        style={{ fontWeight: "bold", color: "#023e07" }}
+      >
+        Get In Touch
       </Typography>
-      <Paper className={classes.root}>
-        <MailOutlineOutlinedIcon className={classes.message} />
+      <form noValidate autoComplete="off">
+        <Typography>
+          Name
+          <StarRateTwoToneIcon className={classes.icon} />
+        </Typography>
         <TextField
-          id="standard-full-width"
-          style={{ margin: 8 }}
-          placeholder="Full name"
-          fullWidth
+          id="outlined-basic"
+          variant="outlined"
           margin="normal"
-          InputLabelProps={{
-            shrink: true,
+          className={classes.textFieldLeft}
+          style={{
+            backgroundColor: "white",
           }}
         />
         <TextField
-          id="standard-full-width"
-          style={{ margin: 8 }}
-          placeholder="Email address"
-          fullWidth
+          id="outlined-basic"
+          variant="outlined"
           margin="normal"
-          InputLabelProps={{
-            shrink: true,
+          className={classes.textFieldRight}
+          style={{
+            backgroundColor: "white",
           }}
         />
+        <Typography>
+          Email
+          <StarRateTwoToneIcon className={classes.icon} />
+        </Typography>
         <TextField
-          id="standard-full-width"
-          style={{ margin: 8 }}
-          placeholder="Phone number"
+          id="outlined-full-width-static"
+          variant="outlined"
           fullWidth
           margin="normal"
-          InputLabelProps={{
-            shrink: true,
+          style={{
+            backgroundColor: "white",
           }}
         />
+        <Typography>
+          Comment or Message
+          <StarRateTwoToneIcon className={classes.icon} />
+        </Typography>
         <TextField
-          id="standard-full-width"
-          style={{ margin: 8 }}
-          placeholder="Leave a message"
+          id="outlined-multiline-static"
           fullWidth
+          multiline
+          rows={6}
+          variant="outlined"
           margin="normal"
-          InputLabelProps={{
-            shrink: true,
+          style={{
+            backgroundColor: "white",
           }}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          className={classes.button}
-        >
-          Send
-          <SendRoundedIcon className={classes.icon} />
-        </Button>
-      </Paper>
+      </form>
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        className={classes.button}
+      >
+        Submit
+      </Button>
     </div>
   );
 }
