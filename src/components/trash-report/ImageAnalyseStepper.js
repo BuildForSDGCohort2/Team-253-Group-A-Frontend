@@ -113,18 +113,6 @@ export default function ImageAnalyseStepper(props) {
   const [activeStep, setActiveStep] = React.useState(props.step);
   const steps = getSteps();
 
-  /* const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  }; */
-
   useEffect(() => {
     const abortController = new AbortController();
     const updateState = async () => {
