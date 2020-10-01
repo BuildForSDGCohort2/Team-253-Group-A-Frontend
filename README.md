@@ -5,17 +5,17 @@
 
 ## About the team
 
-We are a team of 4 members :
-[Khalil Hammami](https://github.com/khammami) 
+We are a team of 4 members :  
+[Khalil Hammami](https://github.com/khammami).  
 <img src="https://avatars1.githubusercontent.com/u/297917?s=460&v=4" width="150px" height="150px">
 
-[Ojoechem Chinonso]() 
+[Ojoechem Chinonso]().  
 <img src="https://avatars2.githubusercontent.com/u/46009285?s=460&v=4" width="150px" height="150px"> 
 
-[Sara EL-ATEIF]() 
+[Sara EL-ATEIF]().  
 <img src="https://avatars2.githubusercontent.com/u/27445092?s=460&u=349cffccfccda38293e4aab20868a77b60079274&v=4" width="150px" height="150px">
 
-[Sofia Bourhim]()
+[Sofia Bourhim]().  
 <img src="https://avatars1.githubusercontent.com/u/45902355?s=460&u=ffbc0cc593f575d67140e4197eec449a412a08c9v=4" width="150px" height="150px"> 
 
 ## About our project "CleanOut"
@@ -25,7 +25,7 @@ Each report has a status (trash cleaned or not). Users can create an event to ga
 
 Please check out the application following this [link](https://awesome-jang-7f1fc2.netlify.app/).
 
-## Features available so far
+## Features available
 
 ### Register
 
