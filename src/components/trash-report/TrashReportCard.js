@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link as LinkRouter } from "react-router-dom";
 import { useStorage } from "reactfire";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -18,6 +19,11 @@ const useStyles = makeStyles({
   media: {
     height: 140,
   },
+  cardTitle: {
+    flex: 1,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  },
 });
 
 TrashReportCard.propTypes = {
@@ -27,6 +33,8 @@ TrashReportCard.propTypes = {
 export default function TrashReportCard(props) {
   const classes = useStyles();
   const storage = useStorage();
+
+  const trashReportPath = "/spots/" + props.data.id;
 
   const [reportImageURL, setReportImageURL] = React.useState(null);
   /*   const [userProfile, setUserProfile] = React.useState(null);
@@ -84,14 +92,20 @@ export default function TrashReportCard(props) {
         />
       )} */}
 
-      <CardActionArea>
+      <CardActionArea component={LinkRouter} to={trashReportPath}>
         <CardMedia
           className={classes.media}
           image={reportImageURL}
           title="Contemplative Reptile"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography
+            noWarp
+            gutterBottom
+            variant="h5"
+            component="h2"
+            className={classes.cardTitle}
+          >
             {props.data.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
@@ -103,7 +117,10 @@ export default function TrashReportCard(props) {
         <Button size="small" color="secondary">
           Learn More
         </Button>
-        <TrashReportStatus tagId={props.data.statusId} />
+        <TrashReportStatus
+          className={classes.cardStatus}
+          tagId={props.data.statusId}
+        />
       </CardActions>
     </Card>
   );
