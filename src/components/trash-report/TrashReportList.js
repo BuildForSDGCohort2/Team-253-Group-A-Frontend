@@ -17,11 +17,19 @@ TrashReportList.propTypes = {
   tagId: PropTypes.string,
 };
 
-export default function TrashReportList() {
+export default function TrashReportList(props) {
   const classes = useStyles();
   const db = useFirestore();
 
   const reportFirestoreRef = db.collection("spots");
+
+  if (props.uid != undefined && props.uid.length > 0) {
+    reportFirestoreRef.where("uid", "==", props.uid);
+  }
+
+  if (props.tagId != undefined && props.tagId.length > 0) {
+    reportFirestoreRef.where("tags", "array-contains", props.tagId);
+  }
 
   const [reportList, setReportList] = React.useState([]);
 
