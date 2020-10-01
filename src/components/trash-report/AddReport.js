@@ -193,6 +193,7 @@ export default function AddTrashReport() {
     let mFile = event.target.files[0];
 
     if (remoteUploadRef != null) {
+      handleBackImageAnalyseStep();
       // Delete the file
       remoteUploadRef
         .delete()
@@ -257,9 +258,9 @@ export default function AddTrashReport() {
     setImageAnalyseActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  /* const handleBackImageAnalyseStep = () => {
+  const handleBackImageAnalyseStep = () => {
     setImageAnalyseActiveStep((prevActiveStep) => prevActiveStep - 1);
-  }; */
+  };
 
   // Fit map to its bounds after the api is loaded
   const mapApiIsLoaded = (maps) => {

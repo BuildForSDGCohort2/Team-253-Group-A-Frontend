@@ -126,9 +126,7 @@ export default function ImageAnalyseStepper(props) {
   }; */
 
   useEffect(() => {
-    if (props.step !== 0) {
-      setActiveStep(props.step);
-    }
+    setActiveStep(props.step);
   }, [props.step]);
 
   return (
