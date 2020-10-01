@@ -6,16 +6,16 @@
 ## About the team
 
 We are a team of 4 members :  
-[Khalil Hammami](https://github.com/khammami).  
+[Khalil Hammami](https://github.com/khammami)  
 <img src="https://avatars1.githubusercontent.com/u/297917?s=460&v=4" width="150px" height="150px">
 
-[Ojoechem Chinonso]().  
+[Ojoechem Chinonso](https://github.com/ChinonsoIg)  
 <img src="https://avatars2.githubusercontent.com/u/46009285?s=460&v=4" width="150px" height="150px"> 
 
-[Sara EL-ATEIF]().  
+[Sara EL-ATEIF](https://github.com/elateifsara)  
 <img src="https://avatars2.githubusercontent.com/u/27445092?s=460&u=349cffccfccda38293e4aab20868a77b60079274&v=4" width="150px" height="150px">
 
-[Sofia Bourhim]().  
+[Sofia Bourhim](https://github.com/SofiaBee-W)  
 <img src="https://avatars1.githubusercontent.com/u/45902355?s=460&u=ffbc0cc593f575d67140e4197eec449a412a08c9v=4" width="150px" height="150px"> 
 
 ## About our project "CleanOut"
