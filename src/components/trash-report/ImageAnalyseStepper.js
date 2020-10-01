@@ -126,7 +126,14 @@ export default function ImageAnalyseStepper(props) {
   }; */
 
   useEffect(() => {
-    setActiveStep(props.step);
+    const abortController = new AbortController();
+    const updateState = async () => {
+      setActiveStep(props.step);
+    };
+    updateState();
+    return function cleanup() {
+      abortController.abort();
+    };
   }, [props.step]);
 
   return (
