@@ -25,6 +25,12 @@ const About = React.lazy(() => import("../About"));
 const GenericNotFound = React.lazy(() => import("../404"));
 const PageViewLogger = React.lazy(() => import("../PageViewLogger"));
 const Dashboard = React.lazy(() => import("../dashboard/Dashboard"));
+const Terms = React.lazy(() => import("../Terms"));
+const Privacy = React.lazy(() => import("../Privacy"));
+const ResetPassword = React.lazy(() => import("../signin/ResetPassword"));
+
+// My code
+const UpdateProfile = React.lazy(() => import("../UpdateProfile"));
 
 const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.toolbar,
@@ -32,6 +38,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     minHeight: "100vh",
     flexDirection: "column",
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4),
   },
 }));
 
@@ -79,14 +87,18 @@ function App() {
         <Header />
       </SuspenseWithPerf>
       <div className={classes.offset} />
-      <Container className={classes.mainContainer}>
+      <Container className={classes.mainContainer} maxWidth="md">
         <SuspenseWithPerf fallback={<Loading />} traceId={"load-views-status"}>
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/about" exact component={About} />
             <Route path="/signin" exact component={SignIn} />
+            <Route path="/reset-password" exact component={ResetPassword} />
             <Route path="/register" exact component={Register} />
             <Route path="/dashboard" component={Dashboard} />
+            <Route path="/updateprofile" component={UpdateProfile} />
+            <Route path="/terms-of-services" component={Terms} />
+            <Route path="/privacy-policy" component={Privacy} />
             <Route path="*" exact={true} component={GenericNotFound} />
           </Switch>
           <PageViewLogger />
