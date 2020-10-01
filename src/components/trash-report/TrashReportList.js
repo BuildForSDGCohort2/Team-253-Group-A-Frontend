@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useFirestore } from "reactfire";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -11,7 +12,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function TrashReportList(props) {
+TrashReportList.propTypes = {
+  uid: PropTypes.string,
+  tagId: PropTypes.string,
+};
+
+export default function TrashReportList() {
   const classes = useStyles();
   const db = useFirestore();
 

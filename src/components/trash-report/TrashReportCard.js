@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useStorage } from "reactfire";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -17,6 +18,10 @@ const useStyles = makeStyles({
     height: 140,
   },
 });
+
+TrashReportCard.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
 export default function TrashReportCard(props) {
   const classes = useStyles();
@@ -37,6 +42,7 @@ export default function TrashReportCard(props) {
         })
         .catch(function (error) {
           // Handle any errors
+          console.log(error);
         });
     }
   };
