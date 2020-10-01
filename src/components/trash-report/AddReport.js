@@ -21,6 +21,7 @@ import GoogleMap from "google-map-react";
 import Marker from "./Marker";
 
 import Loading from "../Loading";
+import ImageAnalyseStepper from "./ImageAnalyseStepper";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -101,6 +102,7 @@ export default function AddTrashReport() {
   const [reservedReportID, setReservedReportID] = React.useState("");
   const [remoteUploadRef, setRemoteUploadRef] = React.useState(null);
   const [uploadProgress, setUploadProgress] = React.useState(-1);
+  const [imageAnalyseActiveStep, setImageAnalyseActiveStep] = React.useState(0);
 
   const [reporTitle, setReportTitle] = React.useState("");
   const [reportDescription, setReportDescription] = React.useState("");
@@ -244,11 +246,20 @@ export default function AddTrashReport() {
           uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
             console.log("File available at", downloadURL);
             setUploadProgress(-1);
+            handleNextImageAnalyseStep();
           });
         }
       );
     }
   };
+
+  const handleNextImageAnalyseStep = () => {
+    setImageAnalyseActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  /* const handleBackImageAnalyseStep = () => {
+    setImageAnalyseActiveStep((prevActiveStep) => prevActiveStep - 1);
+  }; */
 
   // Fit map to its bounds after the api is loaded
   const mapApiIsLoaded = (maps) => {
@@ -318,6 +329,8 @@ export default function AddTrashReport() {
             variant="determinate"
             value={uploadProgress}
           />
+
+          <ImageAnalyseStepper step={imageAnalyseActiveStep} />
 
           <div className={classes.formContentContainer}>
             <div className={classes.formContentLine}>
