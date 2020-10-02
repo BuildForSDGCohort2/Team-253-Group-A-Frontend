@@ -17,7 +17,7 @@ TrashReportList.propTypes = {
   tagId: PropTypes.string,
 };
 
-let firstLoad = true;
+//let firstLoad = true;
 
 export default function TrashReportList(props) {
   const classes = useStyles();
@@ -33,11 +33,12 @@ export default function TrashReportList(props) {
     reportFirestoreRef.where("tags", "array-contains", props.tagId);
   }
 
+  const [firstLoad, setFirstLoad] = React.useState(true);
   const [reportList, setReportList] = React.useState([]);
 
   if (firstLoad && reportList.length === 0) {
     console.log("query list");
-    firstLoad = false;
+    setFirstLoad(false);
     reportFirestoreRef.get().then(function (querySnapshot) {
       let data = [];
       querySnapshot.forEach(function (doc) {
