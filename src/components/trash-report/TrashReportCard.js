@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import TrashReportStatus from "./TrashReportStatus";
 import Avatar from "@material-ui/core/Avatar";
 import Moment from "react-moment";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 const useStyles = makeStyles({
   root: {},
@@ -36,14 +37,13 @@ export default function TrashReportCard(props) {
 
   const trashReportPath = "/spots/" + props.data.id;
 
+  const [loading, setLoading] = React.useState(true);
   const [firstLoad, setFirstLoad] = React.useState(true);
 
   const [reportImageURL, setReportImageURL] = React.useState(
     props.data.images[0].downloadUrl
   );
   const [userProfile, setUserProfile] = React.useState(null);
-
-  console.log(userProfile);
 
   const fetchImageURL = () => {
     if (reportImageURL === undefined) {
@@ -91,27 +91,46 @@ export default function TrashReportCard(props) {
     setFirstLoad(false);
   }
 
+  React.useEffect(() => {
+    if (userProfile != null) setLoading(false);
+  }, [userProfile]);
+
   return (
     <Card className={classes.root}>
-      {userProfile != null && (
-        <CardHeader
-          avatar={
+      <CardHeader
+        avatar={
+          loading ? (
+            <Skeleton
+              animation="wave"
+              variant="circle"
+              width={40}
+              height={40}
+            />
+          ) : (
             <Avatar
+              alt={userProfile.displayName}
               src={userProfile.photoURL}
               aria-label="profile picture"
-            ></Avatar>
-          }
-          title={userProfile.displayName}
-          subheader={<Moment fromNow>{props.data.createdAt.toDate()}</Moment>}
-        />
-      )}
+            />
+          )
+        }
+        title={
+          loading ? (
+            <Skeleton
+              animation="wave"
+              height={10}
+              width="80%"
+              style={{ marginBottom: 6 }}
+            />
+          ) : (
+            userProfile.displayName
+          )
+        }
+        subheader={<Moment fromNow>{props.data.createdAt.toDate()}</Moment>}
+      />
 
       <CardActionArea component={LinkRouter} to={trashReportPath}>
-        <CardMedia
-          className={classes.media}
-          image={reportImageURL}
-          title="Contemplative Reptile"
-        />
+        <CardMedia className={classes.media} image={reportImageURL} />
         <CardContent>
           <Typography
             noWrap
