@@ -138,9 +138,9 @@ export default function TrashReportCard(props) {
           >
             {props.data.title}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          {/* <Typography variant="body2" color="textSecondary" component="p">
             {props.data.description}
-          </Typography>
+          </Typography> */}
         </CardContent>
 
         <CardActions>
