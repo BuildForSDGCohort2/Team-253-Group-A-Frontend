@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
 import TrashReportCard from "./TrashReportCard";
+import Loading from "../Loading";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -35,6 +36,7 @@ export default function TrashReportList(props) {
 
   const [firstLoad, setFirstLoad] = React.useState(true);
   const [reportList, setReportList] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   if (firstLoad && reportList.length === 0) {
     console.log("query list");
@@ -45,20 +47,25 @@ export default function TrashReportList(props) {
         data.push(doc.data());
       });
       setReportList(data);
+      setIsLoading(false);
     });
   }
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={2}>
-        {reportList.map((report) => {
-          return (
-            <Grid key={report.id} item xs={12} sm={6} md={4}>
-              <TrashReportCard data={report} />
-            </Grid>
-          );
-        })}
-      </Grid>
+      {isLoading ? (
+        <Loading></Loading>
+      ) : (
+        <Grid container spacing={2}>
+          {reportList.map((report) => {
+            return (
+              <Grid key={report.id} item xs={12} sm={6} md={4}>
+                <TrashReportCard data={report} />
+              </Grid>
+            );
+          })}
+        </Grid>
+      )}
     </div>
   );
 }
