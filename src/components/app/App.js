@@ -29,6 +29,9 @@ const Terms = React.lazy(() => import("../Terms"));
 const Privacy = React.lazy(() => import("../Privacy"));
 const ResetPassword = React.lazy(() => import("../signin/ResetPassword"));
 
+const Profile = React.lazy(() => import("../Profile"));
+const ContactUs = React.lazy(() => import("../ContactUs"));
+
 // My code
 const UpdateProfile = React.lazy(() => import("../UpdateProfile"));
 
@@ -102,6 +105,10 @@ function App() {
             <Route path="/updateprofile" component={UpdateProfile} />
             <Route path="/terms-of-services" component={Terms} />
             <Route path="/privacy-policy" component={Privacy} />
+
+            <Route path="/profile" component={Profile} />
+            <Route path="/contact-us" component={ContactUs} />
+
             <Route path="*" exact={true} component={GenericNotFound} />
           </Switch>
           <PageViewLogger />
