@@ -14,7 +14,7 @@ const useStyles = makeStyles({
 
 NavigationDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
-  open: PropTypes.string,
+  anchor: PropTypes.string,
 };
 
 export default function NavigationDrawer(props) {
