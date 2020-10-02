@@ -8,7 +8,7 @@ const useStyles = makeStyles({
 });
 
 TrashReportStatus.propTypes = {
-  statusId: PropTypes.string.isRequired,
+  statusId: PropTypes.string,
 };
 
 export default function TrashReportStatus(props) {
