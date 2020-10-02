@@ -81,6 +81,7 @@ export default function TrashReportCard(props) {
         })
         .catch(function (error) {
           // Handle any errors
+          console.log(error);
         });
     }
   };
@@ -100,12 +101,9 @@ export default function TrashReportCard(props) {
       <CardHeader
         avatar={
           loading ? (
-            <Skeleton
-              animation="wave"
-              variant="circle"
-              width={40}
-              height={40}
-            />
+            <Skeleton animation="wave" variant="circle">
+              <Avatar />
+            </Skeleton>
           ) : (
             <Avatar
               alt={userProfile.displayName}
