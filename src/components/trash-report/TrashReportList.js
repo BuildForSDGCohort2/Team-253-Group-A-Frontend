@@ -67,7 +67,12 @@ export default function TrashReportList(props) {
           {reportList.map((report) => {
             return (
               <Grid key={report.id} item xs={12} sm={6} md={4}>
-                <TrashReportCard data={report} />
+                <TrashReportCard
+                  {...(props.uid !== undefined && {
+                    noHeader: true,
+                  })}
+                  data={report}
+                />
               </Grid>
             );
           })}

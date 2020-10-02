@@ -15,13 +15,12 @@ export default function TrashReportStatus(props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Chip
-        label={props.statusId === undefined ? "Open" : props.statusId}
-        variant="outlined"
-        color="secondary"
-        size="small"
-      />
-    </div>
+    <Chip
+      className={classes.root}
+      label={props.statusId === undefined ? "Open" : props.statusId}
+      variant="outlined"
+      color="secondary"
+      size="small"
+    />
   );
 }
