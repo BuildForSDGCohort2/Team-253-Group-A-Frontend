@@ -24,14 +24,18 @@ export default function TrashReportList(props) {
   const classes = useStyles();
   const db = useFirestore();
 
-  const reportFirestoreRef = db.collection("spots");
+  let reportFirestoreRef = db.collection("spots");
 
   if (props.uid !== undefined && props.uid.length > 0) {
-    reportFirestoreRef.where("uid", "==", props.uid);
+    reportFirestoreRef = reportFirestoreRef.where("uid", "==", props.uid);
   }
 
   if (props.tagId !== undefined && props.tagId.length > 0) {
-    reportFirestoreRef.where("tags", "array-contains", props.tagId);
+    reportFirestoreRef = reportFirestoreRef.where(
+      "tags",
+      "array-contains",
+      props.tagId
+    );
   }
 
   const [firstLoad, setFirstLoad] = React.useState(true);
@@ -41,14 +45,17 @@ export default function TrashReportList(props) {
   if (firstLoad && reportList.length === 0) {
     console.log("query list");
     setFirstLoad(false);
-    reportFirestoreRef.get().then(function (querySnapshot) {
-      let data = [];
-      querySnapshot.forEach(function (doc) {
-        data.push(doc.data());
+    reportFirestoreRef
+      .orderBy("createdAt", "desc")
+      .get()
+      .then(function (querySnapshot) {
+        let data = [];
+        querySnapshot.forEach(function (doc) {
+          data.push(doc.data());
+        });
+        setReportList(data);
+        setIsLoading(false);
       });
-      setReportList(data);
-      setIsLoading(false);
-    });
   }
 
   return (
