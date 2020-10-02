@@ -14,7 +14,7 @@ import TrashReportStatus from "./TrashReportStatus";
 import Avatar from "@material-ui/core/Avatar";
 import Moment from "react-moment";
 import Skeleton from "@material-ui/lab/Skeleton";
-import Divider from "@material-ui/core/Divider";
+/* import Divider from "@material-ui/core/Divider"; */
 
 const useStyles = makeStyles({
   root: {},
@@ -167,7 +167,7 @@ export default function TrashReportCard(props) {
           )}
         </CardContent>
 
-        <Divider />
+        {/* <Divider /> */}
 
         <CardActions>
           {loading ? (
