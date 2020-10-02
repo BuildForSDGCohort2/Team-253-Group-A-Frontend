@@ -31,9 +31,11 @@ const ResetPassword = React.lazy(() => import("../signin/ResetPassword"));
 
 const Profile = React.lazy(() => import("../Profile"));
 const ContactUs = React.lazy(() => import("../ContactUs"));
-
-// My code
 const UpdateProfile = React.lazy(() => import("../UpdateProfile"));
+
+const TrashReportList = React.lazy(() =>
+  import("../trash-report/TrashReportList")
+);
 
 const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.toolbar,
@@ -105,7 +107,9 @@ function App() {
             <Route path="/updateprofile" component={UpdateProfile} />
             <Route path="/terms-of-services" component={Terms} />
             <Route path="/privacy-policy" component={Privacy} />
-
+            <Route path="/covid">
+              <TrashReportList tagId="covid19" />
+            </Route>
             <Route path="/profile" component={Profile} />
             <Route path="/contact-us" component={ContactUs} />
 
