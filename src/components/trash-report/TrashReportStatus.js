@@ -20,6 +20,7 @@ export default function TrashReportStatus(props) {
         label={props.statusId === undefined ? "Open" : props.statusId}
         variant="outlined"
         color="secondary"
+        size="small"
       />
     </div>
   );

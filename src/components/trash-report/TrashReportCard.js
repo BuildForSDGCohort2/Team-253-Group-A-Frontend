@@ -100,10 +100,9 @@ export default function TrashReportCard(props) {
         />
         <CardContent>
           <Typography
-            noWarp
+            noWrap
             gutterBottom
-            variant="h5"
-            component="h2"
+            variant="subtitle2"
             className={classes.cardTitle}
           >
             {props.data.title}
@@ -112,16 +111,14 @@ export default function TrashReportCard(props) {
             {props.data.description}
           </Typography>
         </CardContent>
+
+        <CardActions>
+          <TrashReportStatus
+            className={classes.cardStatus}
+            tagId={props.data.statusId}
+          />
+        </CardActions>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="secondary">
-          Learn More
-        </Button>
-        <TrashReportStatus
-          className={classes.cardStatus}
-          tagId={props.data.statusId}
-        />
-      </CardActions>
     </Card>
   );
 }
