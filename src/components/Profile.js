@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
   },
   imageContainer: {
     padding: "5px",
-    transform: "translate(40%, 150px)",
     position: "absolute",
     top: "100%",
     left: "50%",
