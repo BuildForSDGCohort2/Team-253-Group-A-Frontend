@@ -1,8 +1,8 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { AuthCheck, SuspenseWithPerf } from "reactfire";
+import { AuthCheck, SuspenseWithPerf, useUser } from "reactfire";
 import { makeStyles } from "@material-ui/core/styles";
-import Account from "../Account"
+import Account from "../Account";
 
 import {
   Link as LinkRouter,
@@ -17,6 +17,9 @@ import PostAddIcon from "@material-ui/icons/PostAdd";
 import Fab from "@material-ui/core/Fab";
 
 const AddTrashReport = React.lazy(() => import("../trash-report/AddReport"));
+const TrashReportList = React.lazy(() =>
+  import("../trash-report/TrashReportList")
+);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const classes = useStyles();
+  const user = useUser();
 
   let { path, url } = useRouteMatch();
 
@@ -52,6 +56,7 @@ export default function Dashboard() {
               <Account />
             </Route>
             <Route exact path={path}>
+              <TrashReportList uid={user.uid} />
               <Fab
                 variant="extended"
                 color="secondary"
