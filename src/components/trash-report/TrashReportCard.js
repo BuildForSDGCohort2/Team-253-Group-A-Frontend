@@ -35,13 +35,15 @@ export default function TrashReportCard(props) {
 
   const trashReportPath = "/spots/" + props.data.id;
 
-  const [reportImageURL, setReportImageURL] = React.useState(null);
+  const [reportImageURL, setReportImageURL] = React.useState(
+    props.data.images[0].downloadUrl
+  );
   /*   const [userProfile, setUserProfile] = React.useState(null);
 
   console.log("profile"); */
 
   const fetchImageURL = () => {
-    if (reportImageURL === null) {
+    if (reportImageURL === undefined) {
       storage
         .ref(props.data.images[0].storagePath)
         .getDownloadURL()
