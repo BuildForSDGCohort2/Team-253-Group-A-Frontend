@@ -4,15 +4,16 @@ import { Link as LinkRouter } from "react-router-dom";
 import { useStorage } from "reactfire";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-/* import CardHeader from "@material-ui/core/CardHeader"; */
+import CardHeader from "@material-ui/core/CardHeader";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import TrashReportStatus from "./TrashReportStatus";
-/* import Avatar from "@material-ui/core/Avatar";
- */
+import Avatar from "@material-ui/core/Avatar";
+import Moment from "react-moment";
+
 const useStyles = makeStyles({
   root: {},
   media: {
@@ -35,12 +36,14 @@ export default function TrashReportCard(props) {
 
   const trashReportPath = "/spots/" + props.data.id;
 
+  const [firstLoad, setFirstLoad] = React.useState(true);
+
   const [reportImageURL, setReportImageURL] = React.useState(
     props.data.images[0].downloadUrl
   );
-  /*   const [userProfile, setUserProfile] = React.useState(null);
+  const [userProfile, setUserProfile] = React.useState(null);
 
-  console.log("profile"); */
+  console.log(userProfile);
 
   const fetchImageURL = () => {
     if (reportImageURL === undefined) {
@@ -57,41 +60,51 @@ export default function TrashReportCard(props) {
     }
   };
 
-  /* if (userProfile == null) {
-    props.data.userProfile
-      .get()
-      .then(function (doc) {
-        if (doc.exists) {
-          setUserProfile((state) => ({
-            ...state,
-            uid: doc.data().uid,
-            displayName: doc.data().displayName,
-            photoURL: doc.data().photoURL,
-            isVerified: doc.data().isVerified,
-            disabled: doc.data().disabled,
-            createdAt: doc.data().createdAt,
-          }));
-        } else {
-          console.log("No such document!");
-        }
-        fetchImageURL();
-      })
-      .catch(function (error) {
-        // Handle any errors
-      });
-  } */
+  const fetchUserProfile = () => {
+    if (userProfile == null) {
+      props.data.userProfile
+        .get()
+        .then(function (doc) {
+          if (doc.exists) {
+            setUserProfile((state) => ({
+              ...state,
+              uid: doc.data().uid,
+              displayName: doc.data().displayName,
+              photoURL: doc.data().photoURL,
+              isVerified: doc.data().isVerified,
+              disabled: doc.data().disabled,
+              createdAt: doc.data().createdAt,
+            }));
+          } else {
+            console.log("No such document!");
+          }
+        })
+        .catch(function (error) {
+          // Handle any errors
+        });
+    }
+  };
 
-  fetchImageURL();
+  if (firstLoad) {
+    fetchUserProfile();
+    fetchImageURL();
+    setFirstLoad(false);
+  }
 
   return (
     <Card className={classes.root}>
-      {/*       {userProfile != null && (
+      {userProfile != null && (
         <CardHeader
-          avatar={<Avatar src={userProfile.photoURL} aria-label="profile picture"></Avatar>}
+          avatar={
+            <Avatar
+              src={userProfile.photoURL}
+              aria-label="profile picture"
+            ></Avatar>
+          }
           title={userProfile.displayName}
-          subheader={props.data.createdAt.toDate().toString()}
+          subheader={<Moment fromNow>{props.data.createdAt.toDate()}</Moment>}
         />
-      )} */}
+      )}
 
       <CardActionArea component={LinkRouter} to={trashReportPath}>
         <CardMedia
