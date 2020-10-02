@@ -5,7 +5,7 @@ const useStyles = makeStyles({
   root: {},
 });
 
-export default function TrashReportView() {
+export default function NoReportFound() {
   const classes = useStyles();
 
   return <div className={classes.root}></div>;
