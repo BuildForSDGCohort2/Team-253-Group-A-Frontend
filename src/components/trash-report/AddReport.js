@@ -101,6 +101,7 @@ export default function AddTrashReport() {
   const [selectedFileURL, setSelectedFileURL] = React.useState("");
   const [reservedReportID, setReservedReportID] = React.useState("");
   const [remoteUploadRef, setRemoteUploadRef] = React.useState(null);
+  const [imageDownloadUrl, setImageDownloadUrl] = React.useState(null);
   const [uploadProgress, setUploadProgress] = React.useState(-1);
   const [imageAnalyseActiveStep, setImageAnalyseActiveStep] = React.useState(0);
 
@@ -153,7 +154,12 @@ export default function AddTrashReport() {
 
     //check image
     if (selectedFile != null && remoteUploadRef != null) {
-      trashReport.images = [remoteUploadRef.fullPath];
+      trashReport.images = [
+        {
+          storagePath: remoteUploadRef.fullPath,
+          downloadUrl: imageDownloadUrl,
+        },
+      ];
     } else {
       // handle image required
     }
@@ -246,6 +252,7 @@ export default function AddTrashReport() {
           setRemoteUploadRef(mRemoteUploadRef);
           uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
             console.log("File available at", downloadURL);
+            setImageDownloadUrl(downloadURL);
             setUploadProgress(-1);
             handleNextImageAnalyseStep();
           });
