@@ -124,20 +124,40 @@ export default function TrashReportCard(props) {
             userProfile.displayName
           )
         }
-        subheader={<Moment fromNow>{props.data.createdAt.toDate()}</Moment>}
+        subheader={
+          loading ? (
+            <Skeleton animation="wave" height={10} width="40%" />
+          ) : (
+            <Moment fromNow>{props.data.createdAt.toDate()}</Moment>
+          )
+        }
       />
 
       <CardActionArea component={LinkRouter} to={trashReportPath}>
-        <CardMedia className={classes.media} image={reportImageURL} />
+        {loading ? (
+          <Skeleton animation="wave" variant="rect" className={classes.media} />
+        ) : (
+          <CardMedia className={classes.media} image={reportImageURL} />
+        )}
         <CardContent>
-          <Typography
-            noWrap
-            gutterBottom
-            variant="subtitle2"
-            className={classes.cardTitle}
-          >
-            {props.data.title}
-          </Typography>
+          {loading ? (
+            <Skeleton
+              animation="wave"
+              height={21}
+              style={{ marginBottom: 8 }}
+              className={classes.cardTitle}
+            />
+          ) : (
+            <Typography
+              noWrap
+              gutterBottom
+              variant="subtitle2"
+              className={classes.cardTitle}
+            >
+              {props.data.title}
+            </Typography>
+          )}
+
           {/* <Typography variant="body2" color="textSecondary" component="p">
             {props.data.description}
           </Typography> */}
