@@ -41,7 +41,7 @@ export default function TrashReportCard(props) {
   const classes = useStyles();
   const storage = useStorage();
 
-  const trashReportPath = "/spots/" + props.data.id;
+  const trashReportPath = "/spots/view/" + props.data.id;
 
   const [loading, setLoading] = React.useState(true);
   const [firstLoad, setFirstLoad] = React.useState(true);
