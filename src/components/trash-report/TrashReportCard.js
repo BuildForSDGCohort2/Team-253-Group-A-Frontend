@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link as LinkRouter } from "react-router-dom";
+import Link from "@material-ui/core/Link";
 import { useStorage } from "reactfire";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -128,7 +129,13 @@ export default function TrashReportCard(props) {
                 style={{ marginBottom: 6 }}
               />
             ) : (
-              userProfile.displayName
+              <Link
+                component={LinkRouter}
+                color="secondary"
+                to={`/profile/${userProfile.uid})`}
+              >
+                {userProfile.displayName}
+              </Link>
             )
           }
           subheader={

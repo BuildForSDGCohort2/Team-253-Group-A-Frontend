@@ -1,6 +1,7 @@
 import React from "react";
 import { useFirestore } from "reactfire";
 import { Link as LinkRouter, useParams } from "react-router-dom";
+import Link from "@material-ui/core/Link";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import GenericNotFound from "../404";
@@ -86,8 +87,6 @@ export default function TrashReportView(props) {
     });
   }
 
-  console.log(userProfile);
-
   if (reportExists) {
     return (
       <Card className={classes.root}>
@@ -114,7 +113,13 @@ export default function TrashReportView(props) {
                 style={{ marginBottom: 6 }}
               />
             ) : (
-              userProfile.displayName
+              <Link
+                component={LinkRouter}
+                color="secondary"
+                to={`/profile/${userProfile.uid})`}
+              >
+                {userProfile.displayName}
+              </Link>
             )
           }
           subheader={
