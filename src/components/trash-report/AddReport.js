@@ -11,14 +11,17 @@ import AddAPhoto from "@material-ui/icons/AddAPhoto";
 import Box from "@material-ui/core/Box";
 import { useStorage, useUser, useFirestore } from "reactfire";
 
-import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
-import DoneIcon from "@material-ui/icons/Done";
+import SvgIcon from "@material-ui/core/SvgIcon";
 
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
 
 import GoogleMap from "google-map-react";
+import Marker from "./Marker";
+
+import Loading from "../Loading";
+import ImageAnalyseStepper from "./ImageAnalyseStepper";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,14 +64,21 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(2),
   },
+  spotTagsContainer: {
+    position: "relative",
+    flexGrow: 1,
+    padding: theme.spacing(2),
+  },
   spotTags: {
     display: "flex",
     justifyContent: "center",
     flexWrap: "wrap",
-    padding: theme.spacing(2),
     "& > *": {
       margin: theme.spacing(0.5),
     },
+  },
+  paperWrapper: {
+    padding: theme.spacing(2),
   },
 }));
 
@@ -76,7 +86,10 @@ export default function AddTrashReport() {
   const classes = useStyles();
   const user = useUser();
   const storage = useStorage();
-  const firestore = useFirestore();
+  const db = useFirestore();
+
+  const reportFirestoreRef = db.collection("spots");
+  const defaultTagsRef = db.collection("report-tags");
 
   // eslint-disable-next-line
   const [mapsApi, setMapsApi] = React.useState(null);
@@ -88,20 +101,105 @@ export default function AddTrashReport() {
   const [selectedFileURL, setSelectedFileURL] = React.useState("");
   const [reservedReportID, setReservedReportID] = React.useState("");
   const [remoteUploadRef, setRemoteUploadRef] = React.useState(null);
+  const [imageDownloadUrl, setImageDownloadUrl] = React.useState(null);
   const [uploadProgress, setUploadProgress] = React.useState(-1);
+  const [imageAnalyseActiveStep, setImageAnalyseActiveStep] = React.useState(0);
+
+  const [reporTitle, setReportTitle] = React.useState("");
+  const [reportDescription, setReportDescription] = React.useState("");
+
+  const [reportLocation, setReportLocation] = React.useState(null);
 
   if (reservedReportID === "") {
-    setReservedReportID(firestore.collection("spots").doc().id);
+    setReservedReportID(reportFirestoreRef.doc().id);
+  }
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      setReportLocation(
+        new firebase.firestore.GeoPoint(
+          position.coords.latitude,
+          position.coords.longitude
+        )
+      );
+    });
+  }
+
+  const [tagsData, setTagsData] = React.useState({ tags: [] });
+
+  if (tagsData.tags.length === 0) {
+    defaultTagsRef.get().then(function (querySnapshot) {
+      let tags = [];
+      querySnapshot.forEach(function (doc) {
+        tags = [...tags, doc.data()];
+      });
+      setTagsData(
+        tags.reduce(
+          (options, option) => ({
+            ...options,
+            tags: tags,
+            [option.id]: false,
+          }),
+          {}
+        )
+      );
+    });
   }
 
   const saveTrashReport = (event) => {
     event.preventDefault();
+    let trashReport = { uid: user.uid, id: reservedReportID };
+    //let isReportValid = false;
+    trashReport.userProfile = db.collection("profiles").doc(user.uid);
+
+    //check image
+    if (selectedFile != null && remoteUploadRef != null) {
+      trashReport.images = [
+        {
+          storagePath: remoteUploadRef.fullPath,
+          downloadUrl: imageDownloadUrl,
+        },
+      ];
+    } else {
+      // handle image required
+    }
+
+    //check title
+    if (reporTitle.length > 0) {
+      trashReport.title = reporTitle;
+    } else {
+      // handle title required
+    }
+
+    //check description
+    if (reportDescription.length > 0) {
+      trashReport.description = reportDescription;
+    } else {
+      // handle description required
+    }
+
+    //check location
+    if (reportLocation != null) {
+      trashReport.location = reportLocation;
+    } else {
+      // handle location required
+    }
+
+    trashReport.createdAt = firebase.firestore.Timestamp.fromDate(new Date());
+
+    reportFirestoreRef
+      .doc(reservedReportID)
+      .set(Object.assign({}, trashReport))
+      .then(function () {
+        console.log("Document successfully written!");
+      });
   };
 
   const handleImageUpload = (event) => {
     let mFile = event.target.files[0];
 
     if (remoteUploadRef != null) {
+      handleBackImageAnalyseStep();
       // Delete the file
       remoteUploadRef
         .delete()
@@ -154,19 +252,21 @@ export default function AddTrashReport() {
           setRemoteUploadRef(mRemoteUploadRef);
           uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
             console.log("File available at", downloadURL);
+            setImageDownloadUrl(downloadURL);
             setUploadProgress(-1);
+            handleNextImageAnalyseStep();
           });
         }
       );
     }
   };
 
-  const handleDelete = () => {
-    console.info("You clicked the delete icon.");
+  const handleNextImageAnalyseStep = () => {
+    setImageAnalyseActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  const handleClick = () => {
-    console.info("You clicked the Chip.");
+  const handleBackImageAnalyseStep = () => {
+    setImageAnalyseActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   // Fit map to its bounds after the api is loaded
@@ -176,21 +276,14 @@ export default function AddTrashReport() {
   };
 
   const handleGoogleMapClick = ({ lat, lng }) => {
-    console.log(lat, lng);
-    /*     const latlng = {
-      lat: lat,
-      lng: lng,
-    }; */
-    /* mapGeocoder.geocode(
-      { location: latlng },
-      (results: mapsApi.GeocoderResult[], status: mapsApi.GeocoderStatus) => {
-        if (status === "OK") {
-          if (results[0]) {
-            console.log(results[0]);
-          }
-        }
-      }
-    ); */
+    setReportLocation(new firebase.firestore.GeoPoint(lat, lng));
+  };
+
+  const handleTagChange = (tag) => () => {
+    setTagsData((prevState) => ({
+      ...prevState,
+      [tag.id]: !prevState[tag.id],
+    }));
   };
 
   return (
@@ -244,54 +337,9 @@ export default function AddTrashReport() {
             variant="determinate"
             value={uploadProgress}
           />
-          <div className={classes.spotTags}>
-            this is just a previw for spot tags:
-            <Chip label="Basic" />
-            <Chip label="Disabled" disabled />
-            <Chip
-              avatar={<Avatar>M</Avatar>}
-              label="Clickable"
-              onClick={handleClick}
-            />
-            <Chip label="Deletable" onDelete={handleDelete} />
-            <Chip
-              label="Clickable deletable"
-              onClick={handleClick}
-              onDelete={handleDelete}
-            />
-            <Chip
-              label="Custom delete icon"
-              onClick={handleClick}
-              onDelete={handleDelete}
-              deleteIcon={<DoneIcon />}
-            />
-            <Chip label="Clickable Link" component="a" href="#chip" clickable />
-            <Chip
-              avatar={<Avatar>M</Avatar>}
-              label="Primary clickable"
-              clickable
-              color="primary"
-              onDelete={handleDelete}
-              deleteIcon={<DoneIcon />}
-            />
-            <Chip
-              label="Primary clickable"
-              clickable
-              color="primary"
-              onDelete={handleDelete}
-              deleteIcon={<DoneIcon />}
-            />
-            <Chip
-              label="Deletable primary"
-              onDelete={handleDelete}
-              color="primary"
-            />
-            <Chip
-              label="Deletable secondary"
-              onDelete={handleDelete}
-              color="secondary"
-            />
-          </div>
+
+          <ImageAnalyseStepper step={imageAnalyseActiveStep} />
+
           <div className={classes.formContentContainer}>
             <div className={classes.formContentLine}>
               <TextField
@@ -305,6 +353,7 @@ export default function AddTrashReport() {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                onChange={(e) => setReportTitle(e.target.value)}
               />
             </div>
             <div className={classes.formContentLine}>
@@ -319,28 +368,88 @@ export default function AddTrashReport() {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                onChange={(e) => setReportDescription(e.target.value)}
                 multiline
               />
             </div>
+
+            <div className={classes.spotTagsContainer}>
+              <Paper
+                variant="outlined"
+                elevation={0}
+                className={classes.paperWrapper}
+              >
+                <Typography gutterBottom variant="h6" component="div">
+                  Tag your spot:
+                </Typography>
+                <div className={classes.spotTags}>
+                  {tagsData["tags"].length === 0 && <Loading />}
+
+                  {tagsData["tags"].map((tag) => {
+                    return (
+                      <Chip
+                        key={tag.id}
+                        label={tag.name}
+                        {...(tag.id === "covid19" && {
+                          icon: (
+                            <SvgIcon viewBox="0 0 48 48">
+                              <path d="M46.5,19A1.49977,1.49977,0,0,0,45,20.5V22H40.87225a16.9,16.9,0,0,0-3.53-8.51367l2.92121-2.92139,1.17582.99561a1.49993,1.49993,0,1,0,2.12134-2.1211l-4.99991-5a1.4999,1.4999,0,0,0-2.12127,2.1211l.99565,1.17578-2.92139,2.92138A16.90205,16.90205,0,0,0,26,7.12793V3h1.5a1.5,1.5,0,0,0,0-3h-7a1.5,1.5,0,0,0,0,3H22V7.12793a16.90205,16.90205,0,0,0-8.51367,3.52978L10.56494,7.73633l.99565-1.17578a1.4999,1.4999,0,0,0-2.12127-2.1211l-4.88475,5a1.49993,1.49993,0,0,0,2.12133,2.1211l1.06067-.99561,2.92121,2.92139A16.9,16.9,0,0,0,7.12775,22H3V20.5a1.5,1.5,0,0,0-3,0v7a1.5,1.5,0,0,0,3,0V26H7.12775a16.9,16.9,0,0,0,3.53,8.51367L7.73657,37.43506l-1.17582-.99561a1.49993,1.49993,0,0,0-2.12134,2.1211l4.99991,5a1.4999,1.4999,0,1,0,2.12127-2.1211l-.99565-1.17578,2.92127-2.92138A16.902,16.902,0,0,0,22,40.87207V45H20.5a1.5,1.5,0,0,0,0,3h7a1.5,1.5,0,0,0,0-3H26V40.87207a16.902,16.902,0,0,0,8.51379-3.52978l2.92127,2.92138-.99565,1.17578a1.4999,1.4999,0,0,0,2.12127,2.1211l4.99991-5a1.49993,1.49993,0,1,0-2.12134-2.1211l-1.17582.99561-2.92121-2.92139A16.9,16.9,0,0,0,40.87225,26H45v1.5a1.5,1.5,0,0,0,3,0v-7A1.49977,1.49977,0,0,0,46.5,19Zm-28,1A3.5,3.5,0,1,1,22,16.5,3.49994,3.49994,0,0,1,18.5,20ZM30,33a2,2,0,1,1,2-2A2.00006,2.00006,0,0,1,30,33Z" />
+                            </SvgIcon>
+                          ),
+                        })}
+                        {...(!tagsData[tag.id] && {
+                          onClick: handleTagChange(tag),
+                        })}
+                        {...(tagsData[tag.id] && {
+                          onDelete: handleTagChange(tag),
+                        })}
+                        color={clsx(
+                          !tagsData[tag.id] && "default",
+                          tagsData[tag.id] && "secondary"
+                        )}
+                      />
+                    );
+                  })}
+                </div>
+              </Paper>
+            </div>
+
             <div className={classes.formContentLine}>
-              <Paper elevation={2} className={classes.locationContainer}>
-                <Typography variant="h6">Select spot location</Typography>
+              <Paper
+                variant="outlined"
+                elevation={0}
+                className={classes.locationContainer}
+              >
+                <Typography gutterBottom variant="h6">
+                  Select spot location*
+                </Typography>
                 <div style={{ height: "350px", width: "100%" }}>
                   <GoogleMap
                     bootstrapURLKeys={{
                       key: process.env.REACT_APP_FIREBASE_APIKEY,
                     }}
-                    defaultCenter={{
-                      lat: 34.7398,
-                      lng: 10.76,
-                    }}
+                    center={
+                      reportLocation != null
+                        ? {
+                            lat: reportLocation.latitude,
+                            lng: reportLocation.longitude,
+                          }
+                        : { lat: 34.7398, lng: 10.76 }
+                    }
                     defaultZoom={10}
                     yesIWantToUseGoogleMapApiInternals
                     onGoogleApiLoaded={({ map, maps }) =>
                       mapApiIsLoaded(map, maps)
                     }
                     onClick={handleGoogleMapClick}
-                  ></GoogleMap>
+                  >
+                    {reportLocation != null && (
+                      <Marker
+                        lat={reportLocation.latitude}
+                        lng={reportLocation.longitude}
+                      />
+                    )}
+                  </GoogleMap>
                 </div>
               </Paper>
             </div>
