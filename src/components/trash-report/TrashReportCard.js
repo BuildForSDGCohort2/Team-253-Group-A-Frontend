@@ -15,12 +15,21 @@ import TrashReportStatus from "./TrashReportStatus";
 import Avatar from "@material-ui/core/Avatar";
 import Moment from "react-moment";
 import Skeleton from "@material-ui/lab/Skeleton";
-/* import Divider from "@material-ui/core/Divider"; */
+import ScheduleOutlined from "@material-ui/icons/ScheduleOutlined";
+import grey from "@material-ui/core/colors/grey";
 
 const useStyles = makeStyles({
   root: {},
   media: {
+    position: "relative",
     height: 140,
+  },
+  cardHeader: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    background: "rgb(0,0,0)",
+    background: "linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)",
   },
   cardTitle: {
     flex: 1,
@@ -29,6 +38,13 @@ const useStyles = makeStyles({
   },
   reportDateFooter: { marginRight: "auto" },
   cardStatus: { marginLeft: "auto" },
+  small: {
+    width: 32,
+    height: 32,
+  },
+  cardActionsContainer: {
+    color: grey[500],
+  },
 });
 
 TrashReportCard.propTypes = {
@@ -104,61 +120,66 @@ export default function TrashReportCard(props) {
   }, [userProfile]);
 
   return (
-    <Card className={classes.root}>
-      {!props.noHeader && (
-        <CardHeader
-          avatar={
-            loading ? (
-              <Skeleton animation="wave" variant="circle">
-                <Avatar />
-              </Skeleton>
-            ) : (
-              <Link component={LinkRouter} to={`/profile/${userProfile.uid}`}>
-                <Avatar
-                  alt={userProfile.displayName}
-                  src={userProfile.photoURL}
-                  aria-label="profile picture"
-                />
-              </Link>
-            )
-          }
-          title={
-            loading ? (
-              <Skeleton
-                animation="wave"
-                height={10}
-                width="80%"
-                style={{ marginBottom: 6 }}
-              />
-            ) : (
-              <Link
-                component={LinkRouter}
-                color="secondary"
-                to={`/profile/${userProfile.uid}`}
-              >
-                {userProfile.displayName === undefined ||
-                userProfile.displayName == null
-                  ? "CleanOut user"
-                  : userProfile.displayName}
-              </Link>
-            )
-          }
-          subheader={
+    <Card className={classes.root} variant="outlined">
+      {loading ? (
+        <Skeleton animation="wave" variant="rect" className={classes.media} />
+      ) : (
+        <CardMedia className={classes.media} image={reportImageURL}>
+          {!props.noHeader && (
+            <CardHeader
+              className={classes.cardHeader}
+              avatar={
+                loading ? (
+                  <Skeleton animation="wave" variant="circle">
+                    <Avatar />
+                  </Skeleton>
+                ) : (
+                  <Link
+                    component={LinkRouter}
+                    to={`/profile/${userProfile.uid}`}
+                  >
+                    <Avatar
+                      className={classes.small}
+                      alt={userProfile.displayName}
+                      src={userProfile.photoURL}
+                      aria-label="profile picture"
+                    />
+                  </Link>
+                )
+              }
+              title={
+                loading ? (
+                  <Skeleton
+                    animation="wave"
+                    height={10}
+                    width="80%"
+                    style={{ marginBottom: 6 }}
+                  />
+                ) : (
+                  <Link
+                    component={LinkRouter}
+                    color="primary"
+                    to={`/profile/${userProfile.uid}`}
+                  >
+                    {userProfile.displayName === undefined ||
+                    userProfile.displayName == null
+                      ? "CleanOut user"
+                      : userProfile.displayName}
+                  </Link>
+                )
+              }
+              /* subheader={
             loading ? (
               <Skeleton animation="wave" height={10} width="40%" />
             ) : (
               <Moment fromNow>{props.data.createdAt.toDate()}</Moment>
             )
-          }
-        />
+          } */
+            />
+          )}
+        </CardMedia>
       )}
-
       <CardActionArea component={LinkRouter} to={trashReportPath}>
-        {loading ? (
-          <Skeleton animation="wave" variant="rect" className={classes.media} />
-        ) : (
-          <CardMedia className={classes.media} image={reportImageURL} />
-        )}
         <CardContent>
           {loading ? (
             <Skeleton
@@ -181,16 +202,15 @@ export default function TrashReportCard(props) {
 
         {/* <Divider /> */}
 
-        <CardActions>
+        <CardActions className={classes.cardActionsContainer}>
           {loading ? (
             <Skeleton animation="wave" height={21} width="100%" />
           ) : (
             <React.Fragment>
-              {props.noHeader && (
-                <Moment className={classes.reportDateFooter} fromNow>
-                  {props.data.createdAt.toDate()}
-                </Moment>
-              )}
+              <ScheduleOutlined color="action" fontSize="small" />
+              <Moment className={classes.reportDateFooter} fromNow>
+                {props.data.createdAt.toDate()}
+              </Moment>
 
               <div className={classes.cardStatus}>
                 <TrashReportStatus tagId={props.data.statusId} />
