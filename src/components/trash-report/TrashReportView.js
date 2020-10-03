@@ -96,11 +96,13 @@ export default function TrashReportView(props) {
                 <Avatar />
               </Skeleton>
             ) : (
-              <Avatar
-                alt={userProfile.displayName}
-                src={userProfile.photoURL}
-                aria-label="profile picture"
-              />
+              <Link component={LinkRouter} to={`/profile/${userProfile.uid}`}>
+                <Avatar
+                  alt={userProfile.displayName}
+                  src={userProfile.photoURL}
+                  aria-label="profile picture"
+                />
+              </Link>
             )
           }
           title={

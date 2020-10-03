@@ -113,11 +113,13 @@ export default function TrashReportCard(props) {
                 <Avatar />
               </Skeleton>
             ) : (
-              <Avatar
-                alt={userProfile.displayName}
-                src={userProfile.photoURL}
-                aria-label="profile picture"
-              />
+              <Link component={LinkRouter} to={`/profile/${userProfile.uid}`}>
+                <Avatar
+                  alt={userProfile.displayName}
+                  src={userProfile.photoURL}
+                  aria-label="profile picture"
+                />
+              </Link>
             )
           }
           title={
@@ -132,7 +134,7 @@ export default function TrashReportCard(props) {
               <Link
                 component={LinkRouter}
                 color="secondary"
-                to={`/profile/${userProfile.uid})`}
+                to={`/profile/${userProfile.uid}`}
               >
                 {userProfile.displayName === undefined ||
                 userProfile.displayName == null
