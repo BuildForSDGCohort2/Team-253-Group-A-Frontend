@@ -16,7 +16,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Moment from "react-moment";
 import Skeleton from "@material-ui/lab/Skeleton";
 import ScheduleOutlined from "@material-ui/icons/ScheduleOutlined";
-import grey from "@material-ui/core/colors/grey";
+import { grey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles({
   root: {},
