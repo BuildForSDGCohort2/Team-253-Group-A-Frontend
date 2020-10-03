@@ -108,7 +108,7 @@ export default function Footer() {
                     primary="About us"
                   />
                 </ListItem>
-                <ListItem button>
+                <ListItem button component={LinkRouter} to="/contact-us">
                   <ListItemText
                     className={classes.primary}
                     primary="Contact us"

@@ -52,3 +52,4 @@ Please remember to read the [Privacy Policy](https://awesome-jang-7f1fc2.netlify
 Please remember to read the [Terms of Service](https://awesome-jang-7f1fc2.netlify.app/terms-of-services) instructions.
 
 ## License
+See the [LICENSE](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Frontend/blob/develop/LICENSE) file for license rights and limitations (MIT).
