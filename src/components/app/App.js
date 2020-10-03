@@ -33,6 +33,10 @@ const Profile = React.lazy(() => import("../Profile"));
 const ContactUs = React.lazy(() => import("../ContactUs"));
 const UpdateProfile = React.lazy(() => import("../UpdateProfile"));
 
+const TrashReportView = React.lazy(() =>
+  import("../trash-report/TrashReportView")
+);
+
 const TrashReportList = React.lazy(() =>
   import("../trash-report/TrashReportList")
 );
@@ -99,6 +103,8 @@ function App() {
               <Redirect to="/spots" />
             </Route>
             <Route path="/spots" exact component={Home} />
+            <Route path="/spots/view/:id" component={TrashReportView} />
+
             <Route path="/about" exact component={About} />
             <Route path="/signin" exact component={SignIn} />
             <Route path="/reset-password" exact component={ResetPassword} />
