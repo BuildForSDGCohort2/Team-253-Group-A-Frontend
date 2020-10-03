@@ -29,6 +29,7 @@ const useStyles = makeStyles({
     bottom: 0,
     width: "100%",
     background: "rgb(0,0,0)",
+    // eslint-disable-next-line
     background: "linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)",
   },
   cardTitle: {
