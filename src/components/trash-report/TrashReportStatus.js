@@ -18,7 +18,6 @@ export default function TrashReportStatus(props) {
     <Chip
       className={classes.root}
       label={props.statusId === undefined ? "Open" : props.statusId}
-      variant="outlined"
       color="secondary"
       size="small"
     />
