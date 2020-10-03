@@ -41,6 +41,10 @@ export default function Dashboard() {
 
   let { path, url } = useRouteMatch();
 
+  if (user == null) {
+    return <Redirect to="/signin" />;
+  }
+
   return (
     <div className={classes.root}>
       <SuspenseWithPerf
