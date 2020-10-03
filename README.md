@@ -4,19 +4,15 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/2b9a8ed1-cb18-488f-acd2-05a2a33b3218/deploy-status)](https://app.netlify.com/sites/awesome-jang-7f1fc2/deploys)
 
 ## About the team
+We are a team of 4 members : 
 
-We are a team of 4 members :  
-[Khalil Hammami](https://github.com/khammami)  
-<img src="https://avatars1.githubusercontent.com/u/297917?s=460&v=4" width="150px" height="150px">
-
-[Ojoechem Chinonso](https://github.com/ChinonsoIg)  
-<img src="https://avatars2.githubusercontent.com/u/46009285?s=460&v=4" width="150px" height="150px"> 
-
-[Sara EL-ATEIF](https://github.com/elateifsara)  
-<img src="https://avatars2.githubusercontent.com/u/27445092?s=460&u=349cffccfccda38293e4aab20868a77b60079274&v=4" width="150px" height="150px">
-
-[Sofia Bourhim](https://github.com/SofiaBee-W)  
-<img src="https://avatars1.githubusercontent.com/u/45902355?s=460&u=ffbc0cc593f575d67140e4197eec449a412a08c9v=4" width="150px" height="150px"> 
+| [Front End Developer](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Frontend) | [Front End Developer](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Frontend)|
+|:-------------------------:|:-------------------------:|
+|<img src="https://avatars1.githubusercontent.com/u/297917?s=460&v=4" width="100px" height="100px">   |  <img src="https://avatars2.githubusercontent.com/u/46009285?s=460&v=4" width="100px" height="100px"> |
+|[Khalil Hammami](https://github.com/khammami)| [Ojoechem Chinonso](https://github.com/ChinonsoIg) |
+| **[Back End Developer](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Backend)** | **[Technical Team Lead](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Backend)** |
+| <img src="https://avatars2.githubusercontent.com/u/27445092?s=460&u=349cffccfccda38293e4aab20868a77b60079274&v=4" width="100px" height="100px"> | <img src="https://avatars1.githubusercontent.com/u/45902355?s=460&u=ffbc0cc593f575d67140e4197eec449a412a08c9v=4" width="100px" height="100px">|
+|[Sara EL-ATEIF](https://github.com/elateifsara)| [Sofia Bourhim](https://github.com/SofiaBee-W) |
 
 ## About our project "CleanOut"
 
