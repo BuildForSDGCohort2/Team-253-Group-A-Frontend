@@ -99,7 +99,8 @@ export default function TrashReportList(props) {
       ) : (
         <div className={classes.noResultsContainer}>
           <Typography gutterBottom variant="body1" component="div">
-            No trash spots has been reported yet or they've been all cleaned.
+            No trash spots has been reported yet or they&apos;ve been all
+            cleaned.
           </Typography>
 
           <Button
