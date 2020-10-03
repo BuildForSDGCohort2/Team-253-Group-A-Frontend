@@ -116,7 +116,7 @@ function App() {
             <Route path="/covid">
               <TrashReportList tagId="covid19" />
             </Route>
-            <Route path="/profile" component={Profile} />
+            <Route path="/profile/:id" component={Profile} />
             <Route path="/contact-us" component={ContactUs} />
 
             <Route path="*" exact={true} component={GenericNotFound} />
