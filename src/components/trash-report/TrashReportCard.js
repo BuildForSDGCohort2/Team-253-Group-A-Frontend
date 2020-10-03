@@ -134,7 +134,10 @@ export default function TrashReportCard(props) {
                 color="secondary"
                 to={`/profile/${userProfile.uid})`}
               >
-                {userProfile.displayName}
+                {userProfile.displayName === undefined ||
+                userProfile.displayName == null
+                  ? "CleanOut user"
+                  : userProfile.displayName}
               </Link>
             )
           }

@@ -44,7 +44,6 @@ export default function TrashReportView(props) {
   const classes = useStyles();
   const db = useFirestore();
   let { id } = useParams();
-  console.log(id);
 
   const [loading, setLoading] = React.useState(true);
   const [data, setData] = React.useState(null);
@@ -118,7 +117,10 @@ export default function TrashReportView(props) {
                 color="secondary"
                 to={`/profile/${userProfile.uid})`}
               >
-                {userProfile.displayName}
+                {userProfile.displayName === undefined ||
+                userProfile.displayName == null
+                  ? "CleanOut user"
+                  : userProfile.displayName}
               </Link>
             )
           }
