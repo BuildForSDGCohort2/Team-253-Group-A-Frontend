@@ -17,7 +17,6 @@ import Moment from "react-moment";
 import Skeleton from "@material-ui/lab/Skeleton";
 import ScheduleOutlined from "@material-ui/icons/ScheduleOutlined";
 import { grey } from "@material-ui/core/colors";
-import Chip from "@material-ui/core/Chip";
 import CovidIcon from "../icons/CovidIcon";
 
 const useStyles = makeStyles({
@@ -215,9 +214,7 @@ export default function TrashReportCard(props) {
                 {props.data.createdAt.toDate()}
               </Moment>
               {props.data.tags != null &&
-                props.data.tags.includes("covid19") && (
-                  <Chip size="small" label="Covid-19" icon={<CovidIcon />} />
-                )}
+                props.data.tags.includes("covid19") && <CovidIcon />}
 
               <div className={classes.cardStatus}>
                 <TrashReportStatus tagId={props.data.statusId} />
