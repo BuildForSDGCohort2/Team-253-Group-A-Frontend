@@ -93,8 +93,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-let apiURL =
-  "http://detectron2api.eastus.azurecontainer.io:5000/api/score-image";
+let apiURL = "https://cleanout.azurewebsites.net/api/score-image";
 if (
   window.location.hostname === "localhost" ||
   window.location.hostname === "127.0.0.1"
