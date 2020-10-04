@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useStorage, useUser, useFirestore } from "reactfire";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Container from "@material-ui/core/Container";
@@ -92,6 +93,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let apiURL = "http://127.0.0.1:8484/api/score-image";
+if (
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1"
+) {
+  apiURL = "http://127.0.0.1:8484/api/score-image";
+}
+
 export default function AddTrashReport() {
   const classes = useStyles();
   const user = useUser();
@@ -124,6 +133,7 @@ export default function AddTrashReport() {
   const [isSaving, setIsSaving] = React.useState(false);
 
   const [errors, setErrors] = React.useState({});
+  const [aiData, setAiData] = React.useState({});
 
   if (reservedReportID === "") {
     setReservedReportID(reportFirestoreRef.doc().id);
@@ -174,6 +184,9 @@ export default function AddTrashReport() {
         {
           storagePath: remoteUploadRef.fullPath,
           downloadUrl: imageDownloadUrl,
+          classes: aiData.classes,
+          pred_classes: aiData.pred_classes,
+          scores: aiData.scores,
         },
       ];
     } else {
@@ -305,6 +318,25 @@ export default function AddTrashReport() {
             setImageDownloadUrl(downloadURL);
             setUploadProgress(-1);
             handleNextImageAnalyseStep();
+            setIsSaving(true);
+            axios
+              .post(apiURL, {
+                imageUrl: downloadURL,
+              })
+              .then(function (response) {
+                console.log(response);
+                setIsSaving(false);
+                if (response.status === 200) {
+                  if (response.data != null) {
+                    setAiData(response.data);
+                  }
+                }
+                handleNextImageAnalyseStep();
+              })
+              .catch(function (error) {
+                console.log(error);
+                setIsSaving(false);
+              });
           });
         }
       );
