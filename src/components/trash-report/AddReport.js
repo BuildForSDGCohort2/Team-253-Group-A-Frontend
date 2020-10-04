@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
-
 import React from "react";
+import { useHistory } from "react-router-dom";
+import { useStorage, useUser, useFirestore } from "reactfire";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Container from "@material-ui/core/Container";
@@ -9,13 +10,15 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import AddAPhoto from "@material-ui/icons/AddAPhoto";
 import Box from "@material-ui/core/Box";
-import { useStorage, useUser, useFirestore } from "reactfire";
 
 import Chip from "@material-ui/core/Chip";
 import SvgIcon from "@material-ui/core/SvgIcon";
 
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
+import Alert from "@material-ui/lab/Alert";
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import GoogleMap from "google-map-react";
 import Marker from "./Marker";
@@ -80,6 +83,13 @@ const useStyles = makeStyles((theme) => ({
   paperWrapper: {
     padding: theme.spacing(2),
   },
+  errorMessageContainer: {
+    margin: theme.spacing(2),
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
 }));
 
 export default function AddTrashReport() {
@@ -87,6 +97,7 @@ export default function AddTrashReport() {
   const user = useUser();
   const storage = useStorage();
   const db = useFirestore();
+  let history = useHistory();
 
   const reportFirestoreRef = db.collection("spots");
   const defaultTagsRef = db.collection("report-tags");
@@ -109,6 +120,10 @@ export default function AddTrashReport() {
   const [reportDescription, setReportDescription] = React.useState("");
 
   const [reportLocation, setReportLocation] = React.useState(null);
+
+  const [isSaving, setIsSaving] = React.useState(false);
+
+  const [errors, setErrors] = React.useState({});
 
   if (reservedReportID === "") {
     setReservedReportID(reportFirestoreRef.doc().id);
@@ -148,8 +163,9 @@ export default function AddTrashReport() {
 
   const saveTrashReport = (event) => {
     event.preventDefault();
+    setIsSaving(true);
+    const validateErrors = {};
     let trashReport = { uid: user.uid, id: reservedReportID };
-    //let isReportValid = false;
     trashReport.userProfile = db.collection("profiles").doc(user.uid);
 
     //check image
@@ -162,6 +178,8 @@ export default function AddTrashReport() {
       ];
     } else {
       // handle image required
+      validateErrors.isImage = true;
+      validateErrors.imageMsgError = "You need to upload a photo for the spot.";
     }
 
     //check title
@@ -169,6 +187,8 @@ export default function AddTrashReport() {
       trashReport.title = reporTitle;
     } else {
       // handle title required
+      validateErrors.isTitle = true;
+      validateErrors.titleMsgError = "You must give the spot a name.";
     }
 
     //check description
@@ -176,6 +196,9 @@ export default function AddTrashReport() {
       trashReport.description = reportDescription;
     } else {
       // handle description required
+      validateErrors.isDescription = true;
+      validateErrors.descriptionMsgError =
+        "Please write some details about the state of the spot.";
     }
 
     //check location
@@ -183,16 +206,43 @@ export default function AddTrashReport() {
       trashReport.location = reportLocation;
     } else {
       // handle location required
+      validateErrors.isLocation = true;
+      validateErrors.locationMsgError = "Location is required.";
     }
 
     trashReport.createdAt = firebase.firestore.Timestamp.fromDate(new Date());
 
-    reportFirestoreRef
-      .doc(reservedReportID)
-      .set(Object.assign({}, trashReport))
-      .then(function () {
-        console.log("Document successfully written!");
+    //tags
+    trashReport.tags = [];
+    Object.keys(tagsData)
+      .filter((tag) => tag !== "tags")
+      .filter((tag) => tagsData[tag])
+      .forEach((tag) => {
+        trashReport.tags.push(tag);
       });
+
+    //saving report to firestore
+    setErrors(validateErrors);
+    if (
+      !validateErrors.isImage &&
+      !validateErrors.isTitle &&
+      !validateErrors.isDescription &&
+      !validateErrors.isLocation
+    ) {
+      reportFirestoreRef
+        .doc(reservedReportID)
+        .set(Object.assign({}, trashReport))
+        .then(function () {
+          console.log("Document successfully written!");
+          history.push("/dashboard");
+        })
+        .catch(function (error) {
+          setIsSaving(false);
+          console.log(error);
+        });
+    } else {
+      setIsSaving(false);
+    }
   };
 
   const handleImageUpload = (event) => {
@@ -338,6 +388,16 @@ export default function AddTrashReport() {
             value={uploadProgress}
           />
 
+          <Box
+            className={classes.errorMessageContainer}
+            component="div"
+            display={errors.isImage ? "block" : "none"}
+          >
+            <Alert variant="outlined" severity="error">
+              {errors.imageMsgError}
+            </Alert>
+          </Box>
+
           <ImageAnalyseStepper step={imageAnalyseActiveStep} />
 
           <div className={classes.formContentContainer}>
@@ -347,13 +407,15 @@ export default function AddTrashReport() {
                 name="title"
                 fullWidth
                 label="Name your spot"
-                placeholder="placeholder"
+                placeholder="Spot name"
                 color="secondary"
                 variant="outlined"
                 InputLabelProps={{
                   shrink: true,
                 }}
                 onChange={(e) => setReportTitle(e.target.value)}
+                error={errors.isTitle}
+                helperText={errors.titleMsgError}
               />
             </div>
             <div className={classes.formContentLine}>
@@ -370,6 +432,8 @@ export default function AddTrashReport() {
                 }}
                 onChange={(e) => setReportDescription(e.target.value)}
                 multiline
+                error={errors.isDescription}
+                helperText={errors.descriptionMsgError}
               />
             </div>
 
@@ -420,6 +484,15 @@ export default function AddTrashReport() {
                 elevation={0}
                 className={classes.locationContainer}
               >
+                <Box
+                  className={classes.errorMessageContainer}
+                  component="div"
+                  display={errors.isLocation ? "block" : "none"}
+                >
+                  <Alert variant="outlined" severity="error">
+                    {errors.locationMsgError}
+                  </Alert>
+                </Box>
                 <Typography gutterBottom variant="h6">
                   Select spot location*
                 </Typography>
@@ -454,13 +527,21 @@ export default function AddTrashReport() {
               </Paper>
             </div>
             <div className={classes.formContentLine}>
-              <Button type="submit" variant="contained" color="secondary">
+              <Button
+                type="submit"
+                variant="contained"
+                color="secondary"
+                disabled={isSaving}
+              >
                 Create Report
               </Button>
             </div>
           </div>
         </form>
       </Paper>
+      <Backdrop className={classes.backdrop} open={isSaving}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Container>
   );
 }
