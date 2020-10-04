@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useStorage, useUser, useFirestore } from "reactfire";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Container from "@material-ui/core/Container";
@@ -12,7 +13,6 @@ import AddAPhoto from "@material-ui/icons/AddAPhoto";
 import Box from "@material-ui/core/Box";
 
 import Chip from "@material-ui/core/Chip";
-import SvgIcon from "@material-ui/core/SvgIcon";
 
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
@@ -25,6 +25,7 @@ import Marker from "./Marker";
 
 import Loading from "../Loading";
 import ImageAnalyseStepper from "./ImageAnalyseStepper";
+import CovidIcon from "../icons/CovidIcon";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -92,6 +93,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let apiURL = "https://cleanout.azurewebsites.net/api/score-image";
+if (
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1"
+) {
+  apiURL = "http://127.0.0.1:8484/api/score-image";
+}
+
 export default function AddTrashReport() {
   const classes = useStyles();
   const user = useUser();
@@ -124,6 +133,7 @@ export default function AddTrashReport() {
   const [isSaving, setIsSaving] = React.useState(false);
 
   const [errors, setErrors] = React.useState({});
+  const [aiData, setAiData] = React.useState({});
 
   if (reservedReportID === "") {
     setReservedReportID(reportFirestoreRef.doc().id);
@@ -170,12 +180,24 @@ export default function AddTrashReport() {
 
     //check image
     if (selectedFile != null && remoteUploadRef != null) {
-      trashReport.images = [
-        {
-          storagePath: remoteUploadRef.fullPath,
-          downloadUrl: imageDownloadUrl,
-        },
-      ];
+      if (aiData == null) {
+        trashReport.images = [
+          {
+            storagePath: remoteUploadRef.fullPath,
+            downloadUrl: imageDownloadUrl,
+          },
+        ];
+      } else {
+        trashReport.images = [
+          {
+            storagePath: remoteUploadRef.fullPath,
+            downloadUrl: imageDownloadUrl,
+            classes: aiData.classes,
+            pred_classes: aiData.pred_classes,
+            scores: aiData.scores,
+          },
+        ];
+      }
     } else {
       // handle image required
       validateErrors.isImage = true;
@@ -263,6 +285,7 @@ export default function AddTrashReport() {
 
     if (mFile == null) {
       setSelectedFileURL("");
+      setSelectedFile(null);
     } else {
       setSelectedFile(mFile);
       setSelectedFileURL(URL.createObjectURL(mFile));
@@ -305,6 +328,26 @@ export default function AddTrashReport() {
             setImageDownloadUrl(downloadURL);
             setUploadProgress(-1);
             handleNextImageAnalyseStep();
+            setIsSaving(true);
+            axios
+              .post(apiURL, {
+                imageUrl: downloadURL,
+              })
+              .then(function (response) {
+                console.log(response);
+                setIsSaving(false);
+                if (response.status === 200) {
+                  if (response.data != null) {
+                    setAiData(response.data);
+                  }
+                }
+                handleNextImageAnalyseStep();
+              })
+              .catch(function (error) {
+                console.log(error);
+                setAiData(null);
+                setIsSaving(false);
+              });
           });
         }
       );
@@ -455,11 +498,7 @@ export default function AddTrashReport() {
                         key={tag.id}
                         label={tag.name}
                         {...(tag.id === "covid19" && {
-                          icon: (
-                            <SvgIcon viewBox="0 0 48 48">
-                              <path d="M46.5,19A1.49977,1.49977,0,0,0,45,20.5V22H40.87225a16.9,16.9,0,0,0-3.53-8.51367l2.92121-2.92139,1.17582.99561a1.49993,1.49993,0,1,0,2.12134-2.1211l-4.99991-5a1.4999,1.4999,0,0,0-2.12127,2.1211l.99565,1.17578-2.92139,2.92138A16.90205,16.90205,0,0,0,26,7.12793V3h1.5a1.5,1.5,0,0,0,0-3h-7a1.5,1.5,0,0,0,0,3H22V7.12793a16.90205,16.90205,0,0,0-8.51367,3.52978L10.56494,7.73633l.99565-1.17578a1.4999,1.4999,0,0,0-2.12127-2.1211l-4.88475,5a1.49993,1.49993,0,0,0,2.12133,2.1211l1.06067-.99561,2.92121,2.92139A16.9,16.9,0,0,0,7.12775,22H3V20.5a1.5,1.5,0,0,0-3,0v7a1.5,1.5,0,0,0,3,0V26H7.12775a16.9,16.9,0,0,0,3.53,8.51367L7.73657,37.43506l-1.17582-.99561a1.49993,1.49993,0,0,0-2.12134,2.1211l4.99991,5a1.4999,1.4999,0,1,0,2.12127-2.1211l-.99565-1.17578,2.92127-2.92138A16.902,16.902,0,0,0,22,40.87207V45H20.5a1.5,1.5,0,0,0,0,3h7a1.5,1.5,0,0,0,0-3H26V40.87207a16.902,16.902,0,0,0,8.51379-3.52978l2.92127,2.92138-.99565,1.17578a1.4999,1.4999,0,0,0,2.12127,2.1211l4.99991-5a1.49993,1.49993,0,1,0-2.12134-2.1211l-1.17582.99561-2.92121-2.92139A16.9,16.9,0,0,0,40.87225,26H45v1.5a1.5,1.5,0,0,0,3,0v-7A1.49977,1.49977,0,0,0,46.5,19Zm-28,1A3.5,3.5,0,1,1,22,16.5,3.49994,3.49994,0,0,1,18.5,20ZM30,33a2,2,0,1,1,2-2A2.00006,2.00006,0,0,1,30,33Z" />
-                            </SvgIcon>
-                          ),
+                          icon: <CovidIcon />,
                         })}
                         {...(!tagsData[tag.id] && {
                           onClick: handleTagChange(tag),
