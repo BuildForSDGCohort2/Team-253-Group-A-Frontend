@@ -181,15 +181,24 @@ export default function AddTrashReport() {
 
     //check image
     if (selectedFile != null && remoteUploadRef != null) {
-      trashReport.images = [
-        {
-          storagePath: remoteUploadRef.fullPath,
-          downloadUrl: imageDownloadUrl,
-          classes: aiData.classes,
-          pred_classes: aiData.pred_classes,
-          scores: aiData.scores,
-        },
-      ];
+      if (aiData == null) {
+        trashReport.images = [
+          {
+            storagePath: remoteUploadRef.fullPath,
+            downloadUrl: imageDownloadUrl,
+          },
+        ];
+      } else {
+        trashReport.images = [
+          {
+            storagePath: remoteUploadRef.fullPath,
+            downloadUrl: imageDownloadUrl,
+            classes: aiData.classes,
+            pred_classes: aiData.pred_classes,
+            scores: aiData.scores,
+          },
+        ];
+      }
     } else {
       // handle image required
       validateErrors.isImage = true;
@@ -337,6 +346,7 @@ export default function AddTrashReport() {
               })
               .catch(function (error) {
                 console.log(error);
+                setAiData(null);
                 setIsSaving(false);
               });
           });
