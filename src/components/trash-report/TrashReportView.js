@@ -128,7 +128,7 @@ export default function TrashReportView(props) {
                 <Link
                   component={LinkRouter}
                   color="secondary"
-                  to={`/profile/${userProfile.uid})`}
+                  to={`/profile/${userProfile.uid}`}
                 >
                   {userProfile.displayName === undefined ||
                   userProfile.displayName == null
