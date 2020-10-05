@@ -74,11 +74,11 @@ export default function AccountMenu() {
             component={LinkRouter}
             to={getProfilePath}
           >
-            Profile
+            Your Profile
           </MenuItem>
-          <MenuItem onClick={handleClose} component={LinkRouter} to="/dashboard/account">
+          {/* <MenuItem onClick={handleClose} component={LinkRouter} to="/dashboard/account">
             My account
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem onClick={signOut}>Logout</MenuItem>
         </Menu>
       </div>
