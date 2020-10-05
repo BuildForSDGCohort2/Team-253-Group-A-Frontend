@@ -1,121 +1,215 @@
+import firebase from "firebase/app";
 import React from "react";
+import { useFirestore } from "reactfire";
+import ReCAPTCHA from "react-google-recaptcha";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import StarRateTwoToneIcon from "@material-ui/icons/StarRateTwoTone";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import SendOutlinedIcon from "@material-ui/icons/SendOutlined";
+import CheckOutlinedIcon from "@material-ui/icons/CheckOutlined";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: theme.spacing(4),
   },
-  textFieldLeft: {
-    marginLeft: theme.spacing(0),
-    marginRight: "3%",
-    width: "47%",
-  },
-  textFieldRight: {
-    marginLeft: "3%",
-    marginRight: theme.spacing(0),
-    width: "47%",
-  },
-  button: {
-    margin: theme.spacing(1),
-    fontSize: 20,
-    padding: theme.spacing(1),
-    // backgroundColor: "#d6e4d6e6",
-    backgroundColor: "#023e07",
-    color: "white",
-  },
-  icon: {
-    marginLeft: 2,
-    marginBottom: 4,
-    fontSize: 10,
-    color: "red",
-  },
-  message: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: 80,
-    marginBottom: theme.spacing(5),
-    color: "#1a9224e3",
-  },
 }));
 
 export default function ContactUs() {
   const classes = useStyles();
+  const db = useFirestore();
+
+  const captchaRef = React.createRef();
+
+  const [fullName, setFullName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [subject, setSubject] = React.useState("");
+  const [message, setMessage] = React.useState("");
+  const [isNotRobot, setIsNotRobot] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+
+  const [errors, setErrors] = React.useState({});
+
+  const onRecaptchaSuccess = () => {
+    setIsNotRobot(true);
+  };
+
+  const onRecaptchaError = () => {
+    setIsNotRobot(false);
+  };
+
+  const selectIcon = (success, isSubmitting) => {
+    if (success) {
+      return <CheckOutlinedIcon />;
+    } else {
+      if (isSubmitting) {
+        return <CircularProgress color="secondary" size={24} />;
+      } else {
+        return <SendOutlinedIcon />;
+      }
+    }
+  };
+
+  const submitContactRequest = (event) => {
+    event.preventDefault();
+
+    let contactErrors = {};
+    //check fuul name
+    if (fullName.length === 0) {
+      contactErrors.isFullName = true;
+      contactErrors.fullNameMsg = "This field is required";
+    }
+    //check email
+    if (email.length === 0) {
+      contactErrors.isEmail = true;
+      contactErrors.emailMsg = "This field is required";
+    }
+    //check subject
+    if (subject.length === 0) {
+      contactErrors.isSubject = true;
+      contactErrors.subjectMsg = "This field is required";
+    }
+    //check message
+    if (message.length === 0) {
+      contactErrors.isMessage = true;
+      contactErrors.messageMsg = "This field is required";
+    }
+
+    if (
+      !contactErrors.isFullName &&
+      !contactErrors.isEmail &&
+      !contactErrors.isSubject &&
+      !contactErrors.isMessage &&
+      isNotRobot
+    ) {
+      setIsSubmitting(true);
+      console.log("submitting");
+      db.collection("contact-request")
+        .add({
+          fullName: fullName,
+          email: email,
+          subject: subject,
+          message: message,
+          createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+        })
+        .then(function (docRef) {
+          setIsSubmitting(false);
+          setSuccess(true);
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function (error) {
+          setIsSubmitting(false);
+          setSuccess(false);
+          console.error("Error adding document: ", error);
+        });
+    } else {
+      setErrors(contactErrors);
+    }
+  };
 
   return (
     <div className={classes.root}>
-      <Typography
-        gutterBottom
-        variant="h3"
-        style={{ fontWeight: "bold", color: "#023e07" }}
-      >
-        Get In Touch
-      </Typography>
-      <form noValidate autoComplete="off">
-        <Typography>
-          Name
-          <StarRateTwoToneIcon className={classes.icon} />
-        </Typography>
-        <TextField
-          id="outlined-basic"
-          variant="outlined"
-          margin="normal"
-          className={classes.textFieldLeft}
-          style={{
-            backgroundColor: "white",
-          }}
-        />
-        <TextField
-          id="outlined-basic"
-          variant="outlined"
-          margin="normal"
-          className={classes.textFieldRight}
-          style={{
-            backgroundColor: "white",
-          }}
-        />
-        <Typography>
-          Email
-          <StarRateTwoToneIcon className={classes.icon} />
-        </Typography>
-        <TextField
-          id="outlined-full-width-static"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          style={{
-            backgroundColor: "white",
-          }}
-        />
-        <Typography>
-          Comment or Message
-          <StarRateTwoToneIcon className={classes.icon} />
-        </Typography>
-        <TextField
-          id="outlined-multiline-static"
-          fullWidth
-          multiline
-          rows={6}
-          variant="outlined"
-          margin="normal"
-          style={{
-            backgroundColor: "white",
-          }}
-        />
+      <form autoComplete="on" onSubmit={submitContactRequest}>
+        <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <Typography gutterBottom variant="h5">
+              Get In Touch
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Paper elevation={0}>
+              <TextField
+                error={errors.isFullName}
+                variant="outlined"
+                type="text"
+                required
+                name="fullName"
+                fullWidth
+                label="Your Name"
+                color="secondary"
+                onChange={(e) => setFullName(e.target.value)}
+                helperText={errors.fullNameMsg}
+              />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Paper elevation={0}>
+              <TextField
+                error={errors.isEmail}
+                variant="outlined"
+                type="email"
+                required
+                name="email"
+                fullWidth
+                label="Your email"
+                color="secondary"
+                onChange={(e) => setEmail(e.target.value)}
+                helperText={errors.emailMsg}
+              />
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper elevation={0}>
+              <TextField
+                error={errors.isSubject}
+                variant="outlined"
+                type="text"
+                required
+                name="subject"
+                fullWidth
+                label="Subject"
+                color="secondary"
+                onChange={(e) => setSubject(e.target.value)}
+                helperText={errors.subjectMsg}
+              />
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper elevation={0}>
+              <TextField
+                error={errors.isMessage}
+                variant="outlined"
+                type="text"
+                required
+                name="email"
+                fullWidth
+                label="Your message"
+                color="secondary"
+                multiline
+                rows={5}
+                onChange={(e) => setMessage(e.target.value)}
+                helperText={errors.messageMsg}
+              />
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <ReCAPTCHA
+              ref={captchaRef}
+              sitekey={process.env.REACT_APP_RECAPTCHA_CLIENT_KEY}
+              onChange={onRecaptchaSuccess}
+              onErrored={onRecaptchaError}
+              onExpired={onRecaptchaError}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="large"
+              endIcon={selectIcon(success, isSubmitting)}
+              disabled={isSubmitting}
+            >
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
       </form>
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        className={classes.button}
-      >
-        Submit
-      </Button>
     </div>
   );
 }
