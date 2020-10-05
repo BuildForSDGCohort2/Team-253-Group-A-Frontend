@@ -8,6 +8,9 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import SendOutlinedIcon from "@material-ui/icons/SendOutlined";
+import CheckOutlinedIcon from "@material-ui/icons/CheckOutlined";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,17 +23,36 @@ export default function ContactUs() {
   const classes = useStyles();
   const db = useFirestore();
 
+  const captchaRef = React.createRef();
+
   const [fullName, setFullName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [subject, setSubject] = React.useState("");
   const [message, setMessage] = React.useState("");
   const [isNotRobot, setIsNotRobot] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
 
   const [errors, setErrors] = React.useState({});
 
-  const onRecaptchaSuccess = (value) => {
-    console.log("not robot ok " + value);
+  const onRecaptchaSuccess = () => {
     setIsNotRobot(true);
+  };
+
+  const onRecaptchaError = () => {
+    setIsNotRobot(false);
+  };
+
+  const selectIcon = (success, isSubmitting) => {
+    if (success) {
+      return <CheckOutlinedIcon />;
+    } else {
+      if (isSubmitting) {
+        return <CircularProgress color="secondary" size={24} />;
+      } else {
+        return <SendOutlinedIcon />;
+      }
+    }
   };
 
   const submitContactRequest = (event) => {
@@ -65,6 +87,7 @@ export default function ContactUs() {
       !contactErrors.isMessage &&
       isNotRobot
     ) {
+      setIsSubmitting(true);
       console.log("submitting");
       db.collection("contact-request")
         .add({
@@ -75,9 +98,13 @@ export default function ContactUs() {
           createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
         })
         .then(function (docRef) {
+          setIsSubmitting(false);
+          setSuccess(true);
           console.log("Document written with ID: ", docRef.id);
         })
         .catch(function (error) {
+          setIsSubmitting(false);
+          setSuccess(false);
           console.error("Error adding document: ", error);
         });
     } else {
@@ -162,8 +189,11 @@ export default function ContactUs() {
           </Grid>
           <Grid item xs={12}>
             <ReCAPTCHA
+              ref={captchaRef}
               sitekey={process.env.REACT_APP_RECAPTCHA_CLIENT_KEY}
               onChange={onRecaptchaSuccess}
+              onErrored={onRecaptchaError}
+              onExpired={onRecaptchaError}
             />
           </Grid>
           <Grid item xs={12}>
@@ -172,6 +202,8 @@ export default function ContactUs() {
               variant="contained"
               color="primary"
               size="large"
+              endIcon={selectIcon(success, isSubmitting)}
+              disabled={isSubmitting}
             >
               Submit
             </Button>
