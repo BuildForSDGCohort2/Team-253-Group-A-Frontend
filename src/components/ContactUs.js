@@ -1,4 +1,6 @@
+import firebase from "firebase/app";
 import React from "react";
+import { useFirestore } from "reactfire";
 import ReCAPTCHA from "react-google-recaptcha";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -14,21 +16,83 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ContactUs(props) {
+export default function ContactUs() {
   const classes = useStyles();
+  const db = useFirestore();
 
   const [fullName, setFullName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [subject, setSubject] = React.useState("");
   const [message, setMessage] = React.useState("");
+  const [isNotRobot, setIsNotRobot] = React.useState(false);
+
+  const [errors, setErrors] = React.useState({});
+
+  const onRecaptchaSuccess = (value) => {
+    console.log("not robot ok " + value);
+    setIsNotRobot(true);
+  };
 
   const submitContactRequest = (event) => {
     event.preventDefault();
+
+    //let contactData = {};
+    let contactErrors = {};
+    //check fuul name
+    if (fullName.length > 0) {
+    } else {
+      contactErrors.isFullName = true;
+      contactErrors.fullNameMsg = "This field is required";
+    }
+    //check email
+    if (email.length > 0) {
+    } else {
+      contactErrors.isEmail = true;
+      contactErrors.emailMsg = "This field is required";
+    }
+    //check subject
+    if (subject.length > 0) {
+    } else {
+      contactErrors.isSubject = true;
+      contactErrors.subjectMsg = "This field is required";
+    }
+    //check message
+    if (message.length > 0) {
+    } else {
+      contactErrors.isMessage = true;
+      contactErrors.messageMsg = "This field is required";
+    }
+
+    if (
+      !contactErrors.isFullName &&
+      !contactErrors.isEmail &&
+      !contactErrors.isSubject &&
+      !contactErrors.isMessage &&
+      isNotRobot
+    ) {
+      console.log("submitting");
+      db.collection("contact-request")
+        .add({
+          fullName: fullName,
+          email: email,
+          subject: subject,
+          message: message,
+          createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+        })
+        .then(function (docRef) {
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function (error) {
+          console.error("Error adding document: ", error);
+        });
+    } else {
+      setErrors(contactErrors);
+    }
   };
 
   return (
-    <div {...props} className={classes.root}>
-      <form Validate autoComplete="on" onSubmit={submitContactRequest}>
+    <div className={classes.root}>
+      <form autoComplete="on" onSubmit={submitContactRequest}>
         <Grid container spacing={4}>
           <Grid item xs={12}>
             <Typography gutterBottom variant="h5">
@@ -38,6 +102,7 @@ export default function ContactUs(props) {
           <Grid item xs={12} sm={6}>
             <Paper elevation={0}>
               <TextField
+                error={errors.isFullName}
                 variant="outlined"
                 type="text"
                 required
@@ -46,12 +111,14 @@ export default function ContactUs(props) {
                 label="Your Name"
                 color="secondary"
                 onChange={(e) => setFullName(e.target.value)}
+                helperText={errors.fullNameMsg}
               />
             </Paper>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Paper elevation={0}>
               <TextField
+                error={errors.isEmail}
                 variant="outlined"
                 type="email"
                 required
@@ -60,12 +127,14 @@ export default function ContactUs(props) {
                 label="Your email"
                 color="secondary"
                 onChange={(e) => setEmail(e.target.value)}
+                helperText={errors.emailMsg}
               />
             </Paper>
           </Grid>
           <Grid item xs={12}>
             <Paper elevation={0}>
               <TextField
+                error={errors.isSubject}
                 variant="outlined"
                 type="text"
                 required
@@ -74,12 +143,14 @@ export default function ContactUs(props) {
                 label="Subject"
                 color="secondary"
                 onChange={(e) => setSubject(e.target.value)}
+                helperText={errors.subjectMsg}
               />
             </Paper>
           </Grid>
           <Grid item xs={12}>
             <Paper elevation={0}>
               <TextField
+                error={errors.isMessage}
                 variant="outlined"
                 type="text"
                 required
@@ -90,18 +161,22 @@ export default function ContactUs(props) {
                 multiline
                 rows={5}
                 onChange={(e) => setMessage(e.target.value)}
+                helperText={errors.messageMsg}
               />
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <ReCAPTCHA sitekey={process.env.REACT_APP_RECAPTCHA_CLIENT_KEY} />
+            <ReCAPTCHA
+              sitekey={process.env.REACT_APP_RECAPTCHA_CLIENT_KEY}
+              onChange={onRecaptchaSuccess}
+            />
           </Grid>
           <Grid item xs={12}>
             <Button
+              type="submit"
               variant="contained"
               color="primary"
               size="large"
-              className={classes.button}
             >
               Submit
             </Button>
