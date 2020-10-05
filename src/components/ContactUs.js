@@ -17,9 +17,18 @@ const useStyles = makeStyles((theme) => ({
 export default function ContactUs(props) {
   const classes = useStyles();
 
+  const [fullName, setFullName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [subject, setSubject] = React.useState("");
+  const [message, setMessage] = React.useState("");
+
+  const submitContactRequest = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <div {...props} className={classes.root}>
-      <form noValidate autoComplete="off">
+      <form Validate autoComplete="on" onSubmit={submitContactRequest}>
         <Grid container spacing={4}>
           <Grid item xs={12}>
             <Typography gutterBottom variant="h5">
@@ -36,7 +45,7 @@ export default function ContactUs(props) {
                 fullWidth
                 label="Your Name"
                 color="secondary"
-                /* onChange={(e) => setLastName(e.target.value)} */
+                onChange={(e) => setFullName(e.target.value)}
               />
             </Paper>
           </Grid>
@@ -50,7 +59,7 @@ export default function ContactUs(props) {
                 fullWidth
                 label="Your email"
                 color="secondary"
-                /* onChange={(e) => setLastName(e.target.value)} */
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Paper>
           </Grid>
@@ -64,7 +73,7 @@ export default function ContactUs(props) {
                 fullWidth
                 label="Subject"
                 color="secondary"
-                /* onChange={(e) => setLastName(e.target.value)} */
+                onChange={(e) => setSubject(e.target.value)}
               />
             </Paper>
           </Grid>
@@ -80,7 +89,7 @@ export default function ContactUs(props) {
                 color="secondary"
                 multiline
                 rows={5}
-                /* onChange={(e) => setLastName(e.target.value)} */
+                onChange={(e) => setMessage(e.target.value)}
               />
             </Paper>
           </Grid>
