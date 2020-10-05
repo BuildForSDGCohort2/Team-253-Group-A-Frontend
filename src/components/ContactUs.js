@@ -36,29 +36,24 @@ export default function ContactUs() {
   const submitContactRequest = (event) => {
     event.preventDefault();
 
-    //let contactData = {};
     let contactErrors = {};
     //check fuul name
-    if (fullName.length > 0) {
-    } else {
+    if (fullName.length === 0) {
       contactErrors.isFullName = true;
       contactErrors.fullNameMsg = "This field is required";
     }
     //check email
-    if (email.length > 0) {
-    } else {
+    if (email.length === 0) {
       contactErrors.isEmail = true;
       contactErrors.emailMsg = "This field is required";
     }
     //check subject
-    if (subject.length > 0) {
-    } else {
+    if (subject.length === 0) {
       contactErrors.isSubject = true;
       contactErrors.subjectMsg = "This field is required";
     }
     //check message
-    if (message.length > 0) {
-    } else {
+    if (message.length === 0) {
       contactErrors.isMessage = true;
       contactErrors.messageMsg = "This field is required";
     }
