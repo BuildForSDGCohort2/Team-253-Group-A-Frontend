@@ -93,12 +93,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-let apiURL = "https://cleanout.azurewebsites.net/api/score-image";
+let apiURL = process.env.REACT_APP_API_REMOTE_URL + "/score-image";
 if (
   window.location.hostname === "localhost" ||
   window.location.hostname === "127.0.0.1"
 ) {
-  apiURL = "http://127.0.0.1:8484/api/score-image";
+  apiURL = process.env.REACT_APP_API_LOCAL_URL + "/score-image";
 }
 
 export default function AddTrashReport() {
