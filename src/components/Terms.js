@@ -16,7 +16,7 @@ export default function Terms() {
   const classes = useStyles();
 
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} variant="outlined">
       <Typography gutterBottom variant="h4">
         Terms of service
       </Typography>
@@ -24,7 +24,7 @@ export default function Terms() {
         1. Terms
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         By accessing this Website, accessible from
         awesome-jang-7f1fc2.netlify.app, you are agreeing to be bound by these
         Website Terms and Conditions of Use and agree that you are responsible
@@ -38,7 +38,7 @@ export default function Terms() {
         2. Use License
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         Permission is granted to temporarily download one copy of the materials
         on CleanOut&apos;s Website for personal, non-commercial transitory
         viewing only. This is the grant of a license, not a transfer of title,
@@ -65,7 +65,7 @@ export default function Terms() {
         </li>
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         This will let CleanOut to terminate upon violations of any of these
         restrictions. Upon termination, your viewing right will also be
         terminated and you should destroy any downloaded materials in your
@@ -76,7 +76,7 @@ export default function Terms() {
         3. Disclaimer
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         All the materials on CleanOut’s Website are provided &quot;as is&quot;.
         CleanOut makes no warranties, may it be expressed or implied, therefore
         negates all other warranties. Furthermore, CleanOut does not make any
@@ -89,7 +89,7 @@ export default function Terms() {
         4. Limitations
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         CleanOut or its suppliers will not be held accountable for any damages
         that will arise with the use or inability to use the materials on
         CleanOut’s Website, even if CleanOut or an authorized representative of
@@ -103,7 +103,7 @@ export default function Terms() {
         5. Revisions and Errata
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         The materials appearing on CleanOut’s Website may include technical,
         typographical, or photographic errors. CleanOut will not promise that
         any of the materials in this Website are accurate, complete, or current.
@@ -116,7 +116,7 @@ export default function Terms() {
         6. Links
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         CleanOut has not reviewed all of the sites linked to its Website and is
         not responsible for the contents of any such linked site. The presence
         of any link does not imply endorsement by CleanOut of the site. The use
@@ -127,7 +127,7 @@ export default function Terms() {
         7. Site Terms of Use Modifications
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         CleanOut may revise these Terms of Use for its Website at any time
         without prior notice. By using this Website, you are agreeing to be
         bound by the current version of these Terms and Conditions of Use.
@@ -149,7 +149,7 @@ export default function Terms() {
         9. Governing Law
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         Any claim related to CleanOut&apos;s Website shall be governed by the
         laws of Morocco without regards to its conflict of law provisions.
       </Typography>
