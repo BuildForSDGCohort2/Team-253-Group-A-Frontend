@@ -1,13 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { ThemeProvider } from '@material-ui/core/styles';
-import { FirebaseAppProvider } from 'reactfire';
-import App from './components/app/App';
-import * as serviceWorker from './serviceWorker';
-import theme from './theme';
-import ScrollToTop from './components/ScrollToTop'
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { ThemeProvider } from "@material-ui/core/styles";
+import { FirebaseAppProvider } from "reactfire";
+import App from "./components/app/App";
+import * as serviceWorker from "./serviceWorker";
+import theme from "./theme";
+import ScrollToTop from "./components/ScrollToTop";
 
 const firebaseConfig = {
   /* Paste your config object from Firebase console here */
@@ -19,21 +19,20 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
   appId: process.env.REACT_APP_CLIENTID,
   measurementId: process.env.REACT_APP_MEASUREMENTID,
- };
+};
 
 ReactDOM.render(
-    <FirebaseAppProvider firebaseConfig={firebaseConfig} initPerformance>
-      <ThemeProvider theme={theme}>
+  <FirebaseAppProvider firebaseConfig={firebaseConfig} initPerformance>
+    <ThemeProvider theme={theme}>
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
       <CssBaseline />
       <BrowserRouter>
         <ScrollToTop />
         <App />
-        </BrowserRouter>
-        </ThemeProvider>
-    </FirebaseAppProvider>
-  ,
-  document.getElementById('root')
+      </BrowserRouter>
+    </ThemeProvider>
+  </FirebaseAppProvider>,
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
