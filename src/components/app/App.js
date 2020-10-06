@@ -16,7 +16,8 @@ import Container from "@material-ui/core/Container";
 
 import Loading from "../Loading";
 
-const Header = React.lazy(() => import("../Header"));
+const Header = React.lazy(() => import("../header/Header"));
+const SubHeader = React.lazy(() => import("../header/SubHeader"));
 const Footer = React.lazy(() => import("../Footer"));
 const Home = React.lazy(() => import("../Home"));
 const SignIn = React.lazy(() => import("../signin/SignIn"));
@@ -94,8 +95,10 @@ function App() {
     <React.Fragment>
       <SuspenseWithPerf fallback={<Loading />} traceId={"load-header-status"}>
         <Header />
+        <div className={classes.offset} />
+        <SubHeader />
       </SuspenseWithPerf>
-      <div className={classes.offset} />
+
       <Container className={classes.mainContainer} maxWidth="md">
         <SuspenseWithPerf fallback={<Loading />} traceId={"load-views-status"}>
           <Switch>

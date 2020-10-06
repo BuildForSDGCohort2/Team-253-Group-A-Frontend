@@ -59,7 +59,7 @@ export default function Dashboard() {
             <Route path={`${path}/account`}>
               <Account />
             </Route>
-            <Route exact path={path}>
+            <Route exact path={`${path}/spots`}>
               <TrashReportList uid={user.uid} />
               <Fab
                 variant="extended"
@@ -71,6 +71,10 @@ export default function Dashboard() {
                 <PostAddIcon className={classes.extendedIcon} />
                 New Report
               </Fab>
+            </Route>
+
+            <Route path={path}>
+              <Redirect to={`${path}/spots`} />
             </Route>
           </Switch>
         </AuthCheck>
