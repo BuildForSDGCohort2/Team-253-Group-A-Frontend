@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import { Avatar } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
   profilePicture: {
     width: "100%",
     height: "auto",
+    maxWidth: 150,
+    marginLeft: "auto",
+    marginRight: "auto",
     backgroundColor: theme.palette.secondary.main,
     "&::after": {
       content: "' '",
@@ -32,7 +35,7 @@ export default function About() {
 
   return (
     <div>
-      <Paper className={classes.root}>
+      <Paper className={classes.root} variant="outlined">
         <Typography gutterBottom variant="h4">
           About Us
         </Typography>
