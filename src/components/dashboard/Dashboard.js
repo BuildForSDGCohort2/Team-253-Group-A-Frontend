@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import { AuthCheck, SuspenseWithPerf, useUser } from "reactfire";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Account from "../Account";
 
 import {
@@ -11,55 +11,20 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 
-import Loading from "../Loading";
-
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import Fab from "@material-ui/core/Fab";
-
-import PropTypes from "prop-types";
 import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
 import { Grid } from "@material-ui/core";
+
+import DashboardTabPanel from "./DashboardTabPanel";
+import { DashboardTab } from "./DashboardTab";
+
+import Loading from "../Loading";
 
 const AddTrashReport = React.lazy(() => import("../trash-report/AddReport"));
 const TrashReportList = React.lazy(() =>
   import("../trash-report/TrashReportList")
 );
-
-const DashboardTab = withStyles(() => ({
-  root: {
-    textTransform: "none",
-  },
-  selected: {},
-}))((props) => <Tab {...props} />);
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography component={"div"}>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
 
 function a11yProps(index) {
   return {
@@ -144,16 +109,16 @@ export default function Dashboard() {
                   </Fab>
                 </Grid>
                 <Grid item xs={12}>
-                  <TabPanel value={value} index={0}>
+                  <DashboardTabPanel value={value} index={0}>
                     test
                     <TrashReportList uid={user.uid} />
-                  </TabPanel>
-                  <TabPanel value={value} index={1}>
-                    events
-                  </TabPanel>
-                  <TabPanel value={value} index={2}>
+                  </DashboardTabPanel>
+                  <DashboardTabPanel value={value} index={1}>
+                    Comming soon...
+                  </DashboardTabPanel>
+                  <DashboardTabPanel value={value} index={2}>
                     account
-                  </TabPanel>
+                  </DashboardTabPanel>
                 </Grid>
               </Grid>
             </Route>
