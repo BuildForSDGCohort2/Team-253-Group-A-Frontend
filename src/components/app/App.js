@@ -99,7 +99,7 @@ function App() {
         <SubHeader />
       </SuspenseWithPerf>
 
-      <Container className={classes.mainContainer} maxWidth="md">
+      <Container className={classes.mainContainer} maxWidth="md" disableGutters>
         <SuspenseWithPerf fallback={<Loading />} traceId={"load-views-status"}>
           <Switch>
             <Route path="/" exact>
