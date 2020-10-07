@@ -134,6 +134,7 @@ export default function AddTrashReport() {
 
   const [errors, setErrors] = React.useState({});
   const [aiData, setAiData] = React.useState({});
+  const [covidDetected, setCovidDetected] = React.useState(false);
 
   if (reservedReportID === "") {
     setReservedReportID(reportFirestoreRef.doc().id);
@@ -339,6 +340,13 @@ export default function AddTrashReport() {
                 if (response.status === 200) {
                   if (response.data != null) {
                     setAiData(response.data);
+                    if (response.data.pred_classes.length > 0) {
+                      setCovidDetected(true);
+                      setTagsData((prevState) => ({
+                        ...prevState,
+                        covid19: true,
+                      }));
+                    }
                   }
                 }
                 handleNextImageAnalyseStep();
@@ -510,6 +518,9 @@ export default function AddTrashReport() {
                           !tagsData[tag.id] && "default",
                           tagsData[tag.id] && "secondary"
                         )}
+                        {...(tag.id === "covid19" && {
+                          disabled: covidDetected,
+                        })}
                       />
                     );
                   })}
