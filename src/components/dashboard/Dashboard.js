@@ -25,13 +25,6 @@ const TrashReportList = React.lazy(() =>
   import("../trash-report/TrashReportList")
 );
 
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    "aria-controls": `vertical-tabpanel-${index}`,
-  };
-}
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -72,53 +65,65 @@ export default function Dashboard() {
         traceId={"load-dashboard-views-status"}
       >
         <AuthCheck fallback={<Redirect to="/signin" />}>
+          <Tabs
+            variant="scrollable"
+            value={value}
+            indicatorColor="secondary"
+            onChange={handleChange}
+            aria-label="Dashboard tabs"
+            className={classes.tabs}
+          >
+            <DashboardTab
+              label="Your spots"
+              component={LinkRouter}
+              to={`${url}/spots`}
+            />
+            <DashboardTab
+              label="Your events"
+              component={LinkRouter}
+              to={`${url}/events`}
+            />
+            <DashboardTab
+              label="Your account"
+              component={LinkRouter}
+              to={`${url}/account`}
+            />
+          </Tabs>
           <Switch>
             <Route path={`${path}/spots/create`}>
               <AddTrashReport />
             </Route>
-            <Route path={`${path}/account`}>
-              <Account />
-            </Route>
             <Route exact path={`${path}/spots`}>
-              <Grid container spacing={0}>
-                <Grid item xs={12}>
-                  <Tabs
-                    variant="scrollable"
-                    value={value}
-                    indicatorColor="secondary"
-                    onChange={handleChange}
-                    aria-label="Dashboard tabs"
-                    className={classes.tabs}
-                  >
-                    <DashboardTab label="Your spots" {...a11yProps(0)} />
-                    <DashboardTab label="Your events" {...a11yProps(1)} />
-                    <DashboardTab label="Your account" {...a11yProps(2)} />
-                  </Tabs>
-                </Grid>
-                <Grid item xs={12}>
-                  <Fab
-                    variant="extended"
-                    color="primary"
-                    component={LinkRouter}
-                    size="small"
-                    to={`${url}/spots/create`}
-                  >
-                    <PostAddIcon className={classes.extendedIcon} />
-                    New Spot
-                  </Fab>
-                </Grid>
-                <Grid item xs={12}>
-                  <DashboardTabPanel value={value} index={0}>
+              <DashboardTabPanel value={value} index={0}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <Fab
+                      variant="extended"
+                      color="primary"
+                      component={LinkRouter}
+                      size="small"
+                      to={`${url}/spots/create`}
+                    >
+                      <PostAddIcon className={classes.extendedIcon} />
+                      New Spot
+                    </Fab>
+                  </Grid>
+                  <Grid item xs={12}>
                     <TrashReportList uid={user.uid} />
-                  </DashboardTabPanel>
-                  <DashboardTabPanel value={value} index={1}>
-                    Comming soon...
-                  </DashboardTabPanel>
-                  <DashboardTabPanel value={value} index={2}>
-                    <Account />
-                  </DashboardTabPanel>
+                  </Grid>
                 </Grid>
-              </Grid>
+              </DashboardTabPanel>
+            </Route>
+
+            <Route exact path={`${path}/events`}>
+              <DashboardTabPanel value={value} index={1}>
+                Comming soon...
+              </DashboardTabPanel>
+            </Route>
+            <Route path={`${path}/account`}>
+              <DashboardTabPanel value={value} index={2}>
+                <Account />
+              </DashboardTabPanel>
             </Route>
 
             <Route path={path}>
