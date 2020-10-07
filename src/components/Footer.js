@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 12,
     color: grey[700],
   },
+  gridItem: {
+    padding: theme.spacing(3),
+  },
 }));
 
 export default function Footer() {
@@ -34,14 +37,14 @@ export default function Footer() {
   return (
     <div className={classes.root}>
       <Container maxWidth="md" disableGutters>
-        <Grid container spacing={3}>
-          <Grid item md={5} xs={12}>
+        <Grid container spacing={0}>
+          <Grid item md={5} xs={12} className={classes.gridItem}>
             <Typography variant="h6" gutterBottom>
               CleanOut
             </Typography>
           </Grid>
 
-          <Grid item md={3} xs={6}>
+          <Grid item md={3} xs={6} className={classes.gridItem}>
             <Typography
               variant="subtitle1"
               className={classes.subTitle}
@@ -66,7 +69,7 @@ export default function Footer() {
             </List>
           </Grid>
 
-          <Grid item md={2} xs={6}>
+          <Grid item md={2} xs={6} className={classes.gridItem}>
             <Typography
               variant="subtitle1"
               className={classes.subTitle}
@@ -88,7 +91,7 @@ export default function Footer() {
             </List>
           </Grid>
 
-          <Grid item md={2} xs={6}>
+          <Grid item md={2} xs={6} className={classes.gridItem}>
             <Typography
               variant="subtitle1"
               className={classes.subTitle}
@@ -114,7 +117,7 @@ export default function Footer() {
             <Divider />
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item xs={12} className={classes.gridItem}>
             <Typography
               variant="body1"
               className={classes.copyright}
