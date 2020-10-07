@@ -20,7 +20,7 @@ const breadcrumbNameMap = {
   "/privacy-policy": "Privacy policy",
   "/dashboard": "Dashboard",
   "/dashboard/spots": "Spots",
-  "/dashboard/spots/create": "New report",
+  "/dashboard/spots/create": "New Spot",
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const LinkRouter = (props) => <Link {...props} component={RouterLink} />;
 
-export default function Header() {
+export default function SubHeader() {
   const classes = useStyles();
 
   return (
