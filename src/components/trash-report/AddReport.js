@@ -346,6 +346,12 @@ export default function AddTrashReport() {
                         ...prevState,
                         covid19: true,
                       }));
+                    } else {
+                      setCovidDetected(false);
+                      setTagsData((prevState) => ({
+                        ...prevState,
+                        covid19: false,
+                      }));
                     }
                   }
                 }
