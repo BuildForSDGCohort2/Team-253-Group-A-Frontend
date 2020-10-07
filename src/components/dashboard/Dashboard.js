@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import { AuthCheck, SuspenseWithPerf, useUser } from "reactfire";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Account from "../Account";
 
 import {
@@ -28,6 +28,13 @@ const TrashReportList = React.lazy(() =>
   import("../trash-report/TrashReportList")
 );
 
+const DashboardTab = withStyles(() => ({
+  root: {
+    textTransform: "none",
+  },
+  selected: {},
+}))((props) => <Tab {...props} />);
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -40,8 +47,8 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box>
-          <Typography component={"span"}>{children}</Typography>
+        <Box p={3}>
+          <Typography component={"div"}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -73,7 +80,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
   },
   tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`,
+    textTransform: "none",
+    borderBottom: `1px solid ${theme.palette.divider}`,
   },
 }));
 
@@ -108,36 +116,37 @@ export default function Dashboard() {
               <Account />
             </Route>
             <Route exact path={`${path}/spots`}>
-              <Grid container spacing={2}>
+              <Grid container spacing={0}>
+                <Grid item xs={12}>
+                  <Tabs
+                    variant="scrollable"
+                    value={value}
+                    indicatorColor="secondary"
+                    onChange={handleChange}
+                    aria-label="Dashboard tabs"
+                    className={classes.tabs}
+                  >
+                    <DashboardTab label="Your spots" {...a11yProps(0)} />
+                    <DashboardTab label="Your events" {...a11yProps(1)} />
+                    <DashboardTab label="Your account" {...a11yProps(2)} />
+                  </Tabs>
+                </Grid>
                 <Grid item xs={12}>
                   <Fab
                     variant="extended"
-                    color="secondary"
+                    color="primary"
                     component={LinkRouter}
                     size="small"
                     to={`${url}/spots/create`}
                   >
                     <PostAddIcon className={classes.extendedIcon} />
-                    New Report
+                    New Spot
                   </Fab>
                 </Grid>
-                <Grid item sm={3}>
-                  <Tabs
-                    orientation="vertical"
-                    variant="scrollable"
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="Dashboard tabs"
-                    className={classes.tabs}
-                  >
-                    <Tab label="Your spots" {...a11yProps(0)} />
-                    <Tab label="Your events" {...a11yProps(1)} />
-                    <Tab label="Your account" {...a11yProps(2)} />
-                  </Tabs>
-                </Grid>
-                <Grid item sm={9}>
+                <Grid item xs={12}>
                   <TabPanel value={value} index={0}>
-                    <TrashReportList uid={user.uid} dashboard />
+                    test
+                    <TrashReportList uid={user.uid} />
                   </TabPanel>
                   <TabPanel value={value} index={1}>
                     events
