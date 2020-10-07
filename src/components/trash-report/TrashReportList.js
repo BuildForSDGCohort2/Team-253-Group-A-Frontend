@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 TrashReportList.propTypes = {
   uid: PropTypes.string,
   tagId: PropTypes.string,
+  dashboard: PropTypes.bool,
 };
 
 //let firstLoad = true;
@@ -85,7 +86,13 @@ export default function TrashReportList(props) {
         <Grid container spacing={2}>
           {reportList.map((report) => {
             return (
-              <Grid key={report.id} item xs={12} sm={6} md={4}>
+              <Grid
+                key={report.id}
+                item
+                xs={12}
+                sm={6}
+                md={props.dashboard ? 6 : 4}
+              >
                 <TrashReportCard
                   {...(props.uid !== undefined && {
                     noHeader: true,

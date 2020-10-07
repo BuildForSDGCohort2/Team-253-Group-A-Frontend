@@ -40,8 +40,8 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
-          <Typography component={"div"}>{children}</Typography>
+        <Box>
+          <Typography component={"span"}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -108,7 +108,7 @@ export default function Dashboard() {
               <Account />
             </Route>
             <Route exact path={`${path}/spots`}>
-              <Grid container spacing={0}>
+              <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <Fab
                     variant="extended"
@@ -121,7 +121,7 @@ export default function Dashboard() {
                     New Report
                   </Fab>
                 </Grid>
-                <Grid item sm={2}>
+                <Grid item sm={3}>
                   <Tabs
                     orientation="vertical"
                     variant="scrollable"
@@ -135,9 +135,9 @@ export default function Dashboard() {
                     <Tab label="Your account" {...a11yProps(2)} />
                   </Tabs>
                 </Grid>
-                <Grid item sm={10}>
+                <Grid item sm={9}>
                   <TabPanel value={value} index={0}>
-                    <TrashReportList uid={user.uid} />
+                    <TrashReportList uid={user.uid} dashboard />
                   </TabPanel>
                   <TabPanel value={value} index={1}>
                     events
