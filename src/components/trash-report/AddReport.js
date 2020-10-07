@@ -381,7 +381,7 @@ export default function AddTrashReport() {
 
   return (
     <Container maxWidth="md" className={classes.root}>
-      <Paper>
+      <Paper variant="outlined">
         <form autoComplete="off" noValidate onSubmit={saveTrashReport}>
           <Box display="none">
             <input
@@ -572,7 +572,7 @@ export default function AddTrashReport() {
                 color="secondary"
                 disabled={isSaving}
               >
-                Create Report
+                Create Spot
               </Button>
             </div>
           </div>
