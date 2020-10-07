@@ -2,14 +2,14 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { AuthCheck, SuspenseWithPerf, useUser } from "reactfire";
 import { makeStyles } from "@material-ui/core/styles";
-import Account from "../Account";
-
 import {
   Link as LinkRouter,
   Switch,
   Route,
   useRouteMatch,
 } from "react-router-dom";
+
+import Loading from "../Loading";
 
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import Fab from "@material-ui/core/Fab";
@@ -19,8 +19,7 @@ import { Grid } from "@material-ui/core";
 import DashboardTabPanel from "./DashboardTabPanel";
 import { DashboardTab } from "./DashboardTab";
 
-import Loading from "../Loading";
-
+const Account = React.lazy(() => import("../Account"));
 const AddTrashReport = React.lazy(() => import("../trash-report/AddReport"));
 const TrashReportList = React.lazy(() =>
   import("../trash-report/TrashReportList")
@@ -110,14 +109,13 @@ export default function Dashboard() {
                 </Grid>
                 <Grid item xs={12}>
                   <DashboardTabPanel value={value} index={0}>
-                    test
                     <TrashReportList uid={user.uid} />
                   </DashboardTabPanel>
                   <DashboardTabPanel value={value} index={1}>
                     Comming soon...
                   </DashboardTabPanel>
                   <DashboardTabPanel value={value} index={2}>
-                    account
+                    <Account />
                   </DashboardTabPanel>
                 </Grid>
               </Grid>
