@@ -7,10 +7,10 @@
 
 We are a team of 4 members:
 
-| [Front End Developer](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Frontend) | [Front End Developer](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Frontend)| [Back End Developer](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Backend) | [Technical Team Lead](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Backend) |
-|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
-|<img src="https://avatars1.githubusercontent.com/u/297917?s=460&v=4" width="100px" height="100px"> |  <img src="https://avatars2.githubusercontent.com/u/46009285?s=460&v=4" width="100px" height="100px"> | <img src="https://avatars2.githubusercontent.com/u/27445092?s=460&u=349cffccfccda38293e4aab20868a77b60079274&v=4" width="100px" height="100px"> | <img src="https://avatars1.githubusercontent.com/u/45902355?s=460&u=ffbc0cc593f575d67140e4197eec449a412a08c9v=4" width="100px" height="100px">|
-|[Khalil Hammami](https://github.com/khammami)| [Ojoechem Chinonso](https://github.com/ChinonsoIg) | [Sara EL-ATEIF](https://github.com/elateifsara)| [Sofia Bourhim](https://github.com/SofiaBee-W) |
+|       [Front End Developer](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Frontend)       |        [Front End Developer](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Frontend)        |                              [Back End Developer](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Backend)                               |                             [Technical Team Lead](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Backend)                              |
+| :------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img src="https://avatars1.githubusercontent.com/u/297917?s=460&v=4" width="100px" height="100px"> | <img src="https://avatars2.githubusercontent.com/u/46009285?s=460&v=4" width="100px" height="100px"> | <img src="https://avatars2.githubusercontent.com/u/27445092?s=460&u=349cffccfccda38293e4aab20868a77b60079274&v=4" width="100px" height="100px"> | <img src="https://avatars1.githubusercontent.com/u/45902355?s=460&u=ffbc0cc593f575d67140e4197eec449a412a08c9v=4" width="100px" height="100px"> |
+|                           [Khalil Hammami](https://github.com/khammami)                            |                          [Ojoechem Chinonso](https://github.com/ChinonsoIg)                          |                                                 [Sara EL-ATEIF](https://github.com/elateifsara)                                                 |                                                 [Sofia Bourhim](https://github.com/SofiaBee-W)                                                 |
 
 ## About our project "CleanOut"
 
@@ -26,17 +26,19 @@ Access the app by following this [link](https://awesome-jang-7f1fc2.netlify.app/
 You will be directed to the `Spots` section,`fig. 1`, that has all the reported trash spots.
 
 To register or sign up please click on the `REGISTER` button on the upper right and either :
+
 - fill in the required information, `fig. 2`
-**Or**
+  **Or**
 - use on of the social media providers like your `Google` or `Facebook` account, `fig. 3`
 
-| Fig.1: Access the app | Fig.2: Register by filling info | Fig.3: Register using a social media account |
-|:-------------------------:|:-------------------------:|:-------------------------:|
-| <img src="assets/step1.png">  | <img src="assets/step2_1.png">  | <img src="assets/step2_2.png"> |
+|    Fig.1: Access the app     | Fig.2: Register by filling info | Fig.3: Register using a social media account |
+| :--------------------------: | :-----------------------------: | :------------------------------------------: |
+| <img src="assets/step1.png"> | <img src="assets/step2_1.png">  |        <img src="assets/step2_2.png">        |
 
 If you have already created an account (Register), then please click on the `LOG IN` button on the upper right to log in and either:
+
 - fill in the required information
-**Or**
+  **Or**
 - use on of the social media providers like your `Google` or `Facebook` account
 
 ### Step 2: Fill in a trash report
@@ -49,13 +51,13 @@ If you found trash in your neighborhood or on your walk then please report by cl
 - Fill in the title, description, select the appropriate tags and the location of the trash site, `fig. 8, 9, 10, 11, 12`
 - Wrap up by clicking on the `Create report` button
 
-| Fig.4: Fill in a trash report | Fig.5: Allow the app to get your location | Fig.6: Add the trash picture |
-|:-------------------------:|:-------------------------:|:-------------------------:|
-| <img src="assets/step3_1.png">  | <img src="assets/step3_2.png">  | <img src="assets/step3_3.png"> |
-| **Fig.7: Browse for the picture in your photo library** | **Fig.8: AI analysis image** | **Fig.9: AI finished the analysis** |
-| <img src="assets/step3_4.png">  | <img src="assets/step3_5.png">  | <img src="assets/step3_6.png"> |
-| **Fig.10: Select appropriate tags** | **Fig.11: Select exact location & Create report** | **Fig.12: Warning in case location not selected** |
-| <img src="assets/step3_7.png">  | <img src="assets/step3_8.png">  | <img src="assets/step3_9.png">  |
+|              Fig.4: Fill in a trash report              |     Fig.5: Allow the app to get your location     |           Fig.6: Add the trash picture            |
+| :-----------------------------------------------------: | :-----------------------------------------------: | :-----------------------------------------------: |
+|             <img src="assets/step3_1.png">              |          <img src="assets/step3_2.png">           |          <img src="assets/step3_3.png">           |
+| **Fig.7: Browse for the picture in your photo library** |           **Fig.8: AI analysis image**            |        **Fig.9: AI finished the analysis**        |
+|             <img src="assets/step3_4.png">              |          <img src="assets/step3_5.png">           |          <img src="assets/step3_6.png">           |
+|           **Fig.10: Select appropriate tags**           | **Fig.11: Select exact location & Create report** | **Fig.12: Warning in case location not selected** |
+|             <img src="assets/step3_7.png">              |          <img src="assets/step3_8.png">           |          <img src="assets/step3_9.png">           |
 
 ### Step 3: Check reported spot(s)
 
@@ -65,23 +67,24 @@ If you want to check all the reported spots, by you and other users, then go to 
 
 If you instead want to see only spots that have Covi-19 trash in them, then navigate to the `COVID-19` section in the menu, `fig. 16`, `fig. 18`.
 
-| Fig.13: Report created | Fig.14: Check the report details (1) | Fig.15: Check the report details (2) |
-|:-------------------------:|:-------------------------:|:-------------------------:|
-| <img src="assets/step4_1.png">  | <img src="assets/step4_2.png">  | <img src="assets/step4_2_2.png"> |
-| **Fig.16: Navigation menu** | **Fig.17: All the reported spots** | **Fig.18: Covid-19 reported spots** |
-| <img src="assets/step4_3.png">  | <img src="assets/step4_4.png">  | <img src="assets/step4_5.png"> |
+|     Fig.13: Report created     | Fig.14: Check the report details (1) | Fig.15: Check the report details (2) |
+| :----------------------------: | :----------------------------------: | :----------------------------------: |
+| <img src="assets/step4_1.png"> |    <img src="assets/step4_2.png">    |   <img src="assets/step4_2_2.png">   |
+|  **Fig.16: Navigation menu**   |  **Fig.17: All the reported spots**  | **Fig.18: Covid-19 reported spots**  |
+| <img src="assets/step4_3.png"> |    <img src="assets/step4_4.png">    |    <img src="assets/step4_5.png">    |
 
 ### Step 4: Tour the app
 
 You can also check out our :
+
 - `About` section to know more about the members, `fig. 19`
-- `Terms of Service` & `Privacy Policy` sections,  `fig. 20`
+- `Terms of Service` & `Privacy Policy` sections, `fig. 20`
 
 Or you can contact us by leaving us a message using the Contact us section, `fig. 21`.
 
-| Fig.19: About Us | Fig.20: Terms of Service | Fig.21: Contact Us |
-|:-------------------------:|:-------------------------:|:-------------------------:|
-| <img src="assets/step5_1.png">  | <img src="assets/step5_3.png">  | <img src="assets/step5_2.png"> |
+|        Fig.19: About Us        |    Fig.20: Terms of Service    |       Fig.21: Contact Us       |
+| :----------------------------: | :----------------------------: | :----------------------------: |
+| <img src="assets/step5_1.png"> | <img src="assets/step5_3.png"> | <img src="assets/step5_2.png"> |
 
 ## License
 
