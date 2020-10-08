@@ -1,14 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useFirestore } from "reactfire";
-import { Link as LinkRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import TrashReportCard from "./TrashReportCard";
 import Loading from "../Loading";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import AddLocationOutlinedIcon from "@material-ui/icons/AddLocationOutlined";
+import NoReportFound from "./NoReportFound";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,7 +59,7 @@ export default function TrashReportList(props) {
   const [reportList, setReportList] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
-  if (firstLoad && reportList.length === 0) {
+  if (firstLoad) {
     console.log("query list");
     setFirstLoad(false);
     reportFirestoreRef
@@ -77,6 +74,11 @@ export default function TrashReportList(props) {
         setIsLoading(false);
       });
   }
+
+  React.useEffect(() => {
+    setIsLoading(true);
+    setFirstLoad(true);
+  }, [props.uid]);
 
   return (
     <div className={classes.root}>
@@ -104,23 +106,7 @@ export default function TrashReportList(props) {
           })}
         </Grid>
       ) : (
-        <div className={classes.noResultsContainer}>
-          <Typography gutterBottom variant="body1" component="div">
-            No trash spots has been reported yet or they&apos;ve been all
-            cleaned.
-          </Typography>
-
-          <Button
-            component={LinkRouter}
-            to="/dashboard/spots/create"
-            startIcon={<AddLocationOutlinedIcon />}
-            variant="contained"
-            color="secondary"
-            size="large"
-          >
-            Report a spot of trash
-          </Button>
-        </div>
+        <NoReportFound />
       )}
     </div>
   );
