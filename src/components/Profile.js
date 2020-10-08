@@ -73,6 +73,7 @@ export default function Profile(props) {
   }
 
   React.useEffect(() => {
+    console.log("");
     setLoading(true);
     setProfileId(props.match.params.id);
     setFirstLoad(true);

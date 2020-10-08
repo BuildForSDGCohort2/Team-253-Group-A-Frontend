@@ -12,21 +12,6 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     position: "relative",
   },
-  noResultsContainer: {
-    display: "flex",
-    alignSelf: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    textAlign: "center",
-    margin: "auto",
-    "& > *": {
-      margin: theme.spacing(2),
-    },
-    width: "100%",
-    position: "absolute",
-    top: "50%",
-    transform: "translateY(-50%)",
-  },
 }));
 
 TrashReportList.propTypes = {
