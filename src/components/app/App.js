@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import {
   useFirebaseApp,
@@ -16,7 +16,8 @@ import Container from "@material-ui/core/Container";
 
 import Loading from "../Loading";
 
-const Header = React.lazy(() => import("../Header"));
+const Header = React.lazy(() => import("../header/Header"));
+const SubHeader = React.lazy(() => import("../header/SubHeader"));
 const Footer = React.lazy(() => import("../Footer"));
 const Home = React.lazy(() => import("../Home"));
 const SignIn = React.lazy(() => import("../signin/SignIn"));
@@ -31,9 +32,15 @@ const ResetPassword = React.lazy(() => import("../signin/ResetPassword"));
 
 const Profile = React.lazy(() => import("../Profile"));
 const ContactUs = React.lazy(() => import("../ContactUs"));
-
-// My code
 const UpdateProfile = React.lazy(() => import("../UpdateProfile"));
+
+const TrashReportView = React.lazy(() =>
+  import("../trash-report/TrashReportView")
+);
+
+const TrashReportList = React.lazy(() =>
+  import("../trash-report/TrashReportList")
+);
 
 const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.toolbar,
@@ -51,12 +58,12 @@ const preloadSDKs = (firebaseApp) => {
     preloadFirestore({
       firebaseApp,
       setup(firestore) {
-        if (window.location.hostname === "localhost") {
+        /* if (window.location.hostname === "localhost") {
           firestore().settings({
             host: "localhost:8080",
             ssl: false,
           });
-        }
+        } */
         return firestore().enablePersistence({
           synchronizeTabs: true,
         });
@@ -88,12 +95,19 @@ function App() {
     <React.Fragment>
       <SuspenseWithPerf fallback={<Loading />} traceId={"load-header-status"}>
         <Header />
+        <div className={classes.offset} />
+        <SubHeader />
       </SuspenseWithPerf>
-      <div className={classes.offset} />
+
       <Container className={classes.mainContainer} maxWidth="md">
         <SuspenseWithPerf fallback={<Loading />} traceId={"load-views-status"}>
           <Switch>
-            <Route path="/" exact component={Home} />
+            <Route path="/" exact>
+              <Redirect to="/spots" />
+            </Route>
+            <Route path="/spots" exact component={Home} />
+            <Route path="/spots/view/:id" component={TrashReportView} />
+
             <Route path="/about" exact component={About} />
             <Route path="/signin" exact component={SignIn} />
             <Route path="/reset-password" exact component={ResetPassword} />
@@ -102,8 +116,10 @@ function App() {
             <Route path="/updateprofile" component={UpdateProfile} />
             <Route path="/terms-of-services" component={Terms} />
             <Route path="/privacy-policy" component={Privacy} />
-
-            <Route path="/profile" component={Profile} />
+            <Route path="/covid">
+              <TrashReportList tagId="covid19" />
+            </Route>
+            <Route path="/profile/:id" component={Profile} />
             <Route path="/contact-us" component={ContactUs} />
 
             <Route path="*" exact={true} component={GenericNotFound} />

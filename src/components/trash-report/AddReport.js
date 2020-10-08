@@ -1,6 +1,8 @@
 import firebase from "firebase/app";
-
 import React from "react";
+import { useHistory } from "react-router-dom";
+import { useStorage, useUser, useFirestore } from "reactfire";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Container from "@material-ui/core/Container";
@@ -9,16 +11,21 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import AddAPhoto from "@material-ui/icons/AddAPhoto";
 import Box from "@material-ui/core/Box";
-import { useStorage, useUser, useFirestore } from "reactfire";
 
-import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
-import DoneIcon from "@material-ui/icons/Done";
 
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
+import Alert from "@material-ui/lab/Alert";
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import GoogleMap from "google-map-react";
+import Marker from "./Marker";
+
+import Loading from "../Loading";
+import ImageAnalyseStepper from "./ImageAnalyseStepper";
+import CovidIcon from "../icons/CovidIcon";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,22 +68,48 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(2),
   },
+  spotTagsContainer: {
+    position: "relative",
+    flexGrow: 1,
+    padding: theme.spacing(2),
+  },
   spotTags: {
     display: "flex",
     justifyContent: "center",
     flexWrap: "wrap",
-    padding: theme.spacing(2),
     "& > *": {
       margin: theme.spacing(0.5),
     },
   },
+  paperWrapper: {
+    padding: theme.spacing(2),
+  },
+  errorMessageContainer: {
+    margin: theme.spacing(2),
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
 }));
+
+let apiURL = process.env.REACT_APP_API_REMOTE_URL + "/score-image";
+if (
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1"
+) {
+  apiURL = process.env.REACT_APP_API_LOCAL_URL + "/score-image";
+}
 
 export default function AddTrashReport() {
   const classes = useStyles();
   const user = useUser();
   const storage = useStorage();
-  const firestore = useFirestore();
+  const db = useFirestore();
+  let history = useHistory();
+
+  const reportFirestoreRef = db.collection("spots");
+  const defaultTagsRef = db.collection("report-tags");
 
   // eslint-disable-next-line
   const [mapsApi, setMapsApi] = React.useState(null);
@@ -88,20 +121,157 @@ export default function AddTrashReport() {
   const [selectedFileURL, setSelectedFileURL] = React.useState("");
   const [reservedReportID, setReservedReportID] = React.useState("");
   const [remoteUploadRef, setRemoteUploadRef] = React.useState(null);
+  const [imageDownloadUrl, setImageDownloadUrl] = React.useState(null);
   const [uploadProgress, setUploadProgress] = React.useState(-1);
+  const [imageAnalyseActiveStep, setImageAnalyseActiveStep] = React.useState(0);
+
+  const [reporTitle, setReportTitle] = React.useState("");
+  const [reportDescription, setReportDescription] = React.useState("");
+
+  const [reportLocation, setReportLocation] = React.useState(null);
+
+  const [isSaving, setIsSaving] = React.useState(false);
+
+  const [errors, setErrors] = React.useState({});
+  const [aiData, setAiData] = React.useState({});
 
   if (reservedReportID === "") {
-    setReservedReportID(firestore.collection("spots").doc().id);
+    setReservedReportID(reportFirestoreRef.doc().id);
+  }
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      setReportLocation(
+        new firebase.firestore.GeoPoint(
+          position.coords.latitude,
+          position.coords.longitude
+        )
+      );
+    });
+  }
+
+  const [tagsData, setTagsData] = React.useState({ tags: [] });
+
+  if (tagsData.tags.length === 0) {
+    defaultTagsRef.get().then(function (querySnapshot) {
+      let tags = [];
+      querySnapshot.forEach(function (doc) {
+        tags = [...tags, doc.data()];
+      });
+      setTagsData(
+        tags.reduce(
+          (options, option) => ({
+            ...options,
+            tags: tags,
+            [option.id]: false,
+          }),
+          {}
+        )
+      );
+    });
   }
 
   const saveTrashReport = (event) => {
     event.preventDefault();
+    setIsSaving(true);
+    const validateErrors = {};
+    let trashReport = { uid: user.uid, id: reservedReportID };
+    trashReport.userProfile = db.collection("profiles").doc(user.uid);
+
+    //check image
+    if (selectedFile != null && remoteUploadRef != null) {
+      if (aiData == null) {
+        trashReport.images = [
+          {
+            storagePath: remoteUploadRef.fullPath,
+            downloadUrl: imageDownloadUrl,
+          },
+        ];
+      } else {
+        trashReport.images = [
+          {
+            storagePath: remoteUploadRef.fullPath,
+            downloadUrl: imageDownloadUrl,
+            classes: aiData.classes,
+            pred_classes: aiData.pred_classes,
+            scores: aiData.scores,
+          },
+        ];
+      }
+    } else {
+      // handle image required
+      validateErrors.isImage = true;
+      validateErrors.imageMsgError = "You need to upload a photo for the spot.";
+    }
+
+    //check title
+    if (reporTitle.length > 0) {
+      trashReport.title = reporTitle;
+    } else {
+      // handle title required
+      validateErrors.isTitle = true;
+      validateErrors.titleMsgError = "You must give the spot a name.";
+    }
+
+    //check description
+    if (reportDescription.length > 0) {
+      trashReport.description = reportDescription;
+    } else {
+      // handle description required
+      validateErrors.isDescription = true;
+      validateErrors.descriptionMsgError =
+        "Please write some details about the state of the spot.";
+    }
+
+    //check location
+    if (reportLocation != null) {
+      trashReport.location = reportLocation;
+    } else {
+      // handle location required
+      validateErrors.isLocation = true;
+      validateErrors.locationMsgError = "Location is required.";
+    }
+
+    trashReport.createdAt = firebase.firestore.Timestamp.fromDate(new Date());
+
+    //tags
+    trashReport.tags = [];
+    Object.keys(tagsData)
+      .filter((tag) => tag !== "tags")
+      .filter((tag) => tagsData[tag])
+      .forEach((tag) => {
+        trashReport.tags.push(tag);
+      });
+
+    //saving report to firestore
+    setErrors(validateErrors);
+    if (
+      !validateErrors.isImage &&
+      !validateErrors.isTitle &&
+      !validateErrors.isDescription &&
+      !validateErrors.isLocation
+    ) {
+      reportFirestoreRef
+        .doc(reservedReportID)
+        .set(Object.assign({}, trashReport))
+        .then(function () {
+          console.log("Document successfully written!");
+          history.push("/dashboard");
+        })
+        .catch(function (error) {
+          setIsSaving(false);
+          console.log(error);
+        });
+    } else {
+      setIsSaving(false);
+    }
   };
 
   const handleImageUpload = (event) => {
     let mFile = event.target.files[0];
 
     if (remoteUploadRef != null) {
+      handleBackImageAnalyseStep();
       // Delete the file
       remoteUploadRef
         .delete()
@@ -115,6 +285,7 @@ export default function AddTrashReport() {
 
     if (mFile == null) {
       setSelectedFileURL("");
+      setSelectedFile(null);
     } else {
       setSelectedFile(mFile);
       setSelectedFileURL(URL.createObjectURL(mFile));
@@ -154,19 +325,41 @@ export default function AddTrashReport() {
           setRemoteUploadRef(mRemoteUploadRef);
           uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
             console.log("File available at", downloadURL);
+            setImageDownloadUrl(downloadURL);
             setUploadProgress(-1);
+            handleNextImageAnalyseStep();
+            setIsSaving(true);
+            axios
+              .post(apiURL, {
+                imageUrl: downloadURL,
+              })
+              .then(function (response) {
+                console.log(response);
+                setIsSaving(false);
+                if (response.status === 200) {
+                  if (response.data != null) {
+                    setAiData(response.data);
+                  }
+                }
+                handleNextImageAnalyseStep();
+              })
+              .catch(function (error) {
+                console.log(error);
+                setAiData(null);
+                setIsSaving(false);
+              });
           });
         }
       );
     }
   };
 
-  const handleDelete = () => {
-    console.info("You clicked the delete icon.");
+  const handleNextImageAnalyseStep = () => {
+    setImageAnalyseActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  const handleClick = () => {
-    console.info("You clicked the Chip.");
+  const handleBackImageAnalyseStep = () => {
+    setImageAnalyseActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   // Fit map to its bounds after the api is loaded
@@ -176,21 +369,14 @@ export default function AddTrashReport() {
   };
 
   const handleGoogleMapClick = ({ lat, lng }) => {
-    console.log(lat, lng);
-    /*     const latlng = {
-      lat: lat,
-      lng: lng,
-    }; */
-    /* mapGeocoder.geocode(
-      { location: latlng },
-      (results: mapsApi.GeocoderResult[], status: mapsApi.GeocoderStatus) => {
-        if (status === "OK") {
-          if (results[0]) {
-            console.log(results[0]);
-          }
-        }
-      }
-    ); */
+    setReportLocation(new firebase.firestore.GeoPoint(lat, lng));
+  };
+
+  const handleTagChange = (tag) => () => {
+    setTagsData((prevState) => ({
+      ...prevState,
+      [tag.id]: !prevState[tag.id],
+    }));
   };
 
   return (
@@ -244,54 +430,19 @@ export default function AddTrashReport() {
             variant="determinate"
             value={uploadProgress}
           />
-          <div className={classes.spotTags}>
-            this is just a previw for spot tags:
-            <Chip label="Basic" />
-            <Chip label="Disabled" disabled />
-            <Chip
-              avatar={<Avatar>M</Avatar>}
-              label="Clickable"
-              onClick={handleClick}
-            />
-            <Chip label="Deletable" onDelete={handleDelete} />
-            <Chip
-              label="Clickable deletable"
-              onClick={handleClick}
-              onDelete={handleDelete}
-            />
-            <Chip
-              label="Custom delete icon"
-              onClick={handleClick}
-              onDelete={handleDelete}
-              deleteIcon={<DoneIcon />}
-            />
-            <Chip label="Clickable Link" component="a" href="#chip" clickable />
-            <Chip
-              avatar={<Avatar>M</Avatar>}
-              label="Primary clickable"
-              clickable
-              color="primary"
-              onDelete={handleDelete}
-              deleteIcon={<DoneIcon />}
-            />
-            <Chip
-              label="Primary clickable"
-              clickable
-              color="primary"
-              onDelete={handleDelete}
-              deleteIcon={<DoneIcon />}
-            />
-            <Chip
-              label="Deletable primary"
-              onDelete={handleDelete}
-              color="primary"
-            />
-            <Chip
-              label="Deletable secondary"
-              onDelete={handleDelete}
-              color="secondary"
-            />
-          </div>
+
+          <Box
+            className={classes.errorMessageContainer}
+            component="div"
+            display={errors.isImage ? "block" : "none"}
+          >
+            <Alert variant="outlined" severity="error">
+              {errors.imageMsgError}
+            </Alert>
+          </Box>
+
+          <ImageAnalyseStepper step={imageAnalyseActiveStep} />
+
           <div className={classes.formContentContainer}>
             <div className={classes.formContentLine}>
               <TextField
@@ -299,12 +450,15 @@ export default function AddTrashReport() {
                 name="title"
                 fullWidth
                 label="Name your spot"
-                placeholder="placeholder"
+                placeholder="Spot name"
                 color="secondary"
                 variant="outlined"
                 InputLabelProps={{
                   shrink: true,
                 }}
+                onChange={(e) => setReportTitle(e.target.value)}
+                error={errors.isTitle}
+                helperText={errors.titleMsgError}
               />
             </div>
             <div className={classes.formContentLine}>
@@ -319,39 +473,114 @@ export default function AddTrashReport() {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                onChange={(e) => setReportDescription(e.target.value)}
                 multiline
+                error={errors.isDescription}
+                helperText={errors.descriptionMsgError}
               />
             </div>
+
+            <div className={classes.spotTagsContainer}>
+              <Paper
+                variant="outlined"
+                elevation={0}
+                className={classes.paperWrapper}
+              >
+                <Typography gutterBottom variant="h6" component="div">
+                  Tag your spot:
+                </Typography>
+                <div className={classes.spotTags}>
+                  {tagsData["tags"].length === 0 && <Loading />}
+
+                  {tagsData["tags"].map((tag) => {
+                    return (
+                      <Chip
+                        key={tag.id}
+                        label={tag.name}
+                        {...(tag.id === "covid19" && {
+                          icon: <CovidIcon />,
+                        })}
+                        {...(!tagsData[tag.id] && {
+                          onClick: handleTagChange(tag),
+                        })}
+                        {...(tagsData[tag.id] && {
+                          onDelete: handleTagChange(tag),
+                        })}
+                        color={clsx(
+                          !tagsData[tag.id] && "default",
+                          tagsData[tag.id] && "secondary"
+                        )}
+                      />
+                    );
+                  })}
+                </div>
+              </Paper>
+            </div>
+
             <div className={classes.formContentLine}>
-              <Paper elevation={2} className={classes.locationContainer}>
-                <Typography variant="h6">Select spot location</Typography>
+              <Paper
+                variant="outlined"
+                elevation={0}
+                className={classes.locationContainer}
+              >
+                <Box
+                  className={classes.errorMessageContainer}
+                  component="div"
+                  display={errors.isLocation ? "block" : "none"}
+                >
+                  <Alert variant="outlined" severity="error">
+                    {errors.locationMsgError}
+                  </Alert>
+                </Box>
+                <Typography gutterBottom variant="h6">
+                  Select spot location*
+                </Typography>
                 <div style={{ height: "350px", width: "100%" }}>
                   <GoogleMap
                     bootstrapURLKeys={{
                       key: process.env.REACT_APP_FIREBASE_APIKEY,
                     }}
-                    defaultCenter={{
-                      lat: 34.7398,
-                      lng: 10.76,
-                    }}
+                    center={
+                      reportLocation != null
+                        ? {
+                            lat: reportLocation.latitude,
+                            lng: reportLocation.longitude,
+                          }
+                        : { lat: 34.7398, lng: 10.76 }
+                    }
                     defaultZoom={10}
                     yesIWantToUseGoogleMapApiInternals
                     onGoogleApiLoaded={({ map, maps }) =>
                       mapApiIsLoaded(map, maps)
                     }
                     onClick={handleGoogleMapClick}
-                  ></GoogleMap>
+                  >
+                    {reportLocation != null && (
+                      <Marker
+                        lat={reportLocation.latitude}
+                        lng={reportLocation.longitude}
+                      />
+                    )}
+                  </GoogleMap>
                 </div>
               </Paper>
             </div>
             <div className={classes.formContentLine}>
-              <Button type="submit" variant="contained" color="secondary">
+              <Button
+                type="submit"
+                variant="contained"
+                color="secondary"
+                disabled={isSaving}
+              >
                 Create Report
               </Button>
             </div>
           </div>
         </form>
       </Paper>
+      <Backdrop className={classes.backdrop} open={isSaving}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Container>
   );
 }

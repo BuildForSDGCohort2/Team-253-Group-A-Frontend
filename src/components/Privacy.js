@@ -15,19 +15,19 @@ export default function Privacy() {
   const classes = useStyles();
 
   return (
-    <Paper className={classes.root} component="div">
+    <Paper className={classes.root} component="div" variant="outlined">
       <Typography gutterBottom variant="h4">
         Privacy Policy
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         At CleanOut, accessible from awesome-jang-7f1fc2.netlify.app, one of our
         main priorities is the privacy of our visitors. This Privacy Policy
         document contains types of information that are collected and recorded
         by CleanOut and how we use it.
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         If you have additional questions or require more information about our
         Privacy Policy, do not hesitate to contact us.
       </Typography>
@@ -35,11 +35,11 @@ export default function Privacy() {
       <Typography gutterBottom variant="h6">
         General Data Protection Regulation (GDPR
       </Typography>
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         We are a Data Controller of your information.
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         CleanOut legal basis for collecting and using the personal information
         described in this Privacy Policy depends on the Personal Information we
         collect and the specific context in which we collect the information:
@@ -54,21 +54,21 @@ export default function Privacy() {
         <li>CleanOut needs to comply with the law</li>
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         CleanOut will retain your personal information only for as long as is
         necessary for the purposes set out in this Privacy Policy. We will
         retain and use your information to the extent necessary to comply with
         our legal obligations, resolve disputes, and enforce our policies.
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         If you are a resident of the European Economic Area (EEA), you have
         certain data protection rights. If you wish to be informed what Personal
         Information we hold about you and if you want it to be removed from our
         systems, please contact us.
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         In certain circumstances, you have the following data protection rights:
       </Typography>
       <Typography gutterBottom variant="body1" component="ul">
@@ -87,7 +87,7 @@ export default function Privacy() {
         Log Files
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         CleanOut follows a standard procedure of using log files. These files
         log visitors when they visit websites. All hosting companies do this and
         a part of hosting services&apos; analytics. The information collected by
@@ -104,7 +104,7 @@ export default function Privacy() {
         Cookies and Web Beacons
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         Like any other website, CleanOut uses &apos;cookies&apos;. These cookies
         are used to store information including visitors&apos; preferences, and
         the pages on the website that the visitor accessed or visited. The
@@ -113,7 +113,7 @@ export default function Privacy() {
         and/or other information.
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         For more general information on cookies, please read{" "}
         <Link
           color="secondary"
@@ -128,12 +128,12 @@ export default function Privacy() {
         Privacy Policies
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         You may consult this list to find the Privacy Policy for each of the
         advertising partners of CleanOut.
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         Third-party ad servers or ad networks uses technologies like cookies,
         JavaScript, or Web Beacons that are used in their respective
         advertisements and links that appear on CleanOut, which are sent
@@ -143,7 +143,7 @@ export default function Privacy() {
         advertising content that you see on websites that you visit.
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         Note that CleanOut has no access to or control over these cookies that
         are used by third-party advertisers.
       </Typography>
@@ -152,7 +152,7 @@ export default function Privacy() {
         Third Party Privacy Policies
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         CleanOut&apos;s Privacy Policy does not apply to other advertisers or
         websites. Thus, we are advising you to consult the respective Privacy
         Policies of these third-party ad servers for more detailed information.
@@ -160,7 +160,7 @@ export default function Privacy() {
         certain options.
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         You can choose to disable cookies through your individual browser
         options. To know more detailed information about cookie management with
         specific web browsers, it can be found at the browsers&apos; respective
@@ -171,13 +171,13 @@ export default function Privacy() {
         Children&apos;s Information
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         Another part of our priority is adding protection for children while
         using the internet. We encourage parents and guardians to observe,
         participate in, and/or monitor and guide their online activity.
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         CleanOut does not knowingly collect any Personal Identifiable
         Information from children under the age of 13. If you think that your
         child provided this kind of information on our website, we strongly
@@ -189,7 +189,7 @@ export default function Privacy() {
         Online Privacy Policy Only
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         Our Privacy Policy created at GDPRPrivacyPolicy.net) applies only to our
         online activities and is valid for visitors to our website with regards
         to the information that they shared and/or collect in CleanOut. This
@@ -201,7 +201,7 @@ export default function Privacy() {
         Consent
       </Typography>
 
-      <Typography gutterBottom variant="body1" component="p">
+      <Typography gutterBottom variant="body1" component="p" paragraph>
         By using our website, you hereby consent to our Privacy Policy and agree
         to its terms.
       </Typography>
