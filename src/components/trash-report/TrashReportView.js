@@ -3,6 +3,7 @@ import { useFirestore } from "reactfire";
 import { Link as LinkRouter, useParams } from "react-router-dom";
 import Link from "@material-ui/core/Link";
 import PropTypes from "prop-types";
+import * as APP_ROUTES from "../../constants/routes";
 import { makeStyles } from "@material-ui/core/styles";
 import GenericNotFound from "../404";
 import Card from "@material-ui/core/Card";
@@ -107,7 +108,10 @@ export default function TrashReportView(props) {
                   <Avatar />
                 </Skeleton>
               ) : (
-                <Link component={LinkRouter} to={`/profile/${userProfile.uid}`}>
+                <Link
+                  component={LinkRouter}
+                  to={APP_ROUTES.PROFILE + "/" + userProfile.uid}
+                >
                   <Avatar
                     alt={userProfile.displayName}
                     src={userProfile.photoURL}
@@ -128,7 +132,7 @@ export default function TrashReportView(props) {
                 <Link
                   component={LinkRouter}
                   color="secondary"
-                  to={`/profile/${userProfile.uid}`}
+                  to={APP_ROUTES.PROFILE + "/" + userProfile.uid}
                 >
                   {userProfile.displayName === undefined ||
                   userProfile.displayName == null

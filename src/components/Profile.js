@@ -46,20 +46,21 @@ export default function Profile(props) {
   const db = useFirestore();
   let { id } = useParams();
 
+  const [profileId, setProfileId] = React.useState(id);
   const [loading, setLoading] = React.useState(true);
   const [data, setData] = React.useState(null);
   const [firstLoad, setFirstLoad] = React.useState(true);
 
-  if (id === undefined) {
+  /* if (idParam === undefined) {
     if (props.userId !== undefined && props.userId.length > 0) {
-      id = props.userId;
+      setId(props.userId);
     } else return null;
-  }
+  } */
 
   if (firstLoad) {
     console.log("query report view");
     setFirstLoad(false);
-    let userDbRef = db.collection("profiles").doc(id);
+    let userDbRef = db.collection("profiles").doc(profileId);
 
     userDbRef.get().then(function (doc) {
       if (doc.exists) {
@@ -70,6 +71,13 @@ export default function Profile(props) {
       setLoading(false);
     });
   }
+
+  React.useEffect(() => {
+    console.log("");
+    setLoading(true);
+    setProfileId(props.match.params.id);
+    setFirstLoad(true);
+  }, [props.match.params.id]);
 
   if (userExists) {
     return (
@@ -99,7 +107,7 @@ export default function Profile(props) {
           )}
         </div>
         <Divider variant="middle" className={classes.profileDivider} />
-        <TrashReportList uid={id} />
+        <TrashReportList uid={profileId} />
       </div>
     );
   } else {

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link as LinkRouter } from "react-router-dom";
+import * as APP_ROUTES from "../../constants/routes";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
@@ -53,16 +54,16 @@ export default function NavigationDrawer(props) {
             onKeyDown={toggleDrawer(false)}
           >
             <List>
-              <ListItem button component={LinkRouter} to="/spots">
+              <ListItem button component={LinkRouter} to={APP_ROUTES.SPOTS}>
                 <ListItemText primary="Spots" />
               </ListItem>
-              <ListItem button component={LinkRouter} to="/events">
+              <ListItem button component={LinkRouter} to={APP_ROUTES.EVENTS}>
                 <ListItemText primary="Events" />
               </ListItem>
-              <ListItem button component={LinkRouter} to="/covid">
+              <ListItem button component={LinkRouter} to={APP_ROUTES.COVID}>
                 <ListItemText primary="COVID-19" />
               </ListItem>
-              <ListItem button component={LinkRouter} to="/about">
+              <ListItem button component={LinkRouter} to={APP_ROUTES.ABOUT}>
                 <ListItemText primary="About" />
               </ListItem>
             </List>
