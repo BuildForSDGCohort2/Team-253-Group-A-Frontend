@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link as LinkRouter } from "react-router-dom";
 import Link from "@material-ui/core/Link";
 import { useStorage } from "reactfire";
+import * as APP_ROUTES from "../../constants/routes";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -60,7 +61,7 @@ export default function TrashReportCard(props) {
   const classes = useStyles();
   const storage = useStorage();
 
-  const trashReportPath = "/spots/view/" + props.data.id;
+  const trashReportPath = APP_ROUTES.SPOTS_VIEW + "/" + props.data.id;
 
   const [loading, setLoading] = React.useState(true);
   const [firstLoad, setFirstLoad] = React.useState(true);
@@ -138,7 +139,7 @@ export default function TrashReportCard(props) {
                 ) : (
                   <Link
                     component={LinkRouter}
-                    to={`/profile/${userProfile.uid}`}
+                    to={APP_ROUTES.PROFILE + "/" + userProfile.uid}
                   >
                     <Avatar
                       className={classes.small}
@@ -161,7 +162,7 @@ export default function TrashReportCard(props) {
                   <Link
                     component={LinkRouter}
                     color="primary"
-                    to={`/profile/${userProfile.uid}`}
+                    to={APP_ROUTES.PROFILE + "/" + userProfile.uid}
                   >
                     {userProfile.displayName === undefined ||
                     userProfile.displayName == null

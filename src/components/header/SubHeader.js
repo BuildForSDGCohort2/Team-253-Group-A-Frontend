@@ -7,21 +7,7 @@ import Link from "@material-ui/core/Link";
 import { Link as RouterLink } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import HomeIcon from "@material-ui/icons/Home";
-
-const breadcrumbNameMap = {
-  "/spots": "Spots",
-  "/spots/view": "View",
-  "/events": "Events",
-  "/covid": "Covid-19",
-  "/about": "About us",
-  "/profile": "Profile",
-  "/contact-us": "Contact us",
-  "/terms-of-services": "Terms of services",
-  "/privacy-policy": "Privacy policy",
-  "/dashboard": "Dashboard",
-  "/dashboard/spots": "Spots",
-  "/dashboard/spots/create": "New Spot",
-};
+import * as APP_ROUTES from "../../constants/routes";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +38,11 @@ export default function SubHeader() {
 
             return (
               <Breadcrumbs aria-label="breadcrumb">
-                <LinkRouter color="inherit" to="/" className={classes.link}>
+                <LinkRouter
+                  color="inherit"
+                  to={APP_ROUTES.INDEX}
+                  className={classes.link}
+                >
                   <HomeIcon className={classes.icon} />
                   Home
                 </LinkRouter>
@@ -62,11 +52,11 @@ export default function SubHeader() {
 
                   return last ? (
                     <Typography color="textPrimary" key={to}>
-                      {breadcrumbNameMap[to]}
+                      {APP_ROUTES.breadcrumbNameMap[to]}
                     </Typography>
                   ) : (
                     <LinkRouter color="inherit" to={to} key={to}>
-                      {breadcrumbNameMap[to]}
+                      {APP_ROUTES.breadcrumbNameMap[to]}
                     </LinkRouter>
                   );
                 })}

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link as LinkRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import * as APP_ROUTES from "../constants/routes";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -54,13 +55,21 @@ export default function Footer() {
             </Typography>
 
             <List component="nav" dense>
-              <ListItem button component={LinkRouter} to="/terms-of-services">
+              <ListItem
+                button
+                component={LinkRouter}
+                to={APP_ROUTES.TERMS_SERVICE}
+              >
                 <ListItemText
                   className={classes.primary}
                   primary="Terms of service"
                 />
               </ListItem>
-              <ListItem button component={LinkRouter} to="/privacy-policy">
+              <ListItem
+                button
+                component={LinkRouter}
+                to={APP_ROUTES.PRIVACY_POLICY}
+              >
                 <ListItemText
                   className={classes.primary}
                   primary="Privacy policy"
@@ -101,10 +110,14 @@ export default function Footer() {
             </Typography>
 
             <List component="nav" dense>
-              <ListItem button component={LinkRouter} to="/about">
+              <ListItem button component={LinkRouter} to={APP_ROUTES.ABOUT}>
                 <ListItemText className={classes.primary} primary="About us" />
               </ListItem>
-              <ListItem button component={LinkRouter} to="/contact-us">
+              <ListItem
+                button
+                component={LinkRouter}
+                to={APP_ROUTES.CONTACT_US}
+              >
                 <ListItemText
                   className={classes.primary}
                   primary="Contact us"

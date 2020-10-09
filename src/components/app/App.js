@@ -14,6 +14,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+import * as APP_ROUTES from "../../constants/routes";
 import Loading from "../Loading";
 
 const Header = React.lazy(() => import("../header/Header"));
@@ -102,25 +103,32 @@ function App() {
       <Container className={classes.mainContainer} maxWidth="md">
         <SuspenseWithPerf fallback={<Loading />} traceId={"load-views-status"}>
           <Switch>
-            <Route path="/" exact>
-              <Redirect to="/spots" />
+            <Route path={APP_ROUTES.INDEX} exact>
+              <Redirect to={APP_ROUTES.SPOTS} />
             </Route>
-            <Route path="/spots" exact component={Home} />
-            <Route path="/spots/view/:id" component={TrashReportView} />
+            <Route path={APP_ROUTES.SPOTS} exact component={Home} />
+            <Route
+              path={APP_ROUTES.SPOTS_VIEW_ID}
+              component={TrashReportView}
+            />
 
-            <Route path="/about" exact component={About} />
-            <Route path="/signin" exact component={SignIn} />
-            <Route path="/reset-password" exact component={ResetPassword} />
-            <Route path="/register" exact component={Register} />
-            <Route path="/dashboard" component={Dashboard} />
+            <Route path={APP_ROUTES.ABOUT} exact component={About} />
+            <Route path={APP_ROUTES.SIGN_IN} exact component={SignIn} />
+            <Route
+              path={APP_ROUTES.RESET_PASSWORD}
+              exact
+              component={ResetPassword}
+            />
+            <Route path={APP_ROUTES.REGISTER} exact component={Register} />
+            <Route path={APP_ROUTES.DASHBOARD} component={Dashboard} />
             <Route path="/updateprofile" component={UpdateProfile} />
-            <Route path="/terms-of-services" component={Terms} />
-            <Route path="/privacy-policy" component={Privacy} />
-            <Route path="/covid">
+            <Route path={APP_ROUTES.TERMS_SERVICE} component={Terms} />
+            <Route path={APP_ROUTES.PRIVACY_POLICY} component={Privacy} />
+            <Route path={APP_ROUTES.COVID}>
               <TrashReportList tagId="covid19" />
             </Route>
-            <Route path="/profile/:id" component={Profile} />
-            <Route path="/contact-us" component={ContactUs} />
+            <Route path={APP_ROUTES.PROFILE_ID} component={Profile} />
+            <Route path={APP_ROUTES.CONTACT_US} component={ContactUs} />
 
             <Route path="*" exact={true} component={GenericNotFound} />
           </Switch>

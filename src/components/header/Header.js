@@ -11,6 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { AuthCheck, SuspenseWithPerf } from "reactfire";
 
+import * as APP_ROUTES from "../../constants/routes";
 import NavigationDrawer from "../nav/NavigationDrawer";
 
 const AccountMenu = React.lazy(() => import("../AccountMenu"));
@@ -36,7 +37,7 @@ function HeaderAuthButtons() {
         variant="outlined"
         color="secondary"
         component={LinkRouter}
-        to="/signin"
+        to={APP_ROUTES.SIGN_IN}
       >
         Log in
       </Button>
@@ -45,7 +46,7 @@ function HeaderAuthButtons() {
         variant="contained"
         color="secondary"
         component={LinkRouter}
-        to="/register"
+        to={APP_ROUTES.REGISTER}
       >
         Register
       </Button>
@@ -83,7 +84,7 @@ export default function Header() {
           <Typography variant="h6" className={classes.title}>
             <Link
               component={LinkRouter}
-              to="/"
+              to={APP_ROUTES.INDEX}
               underline="none"
               color="secondary"
             >
@@ -95,7 +96,7 @@ export default function Header() {
               className={classes.headerButton}
               color="secondary"
               component={LinkRouter}
-              to="/spots"
+              to={APP_ROUTES.SPOTS}
             >
               Spots
             </Button>
@@ -103,7 +104,7 @@ export default function Header() {
               className={classes.headerButton}
               color="secondary"
               component={LinkRouter}
-              to="/events"
+              to={APP_ROUTES.EVENTS}
             >
               Events
             </Button>
@@ -111,7 +112,7 @@ export default function Header() {
               className={classes.headerButton}
               color="secondary"
               component={LinkRouter}
-              to="/covid"
+              to={APP_ROUTES.COVID}
             >
               Covid-19
             </Button>
@@ -119,7 +120,7 @@ export default function Header() {
               className={classes.headerButton}
               color="secondary"
               component={LinkRouter}
-              to="/about"
+              to={APP_ROUTES.ABOUT}
             >
               About
             </Button>

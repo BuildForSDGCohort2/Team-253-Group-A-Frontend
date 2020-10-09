@@ -9,10 +9,12 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 
+import * as APP_ROUTES from "../../constants/routes";
+
 import Loading from "../Loading";
 
 import PostAddIcon from "@material-ui/icons/PostAdd";
-import Fab from "@material-ui/core/Fab";
+import Button from "@material-ui/core/Button";
 import Tabs from "@material-ui/core/Tabs";
 import { Grid } from "@material-ui/core";
 
@@ -30,8 +32,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   extendedFab: {
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
+    marginLeft: "auto",
+    marginBottom: theme.spacing(2),
+    marginRight: theme.spacing(2),
   },
   extendedIcon: {
     marginRight: theme.spacing(1),
@@ -46,12 +49,12 @@ export default function Dashboard() {
   const classes = useStyles();
   const user = useUser();
 
-  let { path, url } = useRouteMatch();
+  let { path } = useRouteMatch();
 
   const [value, setValue] = React.useState(0);
 
   if (user == null) {
-    return <Redirect to="/signin" />;
+    return <Redirect to={APP_ROUTES.SIGN_IN} />;
   }
 
   const handleChange = (event, newValue) => {
@@ -64,7 +67,7 @@ export default function Dashboard() {
         fallback={<Loading />}
         traceId={"load-dashboard-views-status"}
       >
-        <AuthCheck fallback={<Redirect to="/signin" />}>
+        <AuthCheck fallback={<Redirect to={APP_ROUTES.SIGN_IN} />}>
           <Tabs
             variant="scrollable"
             value={value}
@@ -76,37 +79,36 @@ export default function Dashboard() {
             <DashboardTab
               label="Your spots"
               component={LinkRouter}
-              to={`${url}/spots`}
+              to={APP_ROUTES.DASHBOARD_SPOTS}
             />
             <DashboardTab
               label="Your events"
               component={LinkRouter}
-              to={`${url}/events`}
+              to={APP_ROUTES.DASHBOARD_EVENTS}
             />
             <DashboardTab
               label="Your account"
               component={LinkRouter}
-              to={`${url}/account`}
+              to={APP_ROUTES.DASHBOARD_ACCOUNT}
             />
           </Tabs>
           <Switch>
-            <Route path={`${path}/spots/create`}>
+            <Route path={APP_ROUTES.DASHBOARD_SPOTS_CREATE}>
               <AddTrashReport />
             </Route>
-            <Route exact path={`${path}/spots`}>
+            <Route exact path={APP_ROUTES.DASHBOARD_SPOTS}>
               <DashboardTabPanel value={value} index={0}>
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <Fab
-                      variant="extended"
-                      color="primary"
+                  <Grid item container xs={12} direction="row-reverse">
+                    <Button
+                      color="secondary"
                       component={LinkRouter}
                       size="small"
-                      to={`${url}/spots/create`}
+                      to={APP_ROUTES.DASHBOARD_SPOTS_CREATE}
+                      startIcon={<PostAddIcon />}
                     >
-                      <PostAddIcon className={classes.extendedIcon} />
                       New Spot
-                    </Fab>
+                    </Button>
                   </Grid>
                   <Grid item xs={12}>
                     <TrashReportList uid={user.uid} />
@@ -115,19 +117,19 @@ export default function Dashboard() {
               </DashboardTabPanel>
             </Route>
 
-            <Route exact path={`${path}/events`}>
+            <Route exact path={APP_ROUTES.DASHBOARD_EVENTS}>
               <DashboardTabPanel value={value} index={1}>
                 Comming soon...
               </DashboardTabPanel>
             </Route>
-            <Route path={`${path}/account`}>
+            <Route path={APP_ROUTES.DASHBOARD_ACCOUNT}>
               <DashboardTabPanel value={value} index={2}>
                 <Account />
               </DashboardTabPanel>
             </Route>
 
             <Route path={path}>
-              <Redirect to={`${path}/spots`} />
+              <Redirect to={APP_ROUTES.DASHBOARD_SPOTS} />
             </Route>
           </Switch>
         </AuthCheck>
