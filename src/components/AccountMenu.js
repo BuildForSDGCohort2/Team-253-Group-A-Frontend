@@ -3,8 +3,13 @@ import { useAuth, useUser } from "reactfire";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import { Link as LinkRouter } from "react-router-dom";
+import DashboardOutlined from "@material-ui/icons/DashboardOutlined";
+import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined";
+import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -67,19 +72,30 @@ export default function AccountMenu() {
             component={LinkRouter}
             to="/dashboard"
           >
-            Dashboard
+            <ListItemIcon>
+              <DashboardOutlined fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
           </MenuItem>
           <MenuItem
             onClick={handleClose}
             component={LinkRouter}
             to={getProfilePath}
           >
-            Your Profile
+            <ListItemIcon>
+              <PersonOutlinedIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Your Profile" />
           </MenuItem>
           {/* <MenuItem onClick={handleClose} component={LinkRouter} to="/dashboard/account">
             My account
           </MenuItem> */}
-          <MenuItem onClick={signOut}>Logout</MenuItem>
+          <MenuItem onClick={signOut}>
+            <ListItemIcon>
+              <ExitToAppOutlinedIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </MenuItem>
         </Menu>
       </div>
     );
