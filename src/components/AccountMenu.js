@@ -10,6 +10,7 @@ import { Link as LinkRouter } from "react-router-dom";
 import DashboardOutlined from "@material-ui/icons/DashboardOutlined";
 import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
+import * as APP_ROUTES from "../constants/routes";
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -31,7 +32,7 @@ export default function AccountMenu() {
   const user = useUser();
 
   const getProfilePath = () => {
-    return "/profile/" + user.uid;
+    return APP_ROUTES.PROFILE + "/" + user.uid;
   };
 
   const getInitials = (string) => {
@@ -70,7 +71,7 @@ export default function AccountMenu() {
           <MenuItem
             onClick={handleClose}
             component={LinkRouter}
-            to="/dashboard"
+            to={APP_ROUTES.DASHBOARD}
           >
             <ListItemIcon>
               <DashboardOutlined fontSize="small" />
