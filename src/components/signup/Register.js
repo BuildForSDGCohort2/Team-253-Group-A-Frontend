@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { AuthCheck, SuspenseWithPerf } from "reactfire";
+import { useUser, SuspenseWithPerf } from "reactfire";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
@@ -18,6 +18,7 @@ const useStyles = makeStyles(() => ({
 
 export default function Register() {
   const classes = useStyles();
+  const user = useUser();
 
   return (
     <div className={classes.root}>
@@ -25,15 +26,13 @@ export default function Register() {
         fallback={<Loading />}
         traceId={"load-register-views-status"}
       >
-        <AuthCheck
-          fallback={
-            <Container maxWidth="sm">
-              <EmailSignUp />
-            </Container>
-          }
-        >
-          <Redirect to="/dashboard" />
-        </AuthCheck>
+        {!user && (
+          <Container maxWidth="sm">
+            <EmailSignUp />
+          </Container>
+        )}
+
+        {user && <Redirect to="/dashboard" />}
       </SuspenseWithPerf>
     </div>
   );

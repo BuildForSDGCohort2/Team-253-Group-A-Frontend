@@ -1,5 +1,5 @@
 import React from "react";
-import { useAuth } from "reactfire";
+import { useAuth, useFirestore } from "reactfire";
 import { Link as LinkRouter } from "react-router-dom";
 import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EmailSignIn() {
   const classes = useStyles();
+  const db = useFirestore();
 
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
@@ -62,6 +63,9 @@ export default function EmailSignIn() {
           })
           .then(
             function () {
+              db.collection("users")
+                .doc(auth.currentUser.uid)
+                .update({ displayName: auth.currentUser.displayName });
               handlebackdropClose();
             },
             function () {
