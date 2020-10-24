@@ -67,7 +67,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 We're deploying our frontend on [Netlify](https://www.netlify.com/), you
 may use other free services like heroku, Firebase & ...
 
-Before deplyoing to your hosting service, make sure to declare build environment variables mentioned before. here how to do it on Netlify:
+Before deplyoing to your hosting service, make sure to declare build environment variables mentioned before. here's how to do it on Netlify:
 https://docs.netlify.com/configure-builds/environment-variables/#declare-variables
 
-To deploy on Netlify please follow steps privided in this following detailed guide: https://www.netlify.com/blog/2016/09/29/a-step-by-step-guide-deploying-on-netlify/
+To deploy on Netlify please the follow steps privided in the following detailed guide: https://www.netlify.com/blog/2016/09/29/a-step-by-step-guide-deploying-on-netlify/
