@@ -2,7 +2,7 @@
 
 This project requires a minimin knowlege of some frameworks & technologies to start the developements:
 
-* [git]()
+* [git](https://git-scm.com/)
 * [ReactJS](https://reactjs.org/docs/getting-started.html)
 * [Firebase SDK for web](https://firebase.google.com/docs/reference/js)
 * [Recatfire](https://github.com/FirebaseExtended/reactfire) (Firebase for react)
