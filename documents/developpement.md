@@ -23,7 +23,7 @@ Fill `.env` from firebase console and from reCAPTCHA admin console.
 
 DO NOT PUSH `.env` to Github (already ignored with `.gitignore`)
 
-```javascript
+```
 REACT_APP_FIREBASE_APIKEY = ""
 REACT_APP_FIREBASE_AUTHDOMAIN = ""
 REACT_APP_FIREBASE_DATABASEURL = ""
