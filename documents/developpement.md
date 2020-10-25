@@ -1,7 +1,25 @@
+## Prerequisites
+
+This project requires a minimin knowlege of some frameworks & technologies to start the developements:
+
+* [git]()
+* [ReactJS](https://reactjs.org/docs/getting-started.html)
+* [Firebase SDK for web](https://firebase.google.com/docs/reference/js)
+* [Recatfire](https://github.com/FirebaseExtended/reactfire) (Firebase for react)
+* [Material UI for react](https://material-ui.com/)
+* [Momento.js](https://momentjs.com/)
+* [Google reCAPTCHA](https://www.google.com/recaptcha/about/)
+
 ## Project environment Configuration
 
-Copy & Rename `.env.template` to `.env`
-Fill `.env` from firebase console and from Re-Captcha admin console.
+First clone the repo to your local machine
+
+```co
+git clone git@github.com:BuildForSDGCohort2/Team-253-Group-A-Frontend.git
+```
+then get into project folder and copy & rename `.env.template` to `.env`
+
+Fill `.env` from firebase console and from reCAPTCHA admin console.
 
 DO NOT PUSH `.env` to Github (already ignored with `.gitignore`)
 
