@@ -74,7 +74,7 @@ Or you can contact us by leaving us a message using the Contact us section.
 
 ### Frontend Developement
 
-Check out [the developement documention](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Frontend/blob/develop/documents/developpement.md) which contain all steps needed to start developing on your local machine using RactJs.
+Check out [the developement documention](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Frontend/blob/develop/documents/developpement.md) which contain all the steps needed to start developing on your local machine using ReactJs.
 
 ### Try out our API 
 Check out the simple JS [client example](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Backend/tree/develop/ai_part/model_api/client), to know how to use the API.
