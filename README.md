@@ -6,6 +6,7 @@
 # Table of Contents
 
    * [Team-253-Group-A-Frontend](#team-253-group-a-frontend)
+   * [Table of Contents](#table-of-contents)
       * [About the team](#about-the-team)
       * [About our project "CleanOut"](#about-our-project-cleanout)
       * [User Guide](#user-guide)
@@ -17,7 +18,7 @@
       * [Tutorials](#tutorials)
          * [Frontend Developement](#frontend-developement)
          * [Firebase Developement in Backend](#firebase-developement-in-backend)
-         * [Try out our API](#try-out-our-api)
+         * [Try out the API](#try-out-the-api)
          * [Use the API](#use-the-api)
          * [Train the AI model](#train-the-ai-model)
          * [Learn how we collected the data](#learn-how-we-collected-the-data)
@@ -75,7 +76,7 @@ If you want to check all the reported spots, by you and other users, then go to 
 
 If you instead want to see only spots that have Covid-19 trash in them, then navigate to the `COVID-19` section in the menu.
 
-Also, you can manage your account either with the edit or the delete by accessing `Your account` section. 
+Also, you can manage your account either with the edit or the delete by accessing `Your account` section.
 
 ### Step 4: Tour the app
 
@@ -98,18 +99,22 @@ Check out [the developement documention](https://github.com/BuildForSDGCohort2/T
 
 ### Firebase Developement in Backend
 
-Check out [the firebase developement tutorial](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Backend/blob/develop/documents/FIREBASE-DEV-TUTORIAL.md): All tools you need to setup in order to test Firebase services locally without relying on the production environment of Firebase console.
+Check out [the firebase developement tutorial](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Backend/blob/develop/documents/FIREBASE-DEV-TUTORIAL.md): All tools you need to setup in order to test Firebase services locally without relying on the production environment of Firebase console..
 
-### Try out our API 
+### Try out the API 
+
 Check out the simple JS [client example](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Backend/tree/develop/ai_part/model_api/client), to know how to use the API.
 
 ### Use the API
+
 Checkout the [model_api](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Backend/tree/develop/ai_part/model_api) folder for the quickstart tutorial and the API reference.
 
 ### Train the AI model
+
 Checkout the [modeling](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Backend/tree/develop/ai_part/modeling) folder to train your own model using **Detetron2**.
 
 ### Learn how we collected the data
+
 Checkout the [data_collection](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Backend/tree/develop/ai_part/data_collection) folder to know how we collected the data needed to train the model.
 
 ## License
