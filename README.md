@@ -3,6 +3,26 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4f2d4d4adcda432290b07a179fab3e86)](https://app.codacy.com/gh/BuildForSDGCohort2/Team-253-Group-A-Frontend?utm_source=github.com&utm_medium=referral&utm_content=BuildForSDGCohort2/Team-253-Group-A-Frontend&utm_campaign=Badge_Grade_Dashboard)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/2b9a8ed1-cb18-488f-acd2-05a2a33b3218/deploy-status)](https://app.netlify.com/sites/awesome-jang-7f1fc2/deploys)
 
+# Table of Contents
+
+   * [Team-253-Group-A-Frontend](#team-253-group-a-frontend)
+      * [About the team](#about-the-team)
+      * [About our project "CleanOut"](#about-our-project-cleanout)
+      * [User Guide](#user-guide)
+         * [Step 1: Access the app &amp; Regsiter](#step-1-access-the-app--regsiter)
+         * [Step 2: Fill in a trash report](#step-2-fill-in-a-trash-report)
+         * [Step 3: Check reported spot(s)](#step-3-check-reported-spots)
+         * [Step 4: Tour the app](#step-4-tour-the-app)
+      * [Watch the video Walkthrough](#watch-the-video-walkthrough)
+      * [Tutorials](#tutorials)
+         * [Frontend Developement](#frontend-developement)
+         * [Firebase Developement in Backend](#firebase-developement-in-backend)
+         * [Try out our API](#try-out-our-api)
+         * [Use the API](#use-the-api)
+         * [Train the AI model](#train-the-ai-model)
+         * [Learn how we collected the data](#learn-how-we-collected-the-data)
+      * [License](#license)
+
 ## About the team
 
 We are a team of 4 members: 
@@ -78,7 +98,7 @@ Check out [the developement documention](https://github.com/BuildForSDGCohort2/T
 
 ### Firebase Developement in Backend
 
-Check out [the firebase developement tutorial](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Backend/blob/develop/documents/FIREBASE-DEV-TUTORIAL.md): All tools you need to setup in order to test Firebase services locally without relying on the production environment of Firebase console..
+Check out [the firebase developement tutorial](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Backend/blob/develop/documents/FIREBASE-DEV-TUTORIAL.md): All tools you need to setup in order to test Firebase services locally without relying on the production environment of Firebase console.
 
 ### Try out our API 
 Check out the simple JS [client example](https://github.com/BuildForSDGCohort2/Team-253-Group-A-Backend/tree/develop/ai_part/model_api/client), to know how to use the API.
