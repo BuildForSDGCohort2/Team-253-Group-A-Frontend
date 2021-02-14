@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
 
 export default function Register() {
   const classes = useStyles();
-  const user = useUser();
+  const { data: user } = useUser();
 
   return (
     <div className={classes.root}>

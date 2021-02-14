@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const classes = useStyles();
-  const user = useUser();
+  const { data: user } = useUser();
 
   let { path } = useRouteMatch();
 

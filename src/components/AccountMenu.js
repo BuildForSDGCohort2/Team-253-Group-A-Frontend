@@ -29,7 +29,7 @@ export default function AccountMenu() {
     await auth.signOut();
   };
 
-  const user = useUser();
+  const { data: user } = useUser();
 
   const getProfilePath = () => {
     return APP_ROUTES.PROFILE + "/" + user.uid;

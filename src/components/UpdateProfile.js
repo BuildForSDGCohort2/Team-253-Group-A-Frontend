@@ -26,7 +26,7 @@ function UpdateProfile() {
   const [email, setEmail] = React.useState("");
 
   const auth = useAuth();
-  const user = useUser();
+  const { data: user } = useUser();
   let splitDisplayName = user.displayName.split(" ");
   let userFirstName = splitDisplayName[0];
   let userLastName = splitDisplayName[1];
