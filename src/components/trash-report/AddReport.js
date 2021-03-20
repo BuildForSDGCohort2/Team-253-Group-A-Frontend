@@ -20,12 +20,18 @@ import Alert from "@material-ui/lab/Alert";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import GoogleMap from "google-map-react";
-import Marker from "./Marker";
+/* import GoogleMap from "google-map-react"; */
+//import Marker from "./Marker";
 
 import Loading from "../Loading";
 import ImageAnalyseStepper from "./ImageAnalyseStepper";
 import CovidIcon from "../icons/CovidIcon";
+
+import {
+  GoogleMap as GoogleMapApi,
+  LoadScript,
+  Marker,
+} from "@react-google-maps/api";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -382,8 +388,10 @@ export default function AddTrashReport() {
     /*setMapGeocoder(new maps.Geocoder()); */
   };
 
-  const handleGoogleMapClick = ({ lat, lng }) => {
-    setReportLocation(new firebase.firestore.GeoPoint(lat, lng));
+  const handleGoogleMapClick = ({ latLng }) => {
+    setReportLocation(
+      new firebase.firestore.GeoPoint(latLng.lat(), latLng.lng())
+    );
   };
 
   const handleTagChange = (tag) => () => {
@@ -552,7 +560,7 @@ export default function AddTrashReport() {
                 <Typography gutterBottom variant="h6">
                   Select spot location*
                 </Typography>
-                <div style={{ height: "350px", width: "100%" }}>
+                {/* <div style={{ height: "350px", width: "100%" }}>
                   <GoogleMap
                     bootstrapURLKeys={{
                       key: process.env.REACT_APP_FIREBASE_APIKEY,
@@ -579,7 +587,36 @@ export default function AddTrashReport() {
                       />
                     )}
                   </GoogleMap>
-                </div>
+                </div> */}
+
+                <LoadScript
+                  googleMapsApiKey={process.env.REACT_APP_FIREBASE_APIKEY}
+                >
+                  <GoogleMapApi
+                    mapContainerStyle={{ height: "350px", width: "100%" }}
+                    center={
+                      reportLocation != null
+                        ? {
+                            lat: reportLocation.latitude,
+                            lng: reportLocation.longitude,
+                          }
+                        : { lat: 34.7398, lng: 10.76 }
+                    }
+                    zoom={10}
+                    onLoad={({ map, maps }) => mapApiIsLoaded(map, maps)}
+                    onClick={handleGoogleMapClick}
+                  >
+                    {/* Child components, such as markers, info windows, etc. */}
+                    {reportLocation != null && (
+                      <Marker
+                        position={{
+                          lat: reportLocation.latitude,
+                          lng: reportLocation.longitude,
+                        }}
+                      />
+                    )}
+                  </GoogleMapApi>
+                </LoadScript>
               </Paper>
             </div>
             <div className={classes.formContentLine}>

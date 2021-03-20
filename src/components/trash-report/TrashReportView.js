@@ -19,8 +19,14 @@ import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import Divider from "@material-ui/core/Divider";
-import GoogleMap from "google-map-react";
-import Marker from "./Marker";
+/* import GoogleMap from "google-map-react";
+import Marker from "./Marker"; */
+
+import {
+  GoogleMap as GoogleMapApi,
+  LoadScript,
+  Marker,
+} from "@react-google-maps/api";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -173,11 +179,10 @@ export default function TrashReportView(props) {
             </React.Fragment>
           )}
 
-          <div style={{ height: "250px", width: "100%" }}>
-            <GoogleMap
-              bootstrapURLKeys={{
-                key: process.env.REACT_APP_FIREBASE_APIKEY,
-              }}
+          <LoadScript googleMapsApiKey={process.env.REACT_APP_FIREBASE_APIKEY}>
+            <GoogleMapApi
+              id="map-view"
+              mapContainerStyle={{display: "block", height: "250px", width: "100%" }}
               center={
                 data != null
                   ? {
@@ -186,16 +191,18 @@ export default function TrashReportView(props) {
                     }
                   : { lat: 34.7398, lng: 10.76 }
               }
-              defaultZoom={16}
+              zoom={16}
             >
               {data != null && (
                 <Marker
-                  lat={data.location.latitude}
-                  lng={data.location.longitude}
+                  position={{
+                    lat: data.location.latitude,
+                    lng: data.location.longitude,
+                  }}
                 />
               )}
-            </GoogleMap>
-          </div>
+            </GoogleMapApi>
+          </LoadScript>
 
           {loading ? (
             <Skeleton
