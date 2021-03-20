@@ -8,6 +8,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
+
 const useStyles = makeStyles({
   list: {
     width: 250,
@@ -17,6 +18,7 @@ const useStyles = makeStyles({
 NavigationDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
   anchor: PropTypes.string,
+  closeHandler: PropTypes.func
 };
 
 export default function NavigationDrawer(props) {

@@ -7,7 +7,7 @@ import TrashReportCard from "./TrashReportCard";
 import Loading from "../Loading";
 import NoReportFound from "./NoReportFound";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     position: "relative",
