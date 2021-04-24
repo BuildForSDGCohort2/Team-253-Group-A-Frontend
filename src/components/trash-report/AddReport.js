@@ -109,7 +109,7 @@ if (
 
 export default function AddTrashReport() {
   const classes = useStyles();
-  const user = useUser();
+  const { data: user } = useUser();
   const storage = useStorage();
   const db = useFirestore();
   let history = useHistory();
