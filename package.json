@@ -9,7 +9,7 @@
     "@react-google-maps/api": "latest",
     "@testing-library/jest-dom": "latest",
     "@testing-library/react": "latest",
-    "@testing-library/user-event": "^13.1.9",
+    "@testing-library/user-event": "^13.2.1",
     "axios": "latest",
     "clsx": "latest",
     "firebase": "^8.4.1",
