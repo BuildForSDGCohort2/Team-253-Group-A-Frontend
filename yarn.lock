@@ -1449,10 +1449,10 @@
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.5.1.tgz#a64d1af3c62e3bb89576ec58af880980a562bf4e"
   integrity sha512-dZMzN0uAjwJXWYYAcnxIwXqRTZw3o14hGe7O6uhwjD1ZQWPVYA5lASgnNskEBra0knVBsOXB4KXg+HnlKewN/A==
 
-"@googlemaps/js-api-loader@1.12.4":
-  version "1.12.4"
-  resolved "https://registry.yarnpkg.com/@googlemaps/js-api-loader/-/js-api-loader-1.12.4.tgz#9248ed6ca3ab5055158b2ea1d7eabd54251849ab"
-  integrity sha512-CG2ldySYFP+Pf6ymtAp9fUQGltEdOJCv2+LEiQjVZySqSN9QhqVbIFdFDKOu6cirqXXvpVcKYYLsg/K1H8XN0Q==
+"@googlemaps/js-api-loader@1.12.5":
+  version "1.12.5"
+  resolved "https://registry.yarnpkg.com/@googlemaps/js-api-loader/-/js-api-loader-1.12.5.tgz#ed7856fc42bc5539e76eafe0d6c825bf6bc5fc90"
+  integrity sha512-3SwYXmNQ3lHbkOwyFGdEJyp1wEAKa2P9xuTOmJAxY9M2N4nPxv7CqoskKX8lsgUbsxzRFYU/DYEtaEQ6ZdLXAQ==
   dependencies:
     fast-deep-equal "^3.1.3"
 
@@ -1895,25 +1895,25 @@
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
 "@react-google-maps/api@latest":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@react-google-maps/api/-/api-2.4.1.tgz#d64208da882c26eb5712b7b2e7f8f2098de5e893"
-  integrity sha512-uGB9QLlZSQxxB9/iu5cWVpmub97PQOypfDnow1cACU49BTUEB7s7/3/A30IR9WxVx3TP+CbYYuGDmKkwhYTJMg==
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@react-google-maps/api/-/api-2.5.0.tgz#ddd0b78684e9fcf9475b7b0696c6d0e13fa542b7"
+  integrity sha512-w1EzhzLVYAeznYQhcBc3D1tPH7SfAL11AzaMmCfa9OVLCOu9XIHAvnnN+O/n6a7Rvc1d3d464OkWRmOgcD9lJw==
   dependencies:
-    "@googlemaps/js-api-loader" "1.12.4"
-    "@react-google-maps/infobox" "2.4.0"
-    "@react-google-maps/marker-clusterer" "2.4.0"
+    "@googlemaps/js-api-loader" "1.12.5"
+    "@react-google-maps/infobox" "2.5.0"
+    "@react-google-maps/marker-clusterer" "2.5.0"
     "@types/google.maps" "3.45.6"
     invariant "2.2.4"
 
-"@react-google-maps/infobox@2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@react-google-maps/infobox/-/infobox-2.4.0.tgz#3ef811c3d5d0934c590c68d714c57d63c316b454"
-  integrity sha512-ABxPQLOjT1s5w0DtNvVuLLLtUAW/VtN9rVci/qBo+Hx1wo2QWcGRcmc7+lnheCO8B98A1InHDfxCR6wIMwrcoA==
+"@react-google-maps/infobox@2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@react-google-maps/infobox/-/infobox-2.5.0.tgz#ce5a0ae6bcbb2c525e4741649668ea752fa39299"
+  integrity sha512-wKLdOrOtYXklya5iMof/4JQqNm346RLM60y9NhtWyTWD8KPwGxV+yipVUbehMPNlwbzD0RjNNbW3WOva3NV7qA==
 
-"@react-google-maps/marker-clusterer@2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@react-google-maps/marker-clusterer/-/marker-clusterer-2.4.0.tgz#a5567626287b03e37fa16266e19010d48749113f"
-  integrity sha512-bqSyv0zBf4CTwVKQCXhpeSX7d/OGJIRoKMLLTzwk9C5z5Vj7gXJadaDoNHoYs2x8t54d3bR+ODK5uNq70IHX0w==
+"@react-google-maps/marker-clusterer@2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@react-google-maps/marker-clusterer/-/marker-clusterer-2.5.0.tgz#dde9c7e790f1cb96bca2031aaef95648b24d5f72"
+  integrity sha512-Sn8iTn5AHc4MDMgx5tjYClBObmPgrf5OQARs10c3Dh6oDsI2qXvO3Spair2Mv/hhBZRi+9DWEGffAeqykTWUiA==
 
 "@rollup/plugin-node-resolve@^7.1.1":
   version "7.1.3"
@@ -2113,9 +2113,9 @@
     redent "^3.0.0"
 
 "@testing-library/react@latest":
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-12.0.0.tgz#9aeb2264521522ab9b68f519eaf15136148f164a"
-  integrity sha512-sh3jhFgEshFyJ/0IxGltRhwZv2kFKfJ3fN1vTZ6hhMXzz9ZbbcTgmDYM4e+zJv+oiVKKEWZPyqPAh4MQBI65gA==
+  version "12.1.2"
+  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-12.1.2.tgz#f1bc9a45943461fa2a598bb4597df1ae044cfc76"
+  integrity sha512-ihQiEOklNyHIpo2Y8FREkyD1QAea054U0MVbwH1m8N9TxeFz+KoJ9LkqoKqJlzx2JDm56DVwaJ1r36JYxZM05g==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@testing-library/dom" "^8.0.0"
